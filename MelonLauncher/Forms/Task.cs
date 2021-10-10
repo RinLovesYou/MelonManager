@@ -2,6 +2,7 @@
 using MetroFramework.Controls;
 using System;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace MelonLauncher.Forms
 {
@@ -22,6 +23,7 @@ namespace MelonLauncher.Forms
         public readonly int id;
         public readonly Task reliesOn;
         private readonly Action<Task> task;
+        private readonly bool autoDismiss;
 
         public Action onFinishedCallback;
         public Action onClose;
@@ -30,10 +32,11 @@ namespace MelonLauncher.Forms
         public bool Finished { get; private set; }
         public bool Failed { get; private set; }
 
-        public Task(Action<Task> task, string name, Task reliesOn = null)
+        public Task(string name, Action<Task> task, bool autoDismiss, Task reliesOn = null)
         {
             InitializeComponent();
             this.task = task;
+            this.autoDismiss = autoDismiss;
             this.name = name;
             nameText.Text = name;
 
@@ -114,6 +117,11 @@ namespace MelonLauncher.Forms
                 ProgressBarPercentage = 100;
                 onFinishedCallback?.Invoke();
                 closeButton.Enabled = true;
+                
+                progressBar.Visible = false;
+                
+                if(autoDismiss)
+                    MelonLauncherForm.instance.CloseTask(this);
             }));
         }
 

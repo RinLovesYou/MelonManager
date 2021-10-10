@@ -42,9 +42,9 @@ namespace MelonLauncher
             MelonLauncherForm.instance.GetLibGameByPath(game.path)?.UpdatingStarted();
 
             var inst = new Installer(version, game);
-            var down = new Task((curTask) => inst.InstallDownloadTask(curTask), $"Download MelonLoader {version}");
-            var verify = new Task((curTask) => inst.InstallVerifyTask(curTask), $"Verify Downloaded Package", down);
-            var extract = new Task((curTask) => inst.InstallExtractTask(curTask), $"Extract MelonLoader {version} to {game.name}", verify);
+            var down = new Task($"Download MelonLoader {version}", (curTask) => inst.InstallDownloadTask(curTask), true);
+            var verify = new Task($"Verify Downloaded Package", (curTask) => inst.InstallVerifyTask(curTask), true, down);
+            var extract = new Task($"Extract MelonLoader {version} to {game.name}", (curTask) => inst.InstallExtractTask(curTask), false, verify);
 
             extract.onFinishedCallback += () =>
             {
@@ -66,11 +66,11 @@ namespace MelonLauncher
             return new Tuple<Task, Task, Task>(down, verify, extract);
         }
 
-        public static Task Uninstall(LibraryGame.Info game)
+        public static Task Uninstall(LibraryGame.Info game, bool dismiss = false)
         {
             return (Task)MelonLauncherForm.instance.Invoke(new Func<Task>(() =>
             {
-                var task = new Task((t) => UninstallTask(game, t), "Uninstall MelonLoader from " + game.name);
+                var task = new Task("Uninstall MelonLoader from " + game.name, (t) => UninstallTask(game, t), dismiss);
                 MelonLauncherForm.instance.AddTask(task);
                 return task;
             }));
@@ -120,7 +120,7 @@ namespace MelonLauncher
         {
             if (CheckForML(game))
             {
-                task.WaitForTask(Uninstall(game));
+                task.WaitForTask(Uninstall(game, true));
             }
 
             var str = File.Open(mlTempPath, FileMode.Open, FileAccess.Read, FileShare.Read);
