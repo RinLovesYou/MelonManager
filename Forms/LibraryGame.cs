@@ -28,13 +28,13 @@ namespace MelonLauncher.Forms
         {
             MLVersion.Text = "ML v" + ml.version;
 
-            if (Program.LatestVersion == null)
+            if (Program.LatestMLVersion == null)
             {
                 updateButton.Enabled = false;
                 updateButton.Text = "Updater Offline";
                 return;
             }
-            bool isLatest = ml.version == Program.LatestVersion.Version.Replace("v", string.Empty);
+            bool isLatest = ml.version == Program.LatestMLVersion.Version.Replace("v", string.Empty);
             updateButton.Enabled = !isLatest;
             updateButton.Text = isLatest ? "Up-To-Date" : "Update";
         }
@@ -103,7 +103,7 @@ namespace MelonLauncher.Forms
 
         private void updateButton_Click(object sender, EventArgs e)
         {
-            Installer.Install(Program.LatestVersion.Version, info);
+            Installer.Install(Program.LatestMLVersion.Version, info);
         }
 
         public class Info

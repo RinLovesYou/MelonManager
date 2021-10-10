@@ -289,6 +289,7 @@
     <Compile Include="Libs\LightJson\Serialization\TextPosition.cs" />
     <Compile Include="Libs\LightJson\Serialization\TextScanner.cs" />
     <Compile Include="Managers\Config.cs" />
+    <Compile Include="Managers\Logger.cs" />
     <Compile Include="Managers\TempPath.cs" />
     <Compile Include="Melons\Melon.cs" />
     <Compile Include="MLInfo.cs" />

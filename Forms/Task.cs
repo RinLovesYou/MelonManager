@@ -1,4 +1,5 @@
-﻿using MetroFramework.Controls;
+﻿using MelonLauncher.Managers;
+using MetroFramework.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -55,6 +56,8 @@ namespace MelonLauncher.Forms
 
         public void StartTask()
         {
+            Log("Task started");
+
             Started = true;
             ProgressBarPercentage = 0;
             statusText.Text = "Running";
@@ -63,6 +66,7 @@ namespace MelonLauncher.Forms
 
         public void FinishTask()
         {
+            Log("Task finished");
             Invoke(new Action(() =>
             {
                 Finished = true;
@@ -75,6 +79,9 @@ namespace MelonLauncher.Forms
 
         public void FailTask(string message, Exception exception = null)
         {
+            Log("Task failed: " + message, Logger.Level.Error);
+            if (exception != null)
+                Log("Task exception: " + exception.ToString(), Logger.Level.Error);
             Invoke(new Action(() =>
             {
                 Failed = true;
@@ -91,11 +98,26 @@ namespace MelonLauncher.Forms
 
         public void WaitForTask(Task task)
         {
+            Log($"Waiting for task: '{task.name}' {task.id}");
+            Invoke(new Action(() =>
+            {
+                statusText.Text = $"Waiting for task {task.id} to finish...";
+            }));
+
             while (!task.Finished)
                 Thread.Sleep(5);
 
             if (task.Failed)
+            {
+                FailTask($"Task {task.id} failed");
                 Thread.CurrentThread.Abort();
+                return;
+            }
+
+            Invoke(new Action(() =>
+            {
+                statusText.Text = "Running";
+            }));
         }
 
         private void Done()
@@ -106,6 +128,11 @@ namespace MelonLauncher.Forms
         private void closeButton_Click(object sender, EventArgs e)
         {
             onClose?.Invoke();
+        }
+
+        public void Log(string message, Logger.Level level = Logger.Level.Message)
+        {
+            Logger.Log($"['{name}' task {id}] {message}", level);
         }
     }
 }

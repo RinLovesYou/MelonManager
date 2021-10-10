@@ -24,7 +24,7 @@ namespace MelonLauncher.Forms
                 noButton.Text = "Ok";
             }
             message.Text = text;
-            Size = new Size(message.Size.Width + 90, 125);
+            Size = new Size(message.Size.Width + 90, message.Size.Height + 125);
         }
 
         public static DialogResult Question(string question)

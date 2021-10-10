@@ -39,7 +39,8 @@ namespace MelonLauncher
             return false;
         }
 
-        public static void Install(string version, LibraryGame.Info game)
+        /// <returns>The download task, the verify task and the extract task.</returns>
+        public static Tuple<Task, Task, Task> Install(string version, LibraryGame.Info game)
         {
             var inst = new Installer(version, game);
             var down = new Task((curTask) => inst.InstallDownloadTask(curTask), $"Download MelonLoader {version}");
@@ -48,6 +49,7 @@ namespace MelonLauncher
             MelonLauncherForm.instance.AddTask(down);
             MelonLauncherForm.instance.AddTask(verify);
             MelonLauncherForm.instance.AddTask(extract);
+            return new Tuple<Task, Task, Task>(down, verify, extract);
         }
 
         public static Task Uninstall(LibraryGame.Info game)
@@ -74,10 +76,14 @@ namespace MelonLauncher
             {
                 var elm = paths[a];
                 var path = Path.Combine(game.dir, elm.Item1);
-                if (elm.Item2)
-                    Directory.Delete(path, true);
-                else
-                    File.Delete(path);
+                try
+                {
+                    if (elm.Item2)
+                        Directory.Delete(path, true);
+                    else
+                        File.Delete(path);
+                }
+                catch { }
 
                 task.ProgressBarPercentage = (a + 1) / paths.Count * 100;
             }

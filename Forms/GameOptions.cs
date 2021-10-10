@@ -64,7 +64,13 @@ namespace MelonLauncher.Forms
 
         private void uninstallButton_Click(object sender, EventArgs e)
         {
-            // TODO: Uninstall ML
+            if (CustomMessageBox.Question($"Are you sure you want to uninstall MelonLoader from {game.info.name}?") != DialogResult.Yes)
+                return;
+
+            MelonLauncherForm.instance.RemoveLibraryGame(game);
+            Installer.Uninstall(game.info);
+            Close();
+            Dispose();
         }
     }
 }
