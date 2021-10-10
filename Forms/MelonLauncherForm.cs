@@ -28,6 +28,18 @@ namespace MelonLauncher.Forms
             InitializeComponent();
         }
 
+        public LibraryGame GetLibGameByPath(string exePath)
+        {
+            var len = libraryPanel.Controls.Count;
+            for (int a = 0; a < len; a++)
+            {
+                var gm = (LibraryGame)libraryPanel.Controls[a];
+                if (gm.info.path == exePath)
+                    return gm;
+            }
+            return null;
+        }
+
         public void AddTask(Task task)
         {
             if (task == null)
@@ -83,6 +95,8 @@ namespace MelonLauncher.Forms
 
         public void FinishTask(Task task)
         {
+            if (task.Failed)
+                return;
             var len = tasksLayoutPanel.Controls.Count;
             for (int a = 0; a < len; a++)
             {
@@ -109,24 +123,23 @@ namespace MelonLauncher.Forms
             libraryFileWriter.Flush();
         }
 
-        private void AddLibraryGame(string path, bool askToInstall)
+        private bool AddLibraryGame(LibraryGame.Info gameInf, bool askToInstall)
         {
-            path = path.Replace("\r", "");
-
             var len = libraryPanel.Controls.Count;
             for (int a = 0; a < len; a++)
             {
                 var g = libraryPanel.Controls[a];
-                if (g is LibraryGame libGame && libGame.info.path == path)
+                if (g is LibraryGame libGame && libGame.info.path == gameInf.path)
                 {
-                    return;
+                    return false;
                 }
             }
 
-            var game = LibraryGame.CreateLibraryGame(LibraryGame.Info.Create(path), askToInstall);
+            var game = LibraryGame.CreateLibraryGame(gameInf, askToInstall);
             if (game == null)
-                return;
+                return false;
             libraryPanel.Controls.Add(game);
+            return true;
         }
 
         public void RemoveLibraryGame(LibraryGame game)
@@ -138,10 +151,11 @@ namespace MelonLauncher.Forms
             game.Dispose();
         }
 
-        public void CreateLibraryGame(string path, bool askToInstall)
+        public void CreateLibraryGame(LibraryGame.Info game, bool askToInstall)
         {
-            libraryFileWriter.Write(path + "\n");
-            AddLibraryGame(path, askToInstall);
+            if (!AddLibraryGame(game, askToInstall))
+                return;
+            libraryFileWriter.Write(game.path + "\n");
         }
 
         private void MelonLauncher_Load(object sender, EventArgs e)
@@ -157,7 +171,10 @@ namespace MelonLauncher.Forms
             foreach (var lib in gamesPaths)
             {
                 if (lib == string.Empty) continue;
-                AddLibraryGame(lib, false);
+                var info = LibraryGame.Info.Create(lib);
+                if (info == null)
+                    continue;
+                AddLibraryGame(info, false);
             }
         }
 
@@ -167,7 +184,10 @@ namespace MelonLauncher.Forms
             dia.Filter = "Unity Game Executable | *.exe";
             dia.Title = "Select a Unity Game Executable";
             if (dia.ShowDialog() != DialogResult.OK) return;
-            CreateLibraryGame(dia.FileName, true);
+            var info = LibraryGame.Info.Create(dia.FileName);
+            if (info == null)
+                return;
+            CreateLibraryGame(info, true);
         }
 
         private void MelonLauncher_FormClosing(object sender, FormClosingEventArgs e)

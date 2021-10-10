@@ -27,7 +27,7 @@ namespace MelonLauncher.Forms
             gamePath.Text = game.info.path;
 
             var currentVer = "v" + game.ml.version;
-            mlVersionSelect.Items.AddRange(Program.releasesAPI.ReleasesTbl.Select(x => x.Version).ToArray());
+            mlVersionSelect.Items.AddRange(Program.releasesAPI.ReleasesTbl.Select(x => x.Version).Where(x => !(game.info.x86 && (x.StartsWith("v0.1") || x.StartsWith("v0.2")))).ToArray());
             if (!mlVersionSelect.Items.Contains(currentVer))
                 mlVersionSelect.Items.Add(currentVer);
             mlVersionSelect.SelectedItem = currentVer;
@@ -35,8 +35,8 @@ namespace MelonLauncher.Forms
 
         private void installButton_Click(object sender, EventArgs e)
         {
-            Installer.Install(mlVersionSelect.SelectedItem.ToString(), game.info);
-            MelonLauncherForm.instance.metroTabControl1.SelectedIndex = 2;
+            Installer.Install(mlVersionSelect.SelectedItem.ToString(), game.info, false);
+            MelonLauncherForm.instance.pages.SelectedIndex = 2;
             Close();
             Dispose();
         }

@@ -39,6 +39,7 @@ namespace MelonLauncher.Managers
                 lock (logLock)
                 {
                     var log = $"[{DateTime.Now.ToString("HH:mm:ss.fff")}] [{level}] " + message;
+                    Console.WriteLine(log);
                     latestLog.WriteLine(log);
                     currentLog.WriteLine(log);
                 }

@@ -16,7 +16,7 @@ namespace MelonLauncher
     public class Installer
     {
         // string is the file/folder name and bool is folder if true
-        public static readonly Tuple<string, bool>[] mlRootPaths = 
+        public static readonly Tuple<string, bool>[] mlRootPaths =
         {
             new Tuple<string, bool>("MelonLoader", true),
             new Tuple<string, bool>("version.dll", false),
@@ -40,12 +40,29 @@ namespace MelonLauncher
         }
 
         /// <returns>The download task, the verify task and the extract task.</returns>
-        public static Tuple<Task, Task, Task> Install(string version, LibraryGame.Info game)
+        public static Tuple<Task, Task, Task> Install(string version, LibraryGame.Info game, bool addToLib)
         {
+            MelonLauncherForm.instance.GetLibGameByPath(game.path)?.UpdatingStarted();
+
             var inst = new Installer(version, game);
             var down = new Task((curTask) => inst.InstallDownloadTask(curTask), $"Download MelonLoader {version}");
             var verify = new Task((curTask) => inst.InstallVerifyTask(curTask), $"Verify Downloaded Package", down);
             var extract = new Task((curTask) => inst.InstallExtractTask(curTask), $"Extract MelonLoader {version} to {game.name}", verify);
+
+            extract.onFinishedCallback += () =>
+            {
+                var gm = MelonLauncherForm.instance.GetLibGameByPath(game.path);
+                if (gm == null && !extract.Failed)
+                {
+                    if (addToLib)
+                        MelonLauncherForm.instance.CreateLibraryGame(game, false);
+                }
+                else
+                {
+                    gm.UpdatingFinished();
+                }
+            };
+
             MelonLauncherForm.instance.AddTask(down);
             MelonLauncherForm.instance.AddTask(verify);
             MelonLauncherForm.instance.AddTask(extract);
@@ -91,7 +108,6 @@ namespace MelonLauncher
             task.FinishTask();
         }
 
-        public bool x86;
         public bool legacy;
         public string version;
         public LibraryGame.Info game;
@@ -145,7 +161,7 @@ namespace MelonLauncher
                 "/download/",
                 version,
                 "/MelonLoader.",
-                (!legacy && x86) ? "x86" : "x64",
+                (!legacy && game.x86) ? "x86" : "x64",
                 ".sha512"
             });
 
@@ -214,10 +230,6 @@ namespace MelonLauncher
 
             legacy = version.StartsWith("v0.1") || version.StartsWith("v0.2");
 
-            {
-                byte[] array = File.ReadAllBytes(game.path);
-                x86 = array == null || array.Length == 0 || BitConverter.ToUInt16(array, BitConverter.ToInt32(array, 60) + 4) != 34404;
-            }
 
             string uriString = string.Concat(new string[]
             {
@@ -225,7 +237,7 @@ namespace MelonLauncher
                 "/download/",
                 version,
                 "/MelonLoader.",
-                (!legacy && x86) ? "x86" : "x64",
+                (!legacy && game.x86) ? "x86" : "x64",
                 ".zip"
             });
             Console.WriteLine(uriString);

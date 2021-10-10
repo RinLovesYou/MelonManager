@@ -69,12 +69,9 @@ namespace MelonLauncher.Forms
             Log("Task finished");
             Invoke(new Action(() =>
             {
-                Finished = true;
-                ProgressBarPercentage = 100;
                 statusText.Text = "Finished";
-                onFinishedCallback?.Invoke();
-                Done();
             }));
+            Done();
         }
 
         public void FailTask(string message, Exception exception = null)
@@ -85,15 +82,12 @@ namespace MelonLauncher.Forms
             Invoke(new Action(() =>
             {
                 Failed = true;
-                Finished = true;
-                ProgressBarPercentage = 0;
                 statusText.Text = message;
                 onFailedCallback?.Invoke(message, exception);
 
                 CustomMessageBox.Error(message);
-
-                Done();
             }));
+            Done();
         }
 
         public void WaitForTask(Task task)
@@ -122,7 +116,13 @@ namespace MelonLauncher.Forms
 
         private void Done()
         {
-            closeButton.Enabled = true;
+            Invoke(new Action(() =>
+            {
+                Finished = true;
+                ProgressBarPercentage = 100;
+                onFinishedCallback?.Invoke();
+                closeButton.Enabled = true;
+            }));
         }
 
         private void closeButton_Click(object sender, EventArgs e)

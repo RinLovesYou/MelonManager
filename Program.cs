@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MelonLauncher.Forms;
+using MelonLauncher.Managers;
 using MelonLoader.Interfaces;
 
 namespace MelonLauncher
@@ -33,7 +35,15 @@ namespace MelonLauncher
 
         private static void HandleException(object sender, UnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(e.ExceptionObject.ToString(), "An Unhandled Exception Has Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Logger.Log("[Unhandled Exception] " + e.ExceptionObject.ToString(), Logger.Level.Error);
+            try
+            {
+                CustomMessageBox.Error("An unhandled exception has occured:\n\n" + e.ExceptionObject.ToString());
+            }
+            catch
+            {
+                MessageBox.Show(e.ExceptionObject.ToString(), "An Unhandled Exception Has Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
