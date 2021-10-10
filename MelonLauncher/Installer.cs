@@ -1,11 +1,8 @@
 ﻿using MelonLauncher.Forms;
-using MelonLoader.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using MelonLauncher;
 using System.Net;
 using MelonLauncher.Managers;
 using System.Security.Cryptography;

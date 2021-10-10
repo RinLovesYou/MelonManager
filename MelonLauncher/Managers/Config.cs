@@ -1,5 +1,4 @@
 ﻿using MelonLauncher;
-using System;
 using System.IO;
 using Tomlet;
 

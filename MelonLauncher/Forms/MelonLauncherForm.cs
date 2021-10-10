@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using MelonLauncher.Managers;
 using MelonLoader.Managers;
-using MetroFramework.Controls;
 using MetroFramework.Forms;
 
 namespace MelonLauncher.Forms

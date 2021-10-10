@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MelonLoader.LightJson.Serialization
+﻿namespace MelonLoader.LightJson.Serialization
 {
 	/// <summary>
 	/// Represents a position within a plain text resource.
