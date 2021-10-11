@@ -21,6 +21,7 @@
 Third-party libraries used as source code:
 - [Tomlet](https://github.com/SamboyCoding/Tomlet) is licensed under the MIT License. See [LICENSE](https://github.com/SamboyCoding/Tomlet/blob/master/LICENSE) for the full License.
 - [Cecil](https://github.com/jbevain/cecil/) is licensed under the MIT License. See [LICENSE](https://github.com/jbevain/cecil/blob/master/LICENSE.txt) for the full License.
+- [MetroModernUI](https://github.com/dennismagno/metroframework-modern-ui/) is licensed under the MIT License. See [LICENSE](https://github.com/dennismagno/metroframework-modern-ui/blob/master/LICENSE.md) for the full License.
 
 External tools downloaded:
 - [MelonLoader](https://github.com/LavaGang/MelonLoader) is licensed under the Apache License, Version 2.0. See [LICENSE](https://github.com/LavaGang/MelonLoader/blob/master/LICENSE.md) for the full License.
