@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using MelonManager.Managers;
 using MelonLoader.Managers;
 using MetroFramework.Forms;
+using System.Diagnostics;
 
 namespace MelonManager.Forms
 {
@@ -44,9 +45,6 @@ namespace MelonManager.Forms
             task.onClose += () => CloseTask(task);
             task.onFailedCallback += (msg, ex) =>
             {
-                Console.WriteLine(msg);
-                if (ex != null)
-                    Console.WriteLine(ex.ToString());
                 FailTask(task);
             };
             tasksLayoutPanel.Controls.Add(task);
@@ -155,6 +153,7 @@ namespace MelonManager.Forms
         private void MelonManager_Load(object sender, EventArgs e)
         {
             versionText.Text = 'v' + Application.ProductVersion;
+
             string libFilePath = Path.Combine(Program.localFilesPath, "Library");
             var stream = File.Open(libFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             libraryFileWriter = new StreamWriter(stream);
@@ -169,6 +168,8 @@ namespace MelonManager.Forms
                     continue;
                 AddLibraryGame(info, false);
             }
+
+            consoleButton.Enabled = !Utils.IsConsoleOpen;
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
@@ -188,6 +189,18 @@ namespace MelonManager.Forms
             TempPath.ClearTemp();
             SaveLibrary();
             Config.Save();
+        }
+
+        private void consoleButton_Click(object sender, EventArgs e)
+        {
+            consoleButton.Enabled = false;
+            Utils.OpenConsole();
+            Console.Write(Logger.GetWholeLog());
+        }
+
+        private void localDataButton_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", $"\"{Program.localFilesPath}\"");
         }
     }
 }

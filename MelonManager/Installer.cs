@@ -237,7 +237,6 @@ namespace MelonManager
                 (!legacy && game.x86) ? "x86" : "x64",
                 ".zip"
             });
-            Console.WriteLine(uriString);
 
             mlTempPath = TempPath.CreateTempFile();
 

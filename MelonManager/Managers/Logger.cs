@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Forms;
 
 namespace MelonManager.Managers
 {
@@ -8,8 +9,8 @@ namespace MelonManager.Managers
         public static string logsDir = Path.Combine(Program.localFilesPath, "Logs");
         public static string currentLogPath;
         public static string latestLogPath;
-        private static StreamWriter latestLog;
-        private static StreamWriter currentLog;
+        public static StreamWriter latestLog;
+        public static StreamWriter currentLog;
         private static object logLock = new object();
 
         static Logger()
@@ -24,8 +25,29 @@ namespace MelonManager.Managers
             latestLog.AutoFlush = true;
             currentLog.AutoFlush = true;
 
+            Log("============================================");
+            Log("OS: " + Environment.OSVersion.ToString());
+            Log("App version: v" + Application.ProductVersion);
             Log("Timezone: " + TimeZone.CurrentTimeZone.StandardName);
             Log("Current date: " + DateTime.Now.ToString("yy-MM-dd"));
+            Log("============================================");
+        }
+
+        public static void Initialize()
+        {
+            // smort
+        }
+
+        public static string GetWholeLog()
+        {
+            lock (logLock)
+            {
+                latestLog.Dispose();
+                string str = File.ReadAllText(latestLogPath);
+                latestLog = new StreamWriter(File.Open(latestLogPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read));
+                latestLog.AutoFlush = true;
+                return str;
+            }
         }
 
         public static void Log(string message, Level level = Level.Message)
@@ -35,7 +57,8 @@ namespace MelonManager.Managers
                 lock (logLock)
                 {
                     var log = $"[{DateTime.Now.ToString("HH:mm:ss.fff")}] [{level}] " + message;
-                    Console.WriteLine(log);
+                    if (Utils.IsConsoleOpen)
+                        Console.WriteLine(log);
                     latestLog.WriteLine(log);
                     currentLog.WriteLine(log);
                 }

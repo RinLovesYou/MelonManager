@@ -19,9 +19,13 @@ namespace MelonManager
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
+            if (args.Contains("-console"))
+                Utils.OpenConsole();
+
             Directory.CreateDirectory(localFilesPath);
+            Logger.Initialize();
 
             AppDomain.CurrentDomain.UnhandledException += HandleException;
             releasesAPI.Refresh();
