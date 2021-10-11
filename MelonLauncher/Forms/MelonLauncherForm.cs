@@ -154,8 +154,7 @@ namespace MelonLauncher.Forms
 
         private void MelonLauncher_Load(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Program.localFilesPath))
-                Directory.CreateDirectory(Program.localFilesPath);
+            versionText.Text = 'v' + Application.ProductVersion;
             string libFilePath = Path.Combine(Program.localFilesPath, "Library");
             var stream = File.Open(libFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             libraryFileWriter = new StreamWriter(stream);
