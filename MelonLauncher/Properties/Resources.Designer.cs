@@ -83,6 +83,16 @@ namespace MelonLauncher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Melon_170 {
+            get {
+                object obj = ResourceManager.GetObject("Melon_170", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ML_Icon {
             get {
                 object obj = ResourceManager.GetObject("ML_Icon", resourceCulture);
