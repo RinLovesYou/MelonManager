@@ -24,6 +24,7 @@ namespace MelonLoader.Interfaces
             try { response = webClient.DownloadString(url); } catch (Exception ex) { HandleException(ex); response = null; }
             if (string.IsNullOrEmpty(response))
                 response = null;
+            
             return response;
         }
 
