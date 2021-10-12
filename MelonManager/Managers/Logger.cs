@@ -12,9 +12,13 @@ namespace MelonManager.Managers
         public static StreamWriter latestLog;
         public static StreamWriter currentLog;
         private static object logLock = new object();
+        private static bool initialized;
 
-        static Logger()
+        public static void Initialize()
         {
+            if (initialized)
+                return;
+
             latestLogPath = Path.Combine(Program.localFilesPath, "MelonManager_Latest.log");
             currentLogPath = Path.Combine(logsDir, "MelonManager_" + DateTime.Now.ToString("yy-MM-dd_HH-mm-ss.fff") + ".log");
 
@@ -33,13 +37,11 @@ namespace MelonManager.Managers
             Log("============================================");
         }
 
-        public static void Initialize()
-        {
-            // smort
-        }
-
         public static string GetWholeLog()
         {
+            if (!initialized)
+                return string.Empty;
+
             lock (logLock)
             {
                 latestLog.Dispose();
@@ -52,6 +54,9 @@ namespace MelonManager.Managers
 
         public static void Log(string message, Level level = Level.Message)
         {
+            if (!initialized)
+                return;
+
             try
             {
                 lock (logLock)

@@ -1,6 +1,8 @@
-﻿using Microsoft.Win32.SafeHandles;
+﻿using MelonManager.Managers;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -45,6 +47,20 @@ namespace MelonManager
             standardOutput.AutoFlush = true;
             Console.SetOut(standardOutput);
             IsConsoleOpen = true;
+        }
+
+        public static bool Kill(this IEnumerable<Process> procs)
+        {
+            bool result = true;
+            foreach (var p in procs)
+            {
+                try
+                {
+                    p.Kill();
+                }
+                catch { result = false; }
+            }
+            return result;
         }
     }
 }
