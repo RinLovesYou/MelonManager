@@ -1,3 +1,12 @@
+<p align="center">
+  <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Logo.png"></a>
+</p>
+<p align="center">
+  <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Text.png"></a>
+</p>
+
+---
+
 ## GENERAL INFORMATION:
 
 - This is the new Official Dedicated Installer and Mod Manager for [MelonLoader](https://github.com/LavaGang/MelonLoader)
