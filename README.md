@@ -1,6 +1,6 @@
 ## GENERAL INFORMATION:
 
-- This is the new Official Dedicated Installer and Mods Manager for [MelonLoader](https://github.com/LavaGang/MelonLoader)
+- This is the new Official Dedicated Installer and Mod Manager for [MelonLoader](https://github.com/LavaGang/MelonLoader)
 - All Data and Logs get saved to "%userprofile%/AppData/Local/MelonLauncher/"
 <br></br>
 - [The Official Wiki](https://melonwiki.xyz)
