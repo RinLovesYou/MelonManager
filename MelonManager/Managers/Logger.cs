@@ -28,6 +28,7 @@ namespace MelonManager.Managers
             currentLog = new StreamWriter(File.Open(currentLogPath, FileMode.Create, FileAccess.Write, FileShare.Read));
             latestLog.AutoFlush = true;
             currentLog.AutoFlush = true;
+            initialized = true;
 
             Log("============================================");
             Log("OS: " + Environment.OSVersion.ToString());

@@ -100,6 +100,7 @@ namespace MelonManager.Forms
 
         public void SaveLibrary()
         {
+            Logger.Log("Saving library games...");
             libraryFileWriter.BaseStream.SetLength(0);
             libraryFileWriter.BaseStream.Position = 0;
 
@@ -131,6 +132,7 @@ namespace MelonManager.Forms
             if (game == null)
                 return false;
             libraryPanel.Controls.Add(game);
+            Logger.Log($"Added '{gameInf.path}' to the library.");
             return true;
         }
 
@@ -140,6 +142,7 @@ namespace MelonManager.Forms
                 return;
 
             libraryPanel.Controls.Remove(game);
+            Logger.Log($"Removed '{game.info.path}' from the library.");
             game.Dispose();
         }
 
@@ -170,6 +173,8 @@ namespace MelonManager.Forms
             }
 
             consoleButton.Enabled = !Utils.IsConsoleOpen;
+
+            Logger.Log("Form loaded.");
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
@@ -196,6 +201,7 @@ namespace MelonManager.Forms
             consoleButton.Enabled = false;
             Utils.OpenConsole();
             Console.Write(Logger.GetWholeLog());
+            Logger.Log("You have opened the debug console. Everything written to this console gets saved to the latest log file.", Logger.Level.Warning);
         }
 
         private void localDataButton_Click(object sender, EventArgs e)
