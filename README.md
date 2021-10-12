@@ -1,4 +1,4 @@
-<p align="center">
+<p align="left">
   <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Logo.png"></a>
 </p>
 
