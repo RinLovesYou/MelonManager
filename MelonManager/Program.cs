@@ -95,5 +95,13 @@ namespace MelonManager
                 MessageBox.Show(e.ExceptionObject.ToString(), "An Unhandled Exception Has Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public static void ClearData()
+        {
+            Application.Exit();
+            Logger.Deinitialize();
+            Directory.Delete(localFilesPath, true);
+            Utils.TryClearDirectory(localFilesPath);
+        }
     }
 }

@@ -117,4 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="metroLabel11.Text" xml:space="preserve">
+    <value>SlidyDev#9236  :  Main developer of the manager (that's me!!!)
+Samboy#0063   :  Developer of the manager
+Lava Gang         :  The team behind MelonLoader
+You                   :  User of the manager :)</value>
+  </data>
 </root>

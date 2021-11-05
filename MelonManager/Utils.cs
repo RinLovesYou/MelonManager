@@ -62,5 +62,25 @@ namespace MelonManager
             }
             return result;
         }
+
+        public static void TryClearDirectory(string dir)
+        {
+            if (!Directory.Exists(dir))
+                return;
+
+            foreach (var d in Directory.EnumerateDirectories(dir))
+            {
+                TryClearDirectory(d);
+            }
+
+            foreach (var f in Directory.EnumerateFiles(dir))
+            {
+                try
+                {
+                    File.Delete(f);
+                }
+                catch { }
+            }
+        }
     }
 }

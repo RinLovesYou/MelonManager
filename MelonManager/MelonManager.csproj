@@ -209,9 +209,6 @@
     <None Include="Resources\ML_Icon small.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Discord small.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Cog.png" />
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +241,11 @@
   <ItemGroup>
     <Content Include=".editorconfig" />
     <Content Include="Icon.ico" />
+    <None Include="Resources\Melon 25.png" />
+    <None Include="Resources\Wiki.png" />
+    <None Include="Resources\Twitter.png" />
+    <None Include="Resources\GitHub_Dark.png" />
+    <None Include="Resources\Discord.png" />
     <None Include="Resources\Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

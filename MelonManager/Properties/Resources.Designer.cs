@@ -73,9 +73,19 @@ namespace MelonManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Discord_small {
+        internal static System.Drawing.Bitmap Discord {
             get {
-                object obj = ResourceManager.GetObject("Discord_small", resourceCulture);
+                object obj = ResourceManager.GetObject("Discord", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GitHub_Dark {
+            get {
+                object obj = ResourceManager.GetObject("GitHub_Dark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -96,6 +106,16 @@ namespace MelonManager.Properties {
         internal static System.Drawing.Bitmap Melon_170 {
             get {
                 object obj = ResourceManager.GetObject("Melon_170", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Melon_25 {
+            get {
+                object obj = ResourceManager.GetObject("Melon_25", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -126,6 +146,26 @@ namespace MelonManager.Properties {
         internal static System.Drawing.Bitmap ML_Text_small {
             get {
                 object obj = ResourceManager.GetObject("ML_Text_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Twitter {
+            get {
+                object obj = ResourceManager.GetObject("Twitter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Wiki {
+            get {
+                object obj = ResourceManager.GetObject("Wiki", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

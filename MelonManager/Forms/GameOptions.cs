@@ -19,7 +19,6 @@ namespace MelonManager.Forms
             gameName.Text = game.info.name;
             gameName.Location = new Point((Size.Width - this.gameName.Size.Width) / 2, 7);
             this.game = game;
-            gamePath.Text = game.info.path;
 
             var currentVer = "v" + game.ml.version;
             mlVersionSelect.Items.AddRange(Program.releasesAPI.ReleasesTbl.Select(x => x.Version).Where(x => !(game.info.x86 && (x.StartsWith("v0.1") || x.StartsWith("v0.2")))).ToArray());

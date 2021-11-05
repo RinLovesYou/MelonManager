@@ -1,4 +1,7 @@
 ﻿using MelonManager;
+using MelonManager.Forms;
+using MelonManager.Managers;
+using System;
 using System.IO;
 using Tomlet;
 
@@ -7,7 +10,12 @@ namespace MelonLoader.Managers
     internal static class Config
     {
         private static string FilePath = Path.Combine(Program.localFilesPath, "MelonManager.cfg");
-        private static FileValues Values = new FileValues();
+        public static FileValues Values = new FileValues();
+
+        static Config()
+        {
+            Load();
+        }
 
         internal static void Load()
         {
@@ -25,17 +33,18 @@ namespace MelonLoader.Managers
             {
                 File.WriteAllText(FilePath, TomletMain.TomlStringFrom(Values));
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Logger.Log("Failed to save config:\n" + ex.ToString(), Logger.Level.Error);
+                CustomMessageBox.Error("Failed to save config:\n\n" + ex.ToString());
+            }
         }
 
-        private class FileValues
+        public class FileValues
         {
-            static FileValues()
-            {
-                Load();
-            }
-
-            internal bool autoUpdate = true;
+            internal bool autoUpdateMM = true;
+            internal bool autoUpdateML = true;
+            internal int lastPage;
             internal string lastSelectedGamePath = null;
         }
     }

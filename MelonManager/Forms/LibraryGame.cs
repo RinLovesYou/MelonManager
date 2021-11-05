@@ -190,6 +190,11 @@ namespace MelonManager.Forms
                 return new Info(gameExePath);
             }
 
+            public override string ToString()
+            {
+                return $"{author} - {name}";
+            }
+
             public static bool operator ==(Info inf1, Info inf2)
             {
                 if ((object)inf1 == null || (object)inf2 == null)

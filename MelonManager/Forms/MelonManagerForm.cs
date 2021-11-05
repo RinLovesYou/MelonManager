@@ -6,16 +6,17 @@ using MelonManager.Managers;
 using MelonLoader.Managers;
 using MetroFramework.Forms;
 using System.Diagnostics;
+using MelonLoader.URLs;
+using System.Text;
 
 namespace MelonManager.Forms
 {
     public partial class MelonManagerForm : MetroForm
     {
         public static MelonManagerForm instance;
+        public readonly string libFilePath = Path.Combine(Program.localFilesPath, "Library.cfg");
 
-        private StreamWriter libraryFileWriter;
         private string[] gamesPaths;
-        private StreamReader libraryFileReader;
 
         public MelonManagerForm()
         {
@@ -101,22 +102,18 @@ namespace MelonManager.Forms
         public void SaveLibrary()
         {
             Logger.Log("Saving library games...");
-            libraryFileWriter.BaseStream.SetLength(0);
-            libraryFileWriter.BaseStream.Position = 0;
+            var sb = new StringBuilder();
 
             for (int a = 0; a < libraryPanel.Controls.Count; a++)
             {
-                var ctrl = libraryPanel.Controls[a];
-                if (ctrl is LibraryGame game)
-                {
-                    libraryFileWriter.WriteLine(game.info.path);
-                }
+                var game = (LibraryGame)libraryPanel.Controls[a];
+                sb.AppendLine(game.info.path);
             }
 
-            libraryFileWriter.Flush();
+            File.WriteAllText(libFilePath, sb.ToString());
         }
 
-        private bool AddLibraryGame(LibraryGame.Info gameInf, bool askToInstall)
+        public bool AddLibraryGame(LibraryGame.Info gameInf, bool askToInstall)
         {
             var len = libraryPanel.Controls.Count;
             for (int a = 0; a < len; a++)
@@ -124,6 +121,7 @@ namespace MelonManager.Forms
                 var g = libraryPanel.Controls[a];
                 if (g is LibraryGame libGame && libGame.info.path == gameInf.path)
                 {
+                    Logger.Log($"Failed to add '{gameInf.path}' to the library, because an instance of it already exists.", Logger.Level.Warning);
                     return false;
                 }
             }
@@ -132,6 +130,7 @@ namespace MelonManager.Forms
             if (game == null)
                 return false;
             libraryPanel.Controls.Add(game);
+            noLibGamesText.Visible = false;
             Logger.Log($"Added '{gameInf.path}' to the library.");
             return true;
         }
@@ -142,26 +141,26 @@ namespace MelonManager.Forms
                 return;
 
             libraryPanel.Controls.Remove(game);
+            if (libraryPanel.Controls.Count == 0)
+                noLibGamesText.Visible = true;
             Logger.Log($"Removed '{game.info.path}' from the library.");
             game.Dispose();
         }
 
-        public void CreateLibraryGame(LibraryGame.Info game, bool askToInstall)
+        public void ClearLibrary()
         {
-            if (!AddLibraryGame(game, askToInstall))
-                return;
-            libraryFileWriter.Write(game.path + "\n");
+            libraryPanel.Controls.Clear();
+            noLibGamesText.Visible = true;
+            Logger.Log($"Cleared the library.");
         }
 
+
+        #region UI Events
         private void MelonManager_Load(object sender, EventArgs e)
         {
             versionText.Text = 'v' + Application.ProductVersion;
 
-            string libFilePath = Path.Combine(Program.localFilesPath, "Library");
-            var stream = File.Open(libFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            libraryFileWriter = new StreamWriter(stream);
-            libraryFileReader = new StreamReader(stream);
-            string libs = libraryFileReader.ReadToEnd();
+            string libs = File.ReadAllText(libFilePath);
             gamesPaths = libs.Contains('\n') ? libs.Split('\n') : new string[] { libs };
             foreach (var lib in gamesPaths)
             {
@@ -174,7 +173,15 @@ namespace MelonManager.Forms
 
             consoleButton.Enabled = !Utils.IsConsoleOpen;
 
+            updateMLCheck.Checked = Config.Values.autoUpdateML;
+            updateMMCheck.Checked = Config.Values.autoUpdateMM;
+
             Logger.Log("Form loaded.");
+        }
+
+        private void updateBtn_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
@@ -186,7 +193,7 @@ namespace MelonManager.Forms
             var info = LibraryGame.Info.Create(dia.FileName);
             if (info == null)
                 return;
-            CreateLibraryGame(info, true);
+            AddLibraryGame(info, true);
         }
 
         private void MelonManager_FormClosing(object sender, FormClosingEventArgs e)
@@ -194,6 +201,7 @@ namespace MelonManager.Forms
             TempPath.ClearTemp();
             SaveLibrary();
             Config.Save();
+            Logger.Log("Saved config!");
         }
 
         private void consoleButton_Click(object sender, EventArgs e)
@@ -208,5 +216,59 @@ namespace MelonManager.Forms
         {
             Process.Start("explorer.exe", $"\"{Program.localFilesPath}\"");
         }
+
+        private void mlDiscordLink_Click(object sender, EventArgs e)
+        {
+            Process.Start(ExternalLinks.Discord);
+        }
+
+        private void mlWikiLink_Click(object sender, EventArgs e)
+        {
+            Process.Start(ExternalLinks.Wiki);
+        }
+
+        private void mlGithubLink_Click(object sender, EventArgs e)
+        {
+            Process.Start(ExternalLinks.MLGitHub);
+        }
+
+        private void lgTwitterLink_Click(object sender, EventArgs e)
+        {
+            Process.Start(ExternalLinks.Twitter);
+        }
+
+        private void lgGithubLink_Click(object sender, EventArgs e)
+        {
+            Process.Start(ExternalLinks.LavaGang);
+        }
+
+        private void mmGithubLink_Click(object sender, EventArgs e)
+        {
+            Process.Start(ExternalLinks.MMGitHub);
+        }
+
+        private void clearDataButton_Click(object sender, EventArgs e)
+        {
+            if (CustomMessageBox.Question("Are you sure you want to clear all data?\nThis includes all logs and configurations!") != DialogResult.Yes)
+                return;
+
+            Program.ClearData();
+        }
+
+        private void pages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Config.Values.lastPage = pages.SelectedIndex;
+        }
+
+        private void updateMMCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.Values.autoUpdateMM = updateMMCheck.Checked;
+        }
+
+        private void updateMLCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            Config.Values.autoUpdateML = updateMLCheck.Checked;
+        }
+        #endregion
     }
 }

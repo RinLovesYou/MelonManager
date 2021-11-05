@@ -55,7 +55,7 @@ namespace MelonManager.Forms
             foreach (string mod in mods)
             {
                 Melon melon;
-                bool isCompatible = Melon.Open(mod, game, out melon);
+                bool isCompatible = Melon.Open(mod, game, false, out melon);
                 if (isCompatible)
                 {
                     AddMod(mod, melon);
@@ -91,6 +91,21 @@ namespace MelonManager.Forms
         private void openExplorer_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", modsDir);
+        }
+
+        private void addMelonBtn_Click(object sender, EventArgs e)
+        {
+            var dia = new OpenFileDialog();
+            dia.Title = $"Open a {(isEditingPlugins ? "Plugin" : "Mod")} Melon";
+            dia.Filter = "Melons | *.dll";
+            if (dia.ShowDialog() != DialogResult.OK)
+                return;
+
+            Melon melon;
+            if (!Melon.Open(dia.FileName, game, true, out melon))
+                return;
+
+
         }
     }
 }

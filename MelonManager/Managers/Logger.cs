@@ -38,6 +38,18 @@ namespace MelonManager.Managers
             Log("============================================");
         }
 
+        public static void Deinitialize()
+        {
+            if (!initialized)
+                return;
+
+            initialized = false;
+            if (latestLog != null)
+                latestLog.Dispose();
+            if (currentLog != null)
+                currentLog.Dispose();
+        }
+
         public static string GetWholeLog()
         {
             if (!initialized)

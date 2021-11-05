@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using MelonManager.Forms;
+using MelonManager.Managers;
 using Mono.Cecil;
 
 namespace MelonManager.Melons
@@ -19,7 +21,7 @@ namespace MelonManager.Melons
             this.downloadLink = downloadLink;
         }
 
-        public static bool Open(string path, LibraryGame game, out Melon melon)
+        public static bool Open(string path, LibraryGame game, bool showFailReason, out Melon melon)
         {
             melon = null;
             ModuleDefinition module;
@@ -27,8 +29,11 @@ namespace MelonManager.Melons
             {
                 module = ModuleDefinition.ReadModule(path);
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.Log($"Failed to open Melon '{path}' for game '{game.info}':\n{ex}", Logger.Level.Error);
+                if (showFailReason)
+                    CustomMessageBox.Error($"Failed to open '{path}' as a Melon:\n\n{ex}");
                 return false;
             }
             var attrs = module.Assembly.CustomAttributes;
@@ -40,6 +45,9 @@ namespace MelonManager.Melons
             if (info == null)
             {
                 module.Dispose();
+                Logger.Log($"Failed to open Melon '{path}' for game '{game.info}' because it doesn't have a MelonInfo attribute!", Logger.Level.Error);
+                if (showFailReason)
+                    CustomMessageBox.Error($"Failed to open '{path}' as a Melon:\nThe DLL doesn't have a MelonInfo attribute!");
                 return false;
             }
             var gameAttrs = attrs.Where(x => 
@@ -62,6 +70,9 @@ namespace MelonManager.Melons
             if (!compatible)
             {
                 module.Dispose();
+                Logger.Log($"Failed to open Melon '{path}' for game '{game.info}' because it's incompatible!", Logger.Level.Error);
+                if (showFailReason)
+                    CustomMessageBox.Error($"Failed to open '{path}' as a Melon:\nThe selected Melon is incompatible with {game.info.name}!");
                 return false;
             }
 

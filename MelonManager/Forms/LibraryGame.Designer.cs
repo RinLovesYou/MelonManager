@@ -153,7 +153,7 @@
             this.MLVersion.AutoSize = true;
             this.MLVersion.FontSize = MetroFramework.MetroLabelSize.Small;
             this.MLVersion.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.MLVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.MLVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
             this.MLVersion.Location = new System.Drawing.Point(29, 8);
             this.MLVersion.Name = "MLVersion";
             this.MLVersion.Size = new System.Drawing.Size(57, 15);
@@ -181,6 +181,7 @@
             // 
             // gamePicture
             // 
+            this.gamePicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.gamePicture.Location = new System.Drawing.Point(4, 4);
             this.gamePicture.Name = "gamePicture";
             this.gamePicture.Size = new System.Drawing.Size(65, 61);

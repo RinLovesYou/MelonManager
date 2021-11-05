@@ -40,6 +40,7 @@
             this.modVersion = new MetroFramework.Controls.MetroLabel();
             this.modName = new MetroFramework.Controls.MetroLabel();
             this.browseDir = new System.Windows.Forms.Button();
+            this.addMelonBtn = new System.Windows.Forms.Button();
             this.metroPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             this.modsList.FormattingEnabled = true;
             this.modsList.Location = new System.Drawing.Point(12, 50);
             this.modsList.Name = "modsList";
-            this.modsList.Size = new System.Drawing.Size(200, 338);
+            this.modsList.Size = new System.Drawing.Size(200, 312);
             this.modsList.TabIndex = 0;
             this.modsList.SelectedIndexChanged += new System.EventHandler(this.modsList_SelectedIndexChanged);
             // 
@@ -215,11 +216,27 @@
             this.browseDir.UseVisualStyleBackColor = false;
             this.browseDir.Click += new System.EventHandler(this.openExplorer_Click);
             // 
+            // addMelonBtn
+            // 
+            this.addMelonBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.addMelonBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.addMelonBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addMelonBtn.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.addMelonBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.addMelonBtn.Location = new System.Drawing.Point(12, 368);
+            this.addMelonBtn.Name = "addMelonBtn";
+            this.addMelonBtn.Size = new System.Drawing.Size(200, 24);
+            this.addMelonBtn.TabIndex = 10;
+            this.addMelonBtn.Text = "Add Melon";
+            this.addMelonBtn.UseVisualStyleBackColor = false;
+            this.addMelonBtn.Click += new System.EventHandler(this.addMelonBtn_Click);
+            // 
             // Mods
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 401);
+            this.Controls.Add(this.addMelonBtn);
             this.Controls.Add(this.browseDir);
             this.Controls.Add(this.metroPanel2);
             this.Controls.Add(this.modsLabel);
@@ -257,5 +274,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private System.Windows.Forms.Button removeButton;
         private System.Windows.Forms.Button browseDir;
+        private System.Windows.Forms.Button addMelonBtn;
     }
 }

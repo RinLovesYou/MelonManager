@@ -52,7 +52,7 @@ namespace MelonManager
                 if (gm == null && !extract.Failed)
                 {
                     if (addToLib)
-                        MelonManagerForm.instance.CreateLibraryGame(game, false);
+                        MelonManagerForm.instance.AddLibraryGame(game, false);
                 }
                 else
                 {
