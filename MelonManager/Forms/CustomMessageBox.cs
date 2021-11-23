@@ -2,18 +2,19 @@
 using System.Drawing;
 using System.Media;
 using System.Windows.Forms;
+using MetroFramework;
 using MetroFramework.Forms;
 
 namespace MelonManager.Forms
 {
     public partial class CustomMessageBox : MetroForm
     {
-        public CustomMessageBox(string text, bool isQuestion)
+        public CustomMessageBox(string text, bool isQuestion, MetroColorStyle color = MetroColorStyle.Green)
         {
             InitializeComponent();
             if (!isQuestion)
             {
-                Style = MetroFramework.MetroColorStyle.Red;
+                Style = color;
                 yesButton.Dispose();
                 noButton.Text = "Ok";
             }
@@ -24,12 +25,18 @@ namespace MelonManager.Forms
         public static DialogResult Question(string question)
         {
             SystemSounds.Exclamation.Play();
-            return new CustomMessageBox(question, true).ShowDialog();
+            return new CustomMessageBox(question, true, MetroColorStyle.Yellow).ShowDialog();
         }
 
         public static void Error(string message)
         {
             SystemSounds.Hand.Play();
+            new CustomMessageBox(message, false, MetroColorStyle.Red).ShowDialog();
+        }
+
+        public static void Ok(string message)
+        {
+            SystemSounds.Exclamation.Play();
             new CustomMessageBox(message, false).ShowDialog();
         }
 

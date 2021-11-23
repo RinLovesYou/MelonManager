@@ -8,6 +8,7 @@ using MetroFramework.Forms;
 using System.Diagnostics;
 using MelonLoader.URLs;
 using System.Text;
+using System.Collections.Generic;
 
 namespace MelonManager.Forms
 {
@@ -15,6 +16,7 @@ namespace MelonManager.Forms
     {
         public static MelonManagerForm instance;
         public readonly string libFilePath = Path.Combine(Program.localFilesPath, "Library.cfg");
+        public List<Task> tasks = new List<Task>();
 
         private string[] gamesPaths;
 
@@ -42,12 +44,14 @@ namespace MelonManager.Forms
                 return;
 
             noTasksText.Visible = false;
+
             task.onFinishedCallback += () => FinishTask(task);
             task.onClose += () => CloseTask(task);
             task.onFailedCallback += (msg, ex) =>
             {
                 FailTask(task);
             };
+            tasks.Add(task);
             tasksLayoutPanel.Controls.Add(task);
             if (task.reliesOn != null)
                 return;
@@ -55,14 +59,14 @@ namespace MelonManager.Forms
             task.StartTask();
         }
 
-        public void FailTask(Task task)
+        public void FailTask(Task task, bool close = false)
         {
             var len = tasksLayoutPanel.Controls.Count;
             for (int a = len - 1; a >= 0; a--)
             {
                 var ctrl = (Task)tasksLayoutPanel.Controls[a];
                 if (ctrl.reliesOn == task)
-                    CloseTask(ctrl, true);
+                    FailTask(ctrl);
             }
         }
 
@@ -78,7 +82,7 @@ namespace MelonManager.Forms
                 {
                     var ctrl = (Task)tasksLayoutPanel.Controls[a];
                     if (ctrl.reliesOn == task)
-                        CloseTask(ctrl);
+                        CloseTask(ctrl, closeReliables);
                 }
             }
 
@@ -88,6 +92,7 @@ namespace MelonManager.Forms
 
         public void FinishTask(Task task)
         {
+            tasks.Remove(task);
             if (task.Failed)
                 return;
             var len = tasksLayoutPanel.Controls.Count;
@@ -131,6 +136,7 @@ namespace MelonManager.Forms
                 return false;
             libraryPanel.Controls.Add(game);
             noLibGamesText.Visible = false;
+            noLibGamesText2.Visible = false;
             Logger.Log($"Added '{gameInf.path}' to the library.");
             return true;
         }
@@ -142,7 +148,10 @@ namespace MelonManager.Forms
 
             libraryPanel.Controls.Remove(game);
             if (libraryPanel.Controls.Count == 0)
+            {
                 noLibGamesText.Visible = true;
+                noLibGamesText2.Visible = false;
+            }
             Logger.Log($"Removed '{game.info.path}' from the library.");
             game.Dispose();
         }
@@ -159,8 +168,10 @@ namespace MelonManager.Forms
         private void MelonManager_Load(object sender, EventArgs e)
         {
             versionText.Text = 'v' + Application.ProductVersion;
-
-            string libs = File.ReadAllText(libFilePath);
+            bool libCfgExists = File.Exists(libFilePath);
+            if (!libCfgExists)
+                File.Create(libFilePath).Dispose();
+            string libs = libCfgExists ? File.ReadAllText(libFilePath) : string.Empty;
             gamesPaths = libs.Contains('\n') ? libs.Split('\n') : new string[] { libs };
             foreach (var lib in gamesPaths)
             {
@@ -190,6 +201,11 @@ namespace MelonManager.Forms
             dia.Filter = "Unity Game Executable | *.exe";
             dia.Title = "Select a Unity Game Executable";
             if (dia.ShowDialog() != DialogResult.OK) return;
+            if (GetLibGameByPath(dia.FileName) != null)
+            {
+                CustomMessageBox.Error("This game is already in your library!");
+                return;
+            }
             var info = LibraryGame.Info.Create(dia.FileName);
             if (info == null)
                 return;
@@ -198,10 +214,21 @@ namespace MelonManager.Forms
 
         private void MelonManager_FormClosing(object sender, FormClosingEventArgs e)
         {
+            var tasksRunning = tasks.Count != 0;
+            if (tasksRunning)
+            {
+                if (CustomMessageBox.Question("There are still tasks running in the background, closing the manager might cause unexpected issues.\nWould you like to close anyways?") != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                    Logger.Log("Closing form aborted, tasks are still running");
+                    return;
+                }
+                Logger.Log("Closing from while tasks are still running", Logger.Level.Warning);
+            }
             TempPath.ClearTemp();
             SaveLibrary();
             Config.Save();
-            Logger.Log("Saved config!");
+            Logger.Log("Closing");
         }
 
         private void consoleButton_Click(object sender, EventArgs e)

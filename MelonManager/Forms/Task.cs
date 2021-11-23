@@ -46,6 +46,11 @@ namespace MelonManager.Forms
 
             this.reliesOn = reliesOn;
 
+            if (reliesOn != null)
+            {
+                reliesOn.onFailedCallback += (msg, ex) => FailTask(msg, ex, false);
+            }
+
             statusText.Text = reliesOn == null ? "Not started" : $"Waiting for task {reliesOn.id} to finish...";
         }
 
@@ -69,18 +74,22 @@ namespace MelonManager.Forms
             Done();
         }
 
-        public void FailTask(string message, Exception exception = null)
+        public void FailTask(string message, Exception exception = null, bool log = true)
         {
-            Log("Task failed: " + message, Logger.Level.Error);
-            if (exception != null)
-                Log("Task exception: " + exception.ToString(), Logger.Level.Error);
+            if (log)
+            {
+                Log("Task failed: " + message, Logger.Level.Error);
+                if (exception != null)
+                    Log("Task exception: " + exception.ToString(), Logger.Level.Error);
+            }
             Invoke(new Action(() =>
             {
                 Failed = true;
                 statusText.Text = message;
                 onFailedCallback?.Invoke(message, exception);
 
-                CustomMessageBox.Error(message);
+                if (log)
+                    CustomMessageBox.Error(message);
             }));
             Done();
         }

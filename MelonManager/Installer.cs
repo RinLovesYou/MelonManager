@@ -25,6 +25,8 @@ namespace MelonManager
             new Tuple<string, bool>("LICENSE", false),
         };
 
+        private static List<string> gamesInstalling = new List<string>();
+
         public static bool CheckForML(LibraryGame.Info game)
         {
             foreach (var a in mlRootPaths)
@@ -36,9 +38,15 @@ namespace MelonManager
             return false;
         }
 
-        /// <returns>The download task, the verify task and the extract task.</returns>
+        /// <returns>The download task, the verify task and the extract task. Also returns null if there is an active installation being done on the same game.</returns>
         public static Tuple<Task, Task, Task> Install(string version, LibraryGame.Info game, bool addToLib)
         {
+            if (gamesInstalling.Contains(game.path))
+            {
+                CustomMessageBox.Error($"Can't start installing MelonLoader {version} on {game.name} while another installation is still active!");
+                return null;
+            }
+
             MelonManagerForm.instance.GetLibGameByPath(game.path)?.UpdatingStarted();
 
             var inst = new Installer(version, game);
@@ -46,18 +54,22 @@ namespace MelonManager
             var verify = new Task($"Verify Downloaded Package", (curTask) => inst.InstallVerifyTask(curTask), true, down);
             var extract = new Task($"Extract MelonLoader {version} to {game.name}", (curTask) => inst.InstallExtractTask(curTask), false, verify);
 
+            gamesInstalling.Add(game.path);
+
             extract.onFinishedCallback += () =>
             {
+                gamesInstalling.Remove(game.path);
                 var gm = MelonManagerForm.instance.GetLibGameByPath(game.path);
-                if (gm == null && !extract.Failed)
+                if (!extract.Failed)
                 {
                     if (addToLib)
                         MelonManagerForm.instance.AddLibraryGame(game, false);
+
+                    CustomMessageBox.Ok($"Finished installing MelonLoader {version} on {game.name}.");
                 }
-                else
-                {
-                    gm.UpdatingFinished();
-                }
+                if (gm == null)
+                    return;
+                gm.UpdatingFinished();
             };
 
             MelonManagerForm.instance.AddTask(down);

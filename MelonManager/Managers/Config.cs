@@ -37,7 +37,10 @@ namespace MelonLoader.Managers
             {
                 Logger.Log("Failed to save config:\n" + ex.ToString(), Logger.Level.Error);
                 CustomMessageBox.Error("Failed to save config:\n\n" + ex.ToString());
+                return;
             }
+
+            Logger.Log("Saved configs!");
         }
 
         public class FileValues

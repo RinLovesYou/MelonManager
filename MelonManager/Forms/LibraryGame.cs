@@ -49,7 +49,8 @@ namespace MelonManager.Forms
             if (ml == null)
             {
                 MelonManagerForm.instance.RemoveLibraryGame(this);
-                CustomMessageBox.Error($"{info.name} had to be removed from the library because it's missing MelonLoader.\nReinstall MelonLoader on it to add it back.");
+                Logger.Log($"Removing '{info}' from the library, because ML wasn't found", Logger.Level.Warning);
+                //CustomMessageBox.Error($"{info.name} had to be removed from the library because MelonLoader.\nYou can add it back to the library.");
                 return;
             }
             MLVersion.Text = "ML v" + ml.version;
@@ -193,6 +194,18 @@ namespace MelonManager.Forms
             public override string ToString()
             {
                 return $"{author} - {name}";
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (obj is Info inf)
+                    return path == inf.path;
+                return false;
+            }
+
+            public override int GetHashCode()
+            {
+                return path.GetHashCode();
             }
 
             public static bool operator ==(Info inf1, Info inf2)

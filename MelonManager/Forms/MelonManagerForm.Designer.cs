@@ -31,8 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MelonManagerForm));
             this.pages = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
-            this.noLibGamesText = new MetroFramework.Controls.MetroLabel();
+            this.noLibGamesText2 = new MetroFramework.Controls.MetroLabel();
             this.addGameButton = new System.Windows.Forms.Button();
+            this.noLibGamesText = new MetroFramework.Controls.MetroLabel();
             this.libraryPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.metroTabPage1 = new MetroFramework.Controls.MetroTabPage();
             this.button2 = new System.Windows.Forms.Button();
@@ -119,7 +120,7 @@
             this.pages.HotTrack = true;
             this.pages.Location = new System.Drawing.Point(0, 33);
             this.pages.Name = "pages";
-            this.pages.SelectedIndex = 3;
+            this.pages.SelectedIndex = 0;
             this.pages.Size = new System.Drawing.Size(660, 655);
             this.pages.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.pages.Style = MetroFramework.MetroColorStyle.Red;
@@ -130,8 +131,9 @@
             // 
             // metroTabPage2
             // 
-            this.metroTabPage2.Controls.Add(this.noLibGamesText);
+            this.metroTabPage2.Controls.Add(this.noLibGamesText2);
             this.metroTabPage2.Controls.Add(this.addGameButton);
+            this.metroTabPage2.Controls.Add(this.noLibGamesText);
             this.metroTabPage2.Controls.Add(this.libraryPanel);
             this.metroTabPage2.ForeColor = System.Drawing.Color.Silver;
             this.metroTabPage2.HorizontalScrollbar = true;
@@ -149,21 +151,19 @@
             this.metroTabPage2.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage2.VerticalScrollbarSize = 10;
             // 
-            // noLibGamesText
+            // noLibGamesText2
             // 
-            this.noLibGamesText.AutoSize = true;
-            this.noLibGamesText.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.noLibGamesText.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.noLibGamesText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.noLibGamesText.Location = new System.Drawing.Point(178, 120);
-            this.noLibGamesText.Name = "noLibGamesText";
-            this.noLibGamesText.Size = new System.Drawing.Size(302, 25);
-            this.noLibGamesText.TabIndex = 4;
-            this.noLibGamesText.Text = "You have no games in your library";
-            this.noLibGamesText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.noLibGamesText.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.noLibGamesText.UseCustomForeColor = true;
-            this.noLibGamesText.Visible = false;
+            this.noLibGamesText2.AutoSize = true;
+            this.noLibGamesText2.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.noLibGamesText2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.noLibGamesText2.Location = new System.Drawing.Point(144, 187);
+            this.noLibGamesText2.Name = "noLibGamesText2";
+            this.noLibGamesText2.Size = new System.Drawing.Size(342, 19);
+            this.noLibGamesText2.TabIndex = 15;
+            this.noLibGamesText2.Text = "Add a game to the library to install MelonLoader on it.";
+            this.noLibGamesText2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.noLibGamesText2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.noLibGamesText2.UseCustomForeColor = true;
             // 
             // addGameButton
             // 
@@ -181,6 +181,21 @@
             this.addGameButton.UseVisualStyleBackColor = false;
             this.addGameButton.Click += new System.EventHandler(this.addGameButton_Click);
             // 
+            // noLibGamesText
+            // 
+            this.noLibGamesText.AutoSize = true;
+            this.noLibGamesText.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.noLibGamesText.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.noLibGamesText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.noLibGamesText.Location = new System.Drawing.Point(166, 160);
+            this.noLibGamesText.Name = "noLibGamesText";
+            this.noLibGamesText.Size = new System.Drawing.Size(302, 25);
+            this.noLibGamesText.TabIndex = 4;
+            this.noLibGamesText.Text = "You have no games in your library";
+            this.noLibGamesText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.noLibGamesText.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.noLibGamesText.UseCustomForeColor = true;
+            // 
             // libraryPanel
             // 
             this.libraryPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -189,7 +204,7 @@
             this.libraryPanel.AutoScroll = true;
             this.libraryPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.libraryPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.libraryPanel.Location = new System.Drawing.Point(1, 1);
+            this.libraryPanel.Location = new System.Drawing.Point(0, 3);
             this.libraryPanel.Name = "libraryPanel";
             this.libraryPanel.Size = new System.Drawing.Size(650, 577);
             this.libraryPanel.TabIndex = 2;
@@ -1049,6 +1064,7 @@
         private MetroFramework.Controls.MetroCheckBox updateMLCheck;
         private MetroFramework.Controls.MetroCheckBox updateMMCheck;
         private System.Windows.Forms.Button updateBtn;
+        private MetroFramework.Controls.MetroLabel noLibGamesText2;
     }
 }
 
