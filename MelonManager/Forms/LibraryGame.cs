@@ -61,9 +61,20 @@ namespace MelonManager.Forms
                 updateButton.Text = "Updater Offline";
                 return;
             }
-            bool isLatest = ml.version == Program.LatestMLVersion.Version.Replace("v", string.Empty);
-            updateButton.Enabled = !isLatest;
-            updateButton.Text = isLatest ? "Up-To-Date" : "Update";
+            var ver = Utils.CompareVersions(Program.LatestMLVersion.Version, ml.version);
+            switch (ver)
+            {
+                case 0:
+                    updateButton.Text = "Up-To-Date";
+                    break;
+                case 1:
+                    updateButton.Text = "Update";
+                    break;
+                case 2:
+                    updateButton.Text = "Unknown";
+                    break;
+            }
+            updateButton.Enabled = ver == 1;
         }
 
         public static LibraryGame CreateLibraryGame(Info info, bool askToInstall)

@@ -21,9 +21,13 @@ namespace MelonManager.Forms
             this.game = game;
 
             var currentVer = "v" + game.ml.version;
-            mlVersionSelect.Items.AddRange(Program.releasesAPI.ReleasesTbl.Select(x => x.Version).Where(x => !(game.info.x86 && (x.StartsWith("v0.1") || x.StartsWith("v0.2")))).ToArray());
+            mlVersionSelect.Items.AddRange(Program.releasesAPI.ReleasesTbl.Where(x => !(game.info.x86 && (x.Version.StartsWith("v0.1") || x.Version.StartsWith("v0.2")))).Select(x => x.Version).ToArray());
             if (!mlVersionSelect.Items.Contains(currentVer))
-                mlVersionSelect.Items.Add(currentVer);
+            {
+                mlVersionSelect.Items.Insert(0, currentVer);
+                mlVersionSelect.SelectedIndex = 0;
+                return;
+            }
             mlVersionSelect.SelectedItem = currentVer;
         }
 
@@ -37,13 +41,22 @@ namespace MelonManager.Forms
 
         private void mlVersionSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int idx = mlVersionSelect.SelectedIndex;
-
-            bool enableInstall = Program.releasesAPI.ReleasesTbl.Count != 0 && idx >= 0 && idx < Program.releasesAPI.ReleasesTbl.Count;
+            bool enableInstall = Program.LatestMLVersion != null && Utils.CompareVersions(Program.LatestMLVersion.Version, mlVersionSelect.SelectedItem.ToString()) != 2;
             installButton.Enabled = enableInstall;
 
-            bool reinstall = enableInstall && Program.releasesAPI.ReleasesTbl[mlVersionSelect.SelectedIndex].Version == "v" + game.ml.version;
-            installButton.Text = reinstall ? "Reinstall" : "Install";
+            var ver =  Utils.CompareVersions(mlVersionSelect.SelectedItem.ToString(), game.ml.version);
+            switch (ver)
+            {
+                case 0:
+                    installButton.Text = "Reinstall";
+                    break;
+                case 1:
+                    installButton.Text = "Update";
+                    break;
+                case 2:
+                    installButton.Text = "Downgrade";
+                    break;
+            }
         }
 
         private void removeFromLibButton_Click(object sender, EventArgs e)

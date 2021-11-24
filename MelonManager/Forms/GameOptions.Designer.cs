@@ -99,9 +99,9 @@ namespace MelonManager.Forms
             this.mlVersionSelect.FontSize = MetroFramework.MetroComboBoxSize.Small;
             this.mlVersionSelect.FormattingEnabled = true;
             this.mlVersionSelect.ItemHeight = 19;
-            this.mlVersionSelect.Location = new System.Drawing.Point(89, 26);
+            this.mlVersionSelect.Location = new System.Drawing.Point(82, 26);
             this.mlVersionSelect.Name = "mlVersionSelect";
-            this.mlVersionSelect.Size = new System.Drawing.Size(110, 25);
+            this.mlVersionSelect.Size = new System.Drawing.Size(106, 25);
             this.mlVersionSelect.Style = MetroFramework.MetroColorStyle.Red;
             this.mlVersionSelect.TabIndex = 13;
             this.mlVersionSelect.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -115,9 +115,9 @@ namespace MelonManager.Forms
             this.installButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.installButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.installButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.installButton.Location = new System.Drawing.Point(205, 26);
+            this.installButton.Location = new System.Drawing.Point(194, 26);
             this.installButton.Name = "installButton";
-            this.installButton.Size = new System.Drawing.Size(73, 24);
+            this.installButton.Size = new System.Drawing.Size(88, 24);
             this.installButton.TabIndex = 14;
             this.installButton.Text = "Reinstall";
             this.installButton.UseVisualStyleBackColor = false;

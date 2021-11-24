@@ -45,7 +45,8 @@ namespace MelonManager
             Directory.CreateDirectory(localFilesPath);
             Logger.Initialize();
 
-            AppDomain.CurrentDomain.UnhandledException += HandleException;
+            AppDomain.CurrentDomain.UnhandledException += (s, ex) => HandleException((Exception)ex.ExceptionObject);
+            Application.ThreadException += (s, ex) => HandleException(ex.Exception);
             releasesAPI.Refresh();
 
             Application.Run(new Forms.MelonManagerForm());
@@ -83,16 +84,16 @@ namespace MelonManager
             return result;
         }
 
-        private static void HandleException(object sender, UnhandledExceptionEventArgs e)
+        private static void HandleException(Exception e)
         {
-            Logger.Log("[Unhandled Exception] " + e.ExceptionObject.ToString(), Logger.Level.Error);
+            Logger.Log("[Unhandled Exception] " + e.ToString(), Logger.Level.Error);
             try
             {
-                CustomMessageBox.Error("An unhandled exception has occured:\n\n" + e.ExceptionObject.ToString());
+                CustomMessageBox.Error("An unhandled exception has occured:\n\n" + e.ToString());
             }
             catch
             {
-                MessageBox.Show(e.ExceptionObject.ToString(), "An Unhandled Exception Has Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(e.ToString(), "An Unhandled Exception Has Occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
