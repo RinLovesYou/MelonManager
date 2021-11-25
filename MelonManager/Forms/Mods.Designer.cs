@@ -97,7 +97,7 @@
             this.metroPanel2.HorizontalScrollbarSize = 10;
             this.metroPanel2.Location = new System.Drawing.Point(218, 248);
             this.metroPanel2.Name = "metroPanel2";
-            this.metroPanel2.Size = new System.Drawing.Size(243, 140);
+            this.metroPanel2.Size = new System.Drawing.Size(243, 144);
             this.metroPanel2.TabIndex = 4;
             this.metroPanel2.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel2.UseCustomBackColor = true;
@@ -112,7 +112,7 @@
             this.removeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.removeButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.removeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.removeButton.Location = new System.Drawing.Point(172, 113);
+            this.removeButton.Location = new System.Drawing.Point(172, 117);
             this.removeButton.Name = "removeButton";
             this.removeButton.Size = new System.Drawing.Size(68, 24);
             this.removeButton.TabIndex = 8;

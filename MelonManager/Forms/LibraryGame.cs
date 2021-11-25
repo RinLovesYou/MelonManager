@@ -28,7 +28,6 @@ namespace MelonManager.Forms
         {
             updateButton.Text = "Updating...";
             updateButton.Enabled = false;
-            launchButton.Enabled = false;
             optionsButton.Enabled = false;
             modsButton.Enabled = false;
             pluginsButton.Enabled = false;
@@ -36,7 +35,6 @@ namespace MelonManager.Forms
 
         public void UpdatingFinished()
         {
-            launchButton.Enabled = true;
             optionsButton.Enabled = true;
             modsButton.Enabled = true;
             pluginsButton.Enabled = true;
@@ -92,26 +90,6 @@ namespace MelonManager.Forms
             }
 
             return new LibraryGame(info);
-        }
-
-        private void launchButton_Click(object sender, EventArgs e)
-        {
-            StartGame();
-        }
-
-        public void StartGame()
-        {
-            string steamid = Path.Combine(info.dir, "steam_appid.txt");
-            if (File.Exists(steamid))
-            {
-                string id = File.ReadAllText(steamid);
-                if (id.Length > 0)
-                {
-                    Process.Start("steam://rungameid/" + id);
-                    return;
-                }
-            }
-            Process.Start(info.path);
         }
 
         public void OpenMelonsMenu(bool plugins)

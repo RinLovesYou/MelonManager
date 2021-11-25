@@ -29,17 +29,27 @@ namespace MelonManager.Forms
             this.game = game;
         }
 
-        public void AddMod(string path, Melon melon)
+        public void AddMod(Melon melon)
         {
-            modsList.Items.Add(Path.GetFileName(path));
+            var name = Path.GetFileName(melon.path);
+            var newPath = Path.Combine(modsDir, name);
+            if (!File.Exists(newPath))
+                File.Copy(melon.path, newPath);
+
+            modsList.Items.Add(melon.name);
             mods.Add(melon);
         }
 
         public void RemoveMod(int index)
         {
+            var melon = mods[index];
+            if (File.Exists(melon.path))
+                File.Delete(melon.path);
+
             modsList.Items.RemoveAt(index);
             mods.RemoveAt(index);
-            if (mods.Count > 0) modsList.SelectedIndex = index - 1;
+            if (mods.Count > 0) 
+                modsList.SelectedIndex = index - 1;
             else 
             {
                 metroPanel2.Enabled = false;
@@ -54,11 +64,10 @@ namespace MelonManager.Forms
             var mods = Directory.GetFiles(modsDir, "*.dll");
             foreach (string mod in mods)
             {
-                Melon melon;
-                bool isCompatible = Melon.Open(mod, game, false, out melon);
+                bool isCompatible = Melon.Open(mod, game, false, out Melon melon);
                 if (isCompatible)
                 {
-                    AddMod(mod, melon);
+                    AddMod(melon);
                 }
             }
         }
@@ -75,16 +84,8 @@ namespace MelonManager.Forms
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-            if (CustomMessageBox.Question("Are you sure you want to remove \"" + (string)modsList.SelectedItem + "\"?") != DialogResult.Yes) return;
-            try
-            {
-                File.Delete(Path.Combine(modsDir, (string)modsList.SelectedItem));
-            }
-            catch (Exception ex)
-            {
-                CustomMessageBox.Error(ex.Message);
+            if (CustomMessageBox.Question("Are you sure you want to remove \"" + (string)modsList.SelectedItem + "\"?") != DialogResult.Yes) 
                 return;
-            }
             RemoveMod(modsList.SelectedIndex);
         }
 
@@ -101,11 +102,10 @@ namespace MelonManager.Forms
             if (dia.ShowDialog() != DialogResult.OK)
                 return;
 
-            Melon melon;
-            if (!Melon.Open(dia.FileName, game, true, out melon))
+            if (!Melon.Open(dia.FileName, game, true, out Melon melon))
                 return;
 
-
+            AddMod(melon);
         }
     }
 }

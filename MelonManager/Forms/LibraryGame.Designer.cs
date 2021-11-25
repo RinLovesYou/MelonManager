@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.gameName = new MetroFramework.Controls.MetroLabel();
-            this.launchButton = new System.Windows.Forms.Button();
             this.modsButton = new System.Windows.Forms.Button();
             this.gameAuthor = new MetroFramework.Controls.MetroLabel();
             this.pluginsButton = new System.Windows.Forms.Button();
@@ -54,21 +53,6 @@
             this.gameName.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.gameName.UseCustomBackColor = true;
             // 
-            // launchButton
-            // 
-            this.launchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(100)))), ((int)(((byte)(40)))));
-            this.launchButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.launchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.launchButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.launchButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.launchButton.Location = new System.Drawing.Point(532, 4);
-            this.launchButton.Name = "launchButton";
-            this.launchButton.Size = new System.Drawing.Size(90, 26);
-            this.launchButton.TabIndex = 2;
-            this.launchButton.Text = "Launch";
-            this.launchButton.UseVisualStyleBackColor = false;
-            this.launchButton.Click += new System.EventHandler(this.launchButton_Click);
-            // 
             // modsButton
             // 
             this.modsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -76,9 +60,9 @@
             this.modsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.modsButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.modsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.modsButton.Location = new System.Drawing.Point(500, 35);
+            this.modsButton.Location = new System.Drawing.Point(443, 6);
             this.modsButton.Name = "modsButton";
-            this.modsButton.Size = new System.Drawing.Size(56, 26);
+            this.modsButton.Size = new System.Drawing.Size(60, 26);
             this.modsButton.TabIndex = 3;
             this.modsButton.Text = "Mods";
             this.modsButton.UseVisualStyleBackColor = false;
@@ -106,7 +90,7 @@
             this.pluginsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.pluginsButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.pluginsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.pluginsButton.Location = new System.Drawing.Point(562, 35);
+            this.pluginsButton.Location = new System.Drawing.Point(443, 37);
             this.pluginsButton.Name = "pluginsButton";
             this.pluginsButton.Size = new System.Drawing.Size(60, 26);
             this.pluginsButton.TabIndex = 5;
@@ -122,7 +106,7 @@
             this.MLInfoPanel.HorizontalScrollbarBarColor = true;
             this.MLInfoPanel.HorizontalScrollbarHighlightOnWheel = false;
             this.MLInfoPanel.HorizontalScrollbarSize = 10;
-            this.MLInfoPanel.Location = new System.Drawing.Point(381, 3);
+            this.MLInfoPanel.Location = new System.Drawing.Point(509, 4);
             this.MLInfoPanel.Name = "MLInfoPanel";
             this.MLInfoPanel.Size = new System.Drawing.Size(113, 62);
             this.MLInfoPanel.TabIndex = 7;
@@ -140,7 +124,7 @@
             this.updateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.updateButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.updateButton.Location = new System.Drawing.Point(3, 32);
+            this.updateButton.Location = new System.Drawing.Point(3, 33);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(107, 26);
             this.updateButton.TabIndex = 8;
@@ -154,7 +138,7 @@
             this.MLVersion.FontSize = MetroFramework.MetroLabelSize.Small;
             this.MLVersion.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.MLVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
-            this.MLVersion.Location = new System.Drawing.Point(29, 8);
+            this.MLVersion.Location = new System.Drawing.Point(27, 8);
             this.MLVersion.Name = "MLVersion";
             this.MLVersion.Size = new System.Drawing.Size(57, 15);
             this.MLVersion.TabIndex = 8;
@@ -172,7 +156,7 @@
             this.optionsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.optionsButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.optionsButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.optionsButton.Location = new System.Drawing.Point(500, 4);
+            this.optionsButton.Location = new System.Drawing.Point(411, 6);
             this.optionsButton.Name = "optionsButton";
             this.optionsButton.Size = new System.Drawing.Size(26, 26);
             this.optionsButton.TabIndex = 6;
@@ -199,7 +183,6 @@
             this.Controls.Add(this.pluginsButton);
             this.Controls.Add(this.gameAuthor);
             this.Controls.Add(this.modsButton);
-            this.Controls.Add(this.launchButton);
             this.Controls.Add(this.gameName);
             this.Controls.Add(this.gamePicture);
             this.Name = "LibraryGame";
@@ -218,7 +201,6 @@
 
         private System.Windows.Forms.PictureBox gamePicture;
         private MetroFramework.Controls.MetroLabel gameName;
-        private System.Windows.Forms.Button launchButton;
         private System.Windows.Forms.Button modsButton;
         private MetroFramework.Controls.MetroLabel gameAuthor;
         private System.Windows.Forms.Button pluginsButton;

@@ -8,13 +8,15 @@ namespace MelonManager.Melons
 {
     public class Melon
     {
+        public readonly string path;
         public readonly string name;
         public readonly string author;
         public readonly string version;
         public readonly string downloadLink;
 
-        private Melon(string name, string author, string version, string downloadLink)
+        private Melon(string path, string name, string author, string version, string downloadLink)
         {
+            this.path = path;
             this.name = name;
             this.author = author;
             this.version = version;
@@ -28,6 +30,13 @@ namespace MelonManager.Melons
             try
             {
                 module = ModuleDefinition.ReadModule(path);
+            }
+            catch (BadImageFormatException)
+            {
+                Logger.Log($"Failed to open Melon '{path}' for game '{game.info}': The selected DLL is not a valid .net library", Logger.Level.Error);
+                if (showFailReason)
+                    CustomMessageBox.Error($"Failed to open '{path}' as a Melon: The selected DLL is not a valid .net library!");
+                return false;
             }
             catch (Exception ex)
             {
@@ -45,9 +54,9 @@ namespace MelonManager.Melons
             if (info == null)
             {
                 module.Dispose();
-                Logger.Log($"Failed to open Melon '{path}' for game '{game.info}' because it doesn't have a MelonInfo attribute!", Logger.Level.Error);
+                Logger.Log($"Failed to open Melon '{path}' for game '{game.info}': No MelonInfo attribute", Logger.Level.Error);
                 if (showFailReason)
-                    CustomMessageBox.Error($"Failed to open '{path}' as a Melon:\nThe DLL doesn't have a MelonInfo attribute!");
+                    CustomMessageBox.Error($"Failed to open '{path}' as a Melon: This DLL is not a valid Melon!");
                 return false;
             }
             var gameAttrs = attrs.Where(x => 
@@ -82,7 +91,7 @@ namespace MelonManager.Melons
             string melonVersion = (string)infoArgs[2].Value;
             string melonDownloadLink = (string)infoArgs[4].Value;
 
-            melon = new Melon(melonName, melonAuthor, melonVersion, melonDownloadLink);
+            melon = new Melon(path, melonName, melonAuthor, melonVersion, melonDownloadLink);
             module.Dispose();
             return true; 
         }
