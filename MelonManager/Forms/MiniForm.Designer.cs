@@ -29,6 +29,7 @@ namespace MelonManager.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiniForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.metroProgressBar1 = new MetroFramework.Controls.MetroProgressBar();
             this.taskName = new MetroFramework.Controls.MetroLabel();
@@ -86,6 +87,7 @@ namespace MelonManager.Forms
             this.Controls.Add(this.taskName);
             this.Controls.Add(this.metroProgressBar1);
             this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MiniForm";

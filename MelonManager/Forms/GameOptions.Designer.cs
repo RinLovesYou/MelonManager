@@ -29,6 +29,7 @@ namespace MelonManager.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameOptions));
             this.gameName = new MetroFramework.Controls.MetroLabel();
             this.removeFromLibButton = new System.Windows.Forms.Button();
             this.uninstallButton = new System.Windows.Forms.Button();
@@ -151,6 +152,7 @@ namespace MelonManager.Forms
             this.Controls.Add(this.removeFromLibButton);
             this.Controls.Add(this.gameName);
             this.Controls.Add(this.metroPanel2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GameOptions";

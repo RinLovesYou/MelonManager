@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MelonManagerForm));
             this.pages = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
             this.noLibGamesText2 = new MetroFramework.Controls.MetroLabel();
@@ -1044,6 +1045,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pages);
             this.Controls.Add(this.metroPanel5);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MelonManagerForm";
             this.Resizable = false;

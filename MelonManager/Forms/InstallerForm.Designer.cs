@@ -29,6 +29,7 @@ namespace MelonManager.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstallerForm));
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
             this.mlVersionSelect = new MetroFramework.Controls.MetroComboBox();
             this.mlVersion = new MetroFramework.Controls.MetroLabel();
@@ -115,6 +116,7 @@ namespace MelonManager.Forms
             this.Controls.Add(this.gameName);
             this.Controls.Add(this.metroPanel2);
             this.Controls.Add(this.installButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InstallerForm";
