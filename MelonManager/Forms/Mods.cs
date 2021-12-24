@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using MelonManager.Games;
 using MelonManager.Melons;
+using MelonManager.Utils;
 using MetroFramework.Forms;
 
 namespace MelonManager.Forms
@@ -34,6 +35,20 @@ namespace MelonManager.Forms
             modsList.Items.Clear();
             foreach (var m in Melons)
                 modsList.Items.Add(m.name);
+
+            InvalidMelons((isEditingPlugins ? game.invalidPlugins : game.invalidMods).Count);
+        }
+
+        private void InvalidMelons(int count)
+        {
+            var any = count != 0;
+
+            invalidMelonsWarning.Visible = any;
+            removeInvalidBtn.Visible = any;
+            if (any)
+            {
+                invalidMelonsWarning.Text = $"Warning!\nThere {"is".Plural("are", count)} {count} incompatible or invalid {"Melon".Plural("Melons", count)}\nin your {(isEditingPlugins ? "plugins" : "mods")} folder.\n\nWould you like to remove {"it".Plural("them", count)}?";
+            }
         }
 
         public void RemoveMelon(int index)
@@ -41,12 +56,12 @@ namespace MelonManager.Forms
             var melon = Melons[index];
             if (File.Exists(melon.path))
                 File.Delete(melon.path);
-            game.RefreshMelons();
+            game.RefreshMelons(isEditingPlugins);
         }
 
         private void Mods_Load(object sender, EventArgs e)
         {
-            game.RefreshMelons();
+            game.RefreshMelons(isEditingPlugins);
         }
 
         public void HighlightMelon(Melon melon)
@@ -93,6 +108,11 @@ namespace MelonManager.Forms
 
             foreach (var f in dia.FileNames)
                 game.VerifyMelon(f, isEditingPlugins, true);
+        }
+
+        private void removeInvalidBtn_Click(object sender, EventArgs e)
+        {
+            game.RemoveInvalidMelons(isEditingPlugins);
         }
     }
 }

@@ -41,6 +41,8 @@
             this.modName = new MetroFramework.Controls.MetroLabel();
             this.browseDir = new System.Windows.Forms.Button();
             this.addMelonBtn = new System.Windows.Forms.Button();
+            this.invalidMelonsWarning = new MetroFramework.Controls.MetroLabel();
+            this.removeInvalidBtn = new System.Windows.Forms.Button();
             this.metroPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -231,11 +233,45 @@
             this.addMelonBtn.UseVisualStyleBackColor = false;
             this.addMelonBtn.Click += new System.EventHandler(this.addMelonBtn_Click);
             // 
+            // invalidMelonsWarning
+            // 
+            this.invalidMelonsWarning.AutoSize = true;
+            this.invalidMelonsWarning.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.invalidMelonsWarning.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.invalidMelonsWarning.ForeColor = System.Drawing.Color.Yellow;
+            this.invalidMelonsWarning.Location = new System.Drawing.Point(222, 50);
+            this.invalidMelonsWarning.Name = "invalidMelonsWarning";
+            this.invalidMelonsWarning.Size = new System.Drawing.Size(243, 90);
+            this.invalidMelonsWarning.TabIndex = 11;
+            this.invalidMelonsWarning.Text = "Warning!\r\nThere are 2 incompatible or invalid Melons\r\nin your mods folder.\r\n\r\nWou" +
+    "ld you like to remove them?\r\n";
+            this.invalidMelonsWarning.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.invalidMelonsWarning.UseCustomForeColor = true;
+            this.invalidMelonsWarning.Visible = false;
+            // 
+            // removeInvalidBtn
+            // 
+            this.removeInvalidBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(10)))), ((int)(((byte)(30)))));
+            this.removeInvalidBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.removeInvalidBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.removeInvalidBtn.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.removeInvalidBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.removeInvalidBtn.Location = new System.Drawing.Point(222, 134);
+            this.removeInvalidBtn.Name = "removeInvalidBtn";
+            this.removeInvalidBtn.Size = new System.Drawing.Size(68, 24);
+            this.removeInvalidBtn.TabIndex = 9;
+            this.removeInvalidBtn.Text = "Yes";
+            this.removeInvalidBtn.UseVisualStyleBackColor = false;
+            this.removeInvalidBtn.Visible = false;
+            this.removeInvalidBtn.Click += new System.EventHandler(this.removeInvalidBtn_Click);
+            // 
             // Mods
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 401);
+            this.Controls.Add(this.removeInvalidBtn);
+            this.Controls.Add(this.invalidMelonsWarning);
             this.Controls.Add(this.addMelonBtn);
             this.Controls.Add(this.browseDir);
             this.Controls.Add(this.metroPanel2);
@@ -274,5 +310,7 @@
         private System.Windows.Forms.Button removeButton;
         private System.Windows.Forms.Button browseDir;
         private System.Windows.Forms.Button addMelonBtn;
+        private MetroFramework.Controls.MetroLabel invalidMelonsWarning;
+        private System.Windows.Forms.Button removeInvalidBtn;
     }
 }

@@ -93,6 +93,8 @@ namespace MelonManager.Games
         public FormsSafeEvent onInstallingStateChanged = new FormsSafeEvent();
         public List<Melon> mods = new List<Melon>();
         public List<Melon> plugins = new List<Melon>();
+        public List<string> invalidMods = new List<string>();
+        public List<string> invalidPlugins = new List<string>();
         private bool removed;
         private volatile bool isVerifying;
         private bool installing;
@@ -115,17 +117,30 @@ namespace MelonManager.Games
             this.ml = ml;
         }
 
-        public void RefreshMelons()
+        public void RemoveInvalidMelons(bool plugins)
         {
-            Logger.Log($"Refreshing Melons from '{info}'");
-            RefreshMelonsInternal(false);
-            RefreshMelonsInternal(true);
-            onMelonsRefreshed.Invoke();
-            Logger.Log($"All Melons from '{info}' refreshed!");
+            var invalidsList = plugins ? invalidPlugins : invalidMods;
+            foreach (var i in invalidsList)
+            {
+                if (!File.Exists(i))
+                    return;
+
+                File.Delete(i);
+            }
+            invalidsList.Clear();
+
+            RefreshMelons(plugins);
         }
 
-        private void RefreshMelonsInternal(bool plugins)
+        public void RefreshMelons()
         {
+            RefreshMelons(false);
+            RefreshMelons(true);
+        }
+
+        public void RefreshMelons(bool plugins)
+        {
+            Logger.Log($"Refreshing {(plugins ? "plugins" : "mods")} from '{info}'");
             var melonsPath = Path.Combine(info.dir, plugins ? "Plugins" : "Mods");
             if (!Directory.Exists(melonsPath))
             {
@@ -149,10 +164,13 @@ namespace MelonManager.Games
                     a--;
                 }
             }
+            onMelonsRefreshed.Invoke();
+            Logger.Log($"All {(plugins ? "plugins" : "mods")} from '{info}' refreshed!");
         }
 
-        public void VerifyMelon(string melonPath, bool isPlugin, bool showResultUnlessAdded = false) // This is the best arg name i could have come up with ok lmao... Anyways, if its set to true, it probably means you wanna add a melon
+        public void VerifyMelon(string melonPath, bool isPlugin, bool newMelon = false)
         {
+            melonPath = Path.GetFullPath(melonPath);
             var str = File.OpenRead(melonPath);
             var hash = SimpleSHA512.Compute(str);
 
@@ -165,31 +183,50 @@ namespace MelonManager.Games
                 if (existingMelon.path != melonPath)
                     existingMelon.path = melonPath;
 
-                if (showResultUnlessAdded)
+                if (newMelon)
                     CustomMessageBox.Error($"The {(isPlugin ? "plugin" : "mod")} '{existingMelon.name}' is already installed!");
                 return;
             }
 
             str.Seek(0, SeekOrigin.Begin);
-            var melon = Melon.Open(melonPath, str, showResultUnlessAdded);
+            var melon = Melon.Open(melonPath, str, newMelon);
             str.Dispose();
 
+            var invalidsList = isPlugin ? invalidPlugins : invalidMods;
             if (melon == null)
+            {
+                if (!newMelon && !invalidsList.Contains(melonPath))
+                    invalidsList.Add(melonPath);
+
                 return;
+            }
             if (!melon.CheckCompatibility(info))
             {
+                if (invalidsList.Contains(melonPath))
+                    invalidsList.Add(melonPath);
+
                 Logger.Log($"Melon '{melon.name}' is incompatible with {info}!", Logger.Level.Warning);
-                if (showResultUnlessAdded)
+                if (newMelon)
                     CustomMessageBox.Error($"The {(isPlugin ? "plugin" : "mod")} '{melon.name}' is incompatible with {info.name}.");
+                else if (!invalidsList.Contains(melonPath))
+                    invalidsList.Add(melonPath);
+
                 return;
             }
             if (melon.isPlugin != isPlugin)
             {
+
                 Logger.Log($"{(isPlugin ? "Mod" : "Plugin")} '{melon.name}' cannot be added to the {(isPlugin ? "plugins" : "mods")} list of '{info}'", Logger.Level.Warning);
-                if (showResultUnlessAdded)
+                if (newMelon)
                     CustomMessageBox.Error($"The melon you're trying to add is a {(isPlugin ? "mod" : "plugin")} and cannot be added to the {(isPlugin ? "plugins" : "mods")} list.");
+                else if (!invalidsList.Contains(melonPath))
+                    invalidsList.Add(melonPath);
+
                 return;
             }
+
+            if (invalidsList.Contains(melonPath))
+                invalidsList.Remove(melonPath);
 
             list.Add(melon);
         }
