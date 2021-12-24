@@ -4,7 +4,7 @@
     {
         internal const string MelonLoaderGitApi = "https://api.github.com/repos/LavaGang/MelonLoader/releases";
         internal const string MelonLoaderReleases = "https://github.com/LavaGang/MelonLoader/releases";
-        internal const string SelfReleases = "https://github.com/SlidyDev/MelonManager/releases";
+        internal const string SelfReleases = "https://api.github.com/repos/SlidyDev/MelonManager/releases";
         internal const string Discord = "https://discord.gg/2Wn3N2P";
         internal const string Twitter = "https://twitter.com/lava_gang";
         internal const string MLGitHub = "https://github.com/LavaGang/MelonLoader";

@@ -18,13 +18,12 @@ namespace MelonLoader.Interfaces
 
         public static List<ReleaseData> releasesTbl = new List<ReleaseData>();
         public static ReleaseData LatestVersion => releasesTbl == null ? null : releasesTbl.FirstOrDefault();
-        private static string API_URL = Constants.MelonLoaderGitApi;
 
         public static void Refresh()
         {
             releasesTbl.Clear();
             
-            List<GithubApiRelease> githubApiReleases = Client.GetFromJsonAsync<List<GithubApiRelease>>(API_URL).Result;
+            List<GithubApiRelease> githubApiReleases = Client.GetFromJsonAsync<List<GithubApiRelease>>(Constants.MelonLoaderGitApi).Result;
             githubApiReleases ??= new List<GithubApiRelease>();
             
             foreach (GithubApiRelease release in githubApiReleases)
@@ -49,6 +48,14 @@ namespace MelonLoader.Interfaces
             
             releasesTbl = releasesTbl.OrderBy(x => x.Version).ToList();
             releasesTbl.Reverse();
+        }
+
+        public static string GetLatestManagerVersion()
+        {
+            List<GithubApiRelease> githubApiReleases = Client.GetFromJsonAsync<List<GithubApiRelease>>(Constants.SelfReleases).Result;
+            githubApiReleases ??= new List<GithubApiRelease>();
+
+            return githubApiReleases.FirstOrDefault()?.TagName ?? "unknown";
         }
 
         public class ReleaseData
