@@ -1,12 +1,14 @@
 ﻿using MelonManager.Utils;
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MelonManager.Managers
 {
     public static class Logger
     {
+        private const int MaxLogFiles = 10;
         public static string logsDir = Path.Combine(Program.localFilesPath, "Logs");
         public static string currentLogPath;
         public static string latestLogPath;
@@ -24,6 +26,14 @@ namespace MelonManager.Managers
             currentLogPath = Path.Combine(logsDir, "MelonManager_" + DateTime.Now.ToString("yy-MM-dd_HH-mm-ss.fff") + ".log");
 
             Directory.CreateDirectory(logsDir);
+
+            var dir = new DirectoryInfo(logsDir);
+            var files = dir.GetFileSystemInfos();
+            if (files.Length >= MaxLogFiles)
+            {
+                var oldLog = files.OrderBy(x => x.CreationTime).First();
+                oldLog.Delete();
+            }
 
             latestLog = new StreamWriter(File.Open(latestLogPath, FileMode.Create, FileAccess.Write, FileShare.Read));
             currentLog = new StreamWriter(File.Open(currentLogPath, FileMode.Create, FileAccess.Write, FileShare.Read));
