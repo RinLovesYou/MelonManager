@@ -251,7 +251,6 @@
             this.Style = MetroFramework.MetroColorStyle.Red;
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.Mods_Load);
             this.metroPanel2.ResumeLayout(false);
             this.metroPanel2.PerformLayout();
