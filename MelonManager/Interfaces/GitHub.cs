@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace MelonLoader.Interfaces
 {
-    internal static class MelonLoaderGitHub
+    public static class MelonLoaderGitHub
     {
         private static readonly HttpClient Client = new HttpClient();
 
@@ -15,12 +15,12 @@ namespace MelonLoader.Interfaces
         {
             Client.DefaultRequestHeaders.Add("User-Agent", BuildInfo.Name + " (https://melonwiki.xyz)");
         }
-        
-        internal static List<ReleaseData> releasesTbl = new List<ReleaseData>();
-        internal static ReleaseData LatestVersion => releasesTbl == null ? null : releasesTbl.FirstOrDefault();
+
+        public static List<ReleaseData> releasesTbl = new List<ReleaseData>();
+        public static ReleaseData LatestVersion => releasesTbl == null ? null : releasesTbl.FirstOrDefault();
         private static string API_URL = Constants.MelonLoaderGitApi;
 
-        internal static void Refresh()
+        public static void Refresh()
         {
             releasesTbl.Clear();
             
@@ -51,18 +51,18 @@ namespace MelonLoader.Interfaces
             releasesTbl.Reverse();
         }
 
-        internal class ReleaseData
+        public class ReleaseData
         {
-            internal string Version;
-            internal bool IsPreRelease;
+            public string Version;
+            public bool IsPreRelease;
 
-            internal class AssetData
+            public class AssetData
             {
-                internal string Download;
-                internal string SHA512;
+                public string Download;
+                public string SHA512;
             }
-            internal AssetData Windows_x86;
-            internal AssetData Windows_x64;
+            public AssetData Windows_x86;
+            public AssetData Windows_x64;
             //internal AssetData Android_Quest;
         }
 
@@ -74,7 +74,7 @@ namespace MelonLoader.Interfaces
 
             public List<GithubApiAsset> Assets { get; set; }
 
-            internal GithubApiAsset FindAssetWithFilename(string filename) => Assets.FirstOrDefault(a => a.Name == filename);
+            public GithubApiAsset FindAssetWithFilename(string filename) => Assets.FirstOrDefault(a => a.Name == filename);
         }
 
         private class GithubApiAsset

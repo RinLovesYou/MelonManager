@@ -122,7 +122,7 @@
     <Compile Include="Installer\ExtensionReaders\Url.cs" />
     <Compile Include="Installer\OpenUnityGameDialog.cs" />
     <Compile Include="Installer\PathFinder.cs" />
-    <Compile Include="Interfaces\MelonLoaderGitHub.cs" />
+    <Compile Include="Interfaces\GitHub.cs" />
     <Compile Include="Installer\ExtensionReaders\Shortcut.cs" />
     <Compile Include="Installer\ExtensionReaders\Steam.cs" />
     <Compile Include="Games\LibraryGame.cs" />

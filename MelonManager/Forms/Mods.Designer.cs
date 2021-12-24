@@ -163,7 +163,7 @@
             this.modAuthor.AutoSize = true;
             this.modAuthor.FontSize = MetroFramework.MetroLabelSize.Small;
             this.modAuthor.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.modAuthor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.modAuthor.ForeColor = System.Drawing.Color.Gray;
             this.modAuthor.Location = new System.Drawing.Point(4, 86);
             this.modAuthor.Name = "modAuthor";
             this.modAuthor.Size = new System.Drawing.Size(10, 15);
@@ -193,7 +193,7 @@
             this.modName.AutoSize = true;
             this.modName.FontSize = MetroFramework.MetroLabelSize.Small;
             this.modName.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.modName.ForeColor = System.Drawing.Color.Green;
+            this.modName.ForeColor = System.Drawing.Color.Gray;
             this.modName.Location = new System.Drawing.Point(4, 20);
             this.modName.Name = "modName";
             this.modName.Size = new System.Drawing.Size(10, 15);
