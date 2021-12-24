@@ -119,7 +119,6 @@ namespace MelonManager.Melons
             if (b.FullName == "System.Object")
                 return false;
 
-            Logger.Log(b.FullName);
             if (b.FullName == typeFullName)
                 return true;
 

@@ -71,7 +71,6 @@ namespace MelonManager.Utils
         {
             lock (formsSubscribtions)
             {
-                Logger.Log("Unsubscribing from " + control.Name);
                 var tuple = new Tuple<T, Control>(action, control);
                 if (invoking)
                 {
