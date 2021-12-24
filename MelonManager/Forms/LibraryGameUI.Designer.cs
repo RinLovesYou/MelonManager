@@ -1,6 +1,6 @@
 ﻿namespace MelonManager.Forms
 {
-    partial class LibraryGame
+    partial class LibraryGameUI
     {
         /// <summary> 
         /// Required designer variable.
@@ -128,12 +128,13 @@
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(107, 26);
             this.updateButton.TabIndex = 8;
-            this.updateButton.Text = "Up-To-Date";
+            this.updateButton.Text = "Installing";
             this.updateButton.UseVisualStyleBackColor = false;
             this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
             // MLVersion
             // 
+            this.MLVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.MLVersion.AutoSize = true;
             this.MLVersion.FontSize = MetroFramework.MetroLabelSize.Small;
             this.MLVersion.FontWeight = MetroFramework.MetroLabelWeight.Regular;
@@ -143,6 +144,7 @@
             this.MLVersion.Size = new System.Drawing.Size(57, 15);
             this.MLVersion.TabIndex = 8;
             this.MLVersion.Text = "ML v0.4.4";
+            this.MLVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.MLVersion.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.MLVersion.UseCustomBackColor = true;
             this.MLVersion.UseCustomForeColor = true;
@@ -173,7 +175,7 @@
             this.gamePicture.TabIndex = 0;
             this.gamePicture.TabStop = false;
             // 
-            // LibraryGame
+            // LibraryGameUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -185,7 +187,7 @@
             this.Controls.Add(this.modsButton);
             this.Controls.Add(this.gameName);
             this.Controls.Add(this.gamePicture);
-            this.Name = "LibraryGame";
+            this.Name = "LibraryGameUI";
             this.Size = new System.Drawing.Size(625, 68);
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.UseCustomBackColor = true;

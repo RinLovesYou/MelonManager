@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MelonManagerForm));
             this.pages = new MetroFramework.Controls.MetroTabControl();
             this.metroTabPage2 = new MetroFramework.Controls.MetroTabPage();
             this.noLibGamesText2 = new MetroFramework.Controls.MetroLabel();
@@ -47,16 +46,17 @@
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.modsLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
-            this.noTasksText = new MetroFramework.Controls.MetroLabel();
-            this.tasksLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
-            this.updateMLCheck = new MetroFramework.Controls.MetroCheckBox();
             this.updateMMCheck = new MetroFramework.Controls.MetroCheckBox();
             this.clearDataButton = new System.Windows.Forms.Button();
             this.localDataButton = new System.Windows.Forms.Button();
             this.consoleButton = new System.Windows.Forms.Button();
             this.metroTabPage5 = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
+            this.lavaGangLink = new MetroFramework.Controls.MetroLink();
+            this.samboyLink = new MetroFramework.Controls.MetroLink();
+            this.slidyDevLink = new MetroFramework.Controls.MetroLink();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
@@ -84,11 +84,14 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.versionText = new MetroFramework.Controls.MetroLabel();
             this.updateBtn = new System.Windows.Forms.Button();
+            this.taskProgressBar = new MetroFramework.Controls.MetroProgressBar();
+            this.taskName = new MetroFramework.Controls.MetroLabel();
+            this.taskStatus = new MetroFramework.Controls.MetroLabel();
+            this.metroPanel5 = new MetroFramework.Controls.MetroPanel();
             this.pages.SuspendLayout();
             this.metroTabPage2.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             this.metroPanel1.SuspendLayout();
-            this.metroTabPage4.SuspendLayout();
             this.metroTabPage3.SuspendLayout();
             this.metroTabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
@@ -104,16 +107,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.metroPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // pages
             // 
-            this.pages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pages.Controls.Add(this.metroTabPage2);
             this.pages.Controls.Add(this.metroTabPage1);
-            this.pages.Controls.Add(this.metroTabPage4);
             this.pages.Controls.Add(this.metroTabPage3);
             this.pages.Controls.Add(this.metroTabPage5);
             this.pages.FontWeight = MetroFramework.MetroTabControlWeight.Bold;
@@ -127,7 +129,6 @@
             this.pages.TabIndex = 2;
             this.pages.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.pages.UseSelectable = true;
-            this.pages.SelectedIndexChanged += new System.EventHandler(this.pages_SelectedIndexChanged);
             // 
             // metroTabPage2
             // 
@@ -173,7 +174,7 @@
             this.addGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addGameButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.addGameButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.addGameButton.Location = new System.Drawing.Point(543, 584);
+            this.addGameButton.Location = new System.Drawing.Point(543, 577);
             this.addGameButton.Name = "addGameButton";
             this.addGameButton.Size = new System.Drawing.Size(106, 26);
             this.addGameButton.TabIndex = 3;
@@ -206,7 +207,7 @@
             this.libraryPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.libraryPanel.Location = new System.Drawing.Point(0, 3);
             this.libraryPanel.Name = "libraryPanel";
-            this.libraryPanel.Size = new System.Drawing.Size(650, 577);
+            this.libraryPanel.Size = new System.Drawing.Size(650, 570);
             this.libraryPanel.TabIndex = 2;
             this.libraryPanel.WrapContents = false;
             // 
@@ -442,52 +443,8 @@
             this.modsLayoutPanel.Visible = false;
             this.modsLayoutPanel.WrapContents = false;
             // 
-            // metroTabPage4
-            // 
-            this.metroTabPage4.Controls.Add(this.noTasksText);
-            this.metroTabPage4.Controls.Add(this.tasksLayoutPanel);
-            this.metroTabPage4.HorizontalScrollbarBarColor = true;
-            this.metroTabPage4.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage4.HorizontalScrollbarSize = 10;
-            this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
-            this.metroTabPage4.Name = "metroTabPage4";
-            this.metroTabPage4.Size = new System.Drawing.Size(652, 613);
-            this.metroTabPage4.TabIndex = 3;
-            this.metroTabPage4.Text = "Tasks";
-            this.metroTabPage4.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.metroTabPage4.VerticalScrollbarBarColor = true;
-            this.metroTabPage4.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage4.VerticalScrollbarSize = 10;
-            // 
-            // noTasksText
-            // 
-            this.noTasksText.AutoSize = true;
-            this.noTasksText.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.noTasksText.FontWeight = MetroFramework.MetroLabelWeight.Bold;
-            this.noTasksText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.noTasksText.Location = new System.Drawing.Point(164, 120);
-            this.noTasksText.Name = "noTasksText";
-            this.noTasksText.Size = new System.Drawing.Size(322, 25);
-            this.noTasksText.TabIndex = 3;
-            this.noTasksText.Text = "There are currently no tasks running";
-            this.noTasksText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.noTasksText.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.noTasksText.UseCustomForeColor = true;
-            // 
-            // tasksLayoutPanel
-            // 
-            this.tasksLayoutPanel.AutoScroll = true;
-            this.tasksLayoutPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.tasksLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.tasksLayoutPanel.Location = new System.Drawing.Point(1, 1);
-            this.tasksLayoutPanel.Name = "tasksLayoutPanel";
-            this.tasksLayoutPanel.Size = new System.Drawing.Size(649, 577);
-            this.tasksLayoutPanel.TabIndex = 2;
-            this.tasksLayoutPanel.WrapContents = false;
-            // 
             // metroTabPage3
             // 
-            this.metroTabPage3.Controls.Add(this.updateMLCheck);
             this.metroTabPage3.Controls.Add(this.updateMMCheck);
             this.metroTabPage3.Controls.Add(this.clearDataButton);
             this.metroTabPage3.Controls.Add(this.localDataButton);
@@ -505,20 +462,6 @@
             this.metroTabPage3.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage3.VerticalScrollbarSize = 10;
             // 
-            // updateMLCheck
-            // 
-            this.updateMLCheck.AutoSize = true;
-            this.updateMLCheck.FontSize = MetroFramework.MetroCheckBoxSize.Medium;
-            this.updateMLCheck.Location = new System.Drawing.Point(5, 51);
-            this.updateMLCheck.Name = "updateMLCheck";
-            this.updateMLCheck.Size = new System.Drawing.Size(191, 19);
-            this.updateMLCheck.Style = MetroFramework.MetroColorStyle.Green;
-            this.updateMLCheck.TabIndex = 13;
-            this.updateMLCheck.Text = "Auto-Update MelonLoader";
-            this.updateMLCheck.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.updateMLCheck.UseSelectable = true;
-            this.updateMLCheck.CheckedChanged += new System.EventHandler(this.updateMLCheck_CheckedChanged);
-            // 
             // updateMMCheck
             // 
             this.updateMMCheck.AutoSize = true;
@@ -531,7 +474,6 @@
             this.updateMMCheck.Text = "Auto-Update MelonManager";
             this.updateMMCheck.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.updateMMCheck.UseSelectable = true;
-            this.updateMMCheck.CheckedChanged += new System.EventHandler(this.updateMMCheck_CheckedChanged);
             // 
             // clearDataButton
             // 
@@ -540,7 +482,7 @@
             this.clearDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clearDataButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.clearDataButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.clearDataButton.Location = new System.Drawing.Point(5, 120);
+            this.clearDataButton.Location = new System.Drawing.Point(5, 135);
             this.clearDataButton.Name = "clearDataButton";
             this.clearDataButton.Size = new System.Drawing.Size(157, 24);
             this.clearDataButton.TabIndex = 11;
@@ -556,7 +498,7 @@
             this.localDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.localDataButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.localDataButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.localDataButton.Location = new System.Drawing.Point(5, 88);
+            this.localDataButton.Location = new System.Drawing.Point(5, 103);
             this.localDataButton.Name = "localDataButton";
             this.localDataButton.Size = new System.Drawing.Size(157, 26);
             this.localDataButton.TabIndex = 5;
@@ -572,7 +514,7 @@
             this.consoleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.consoleButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.consoleButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consoleButton.Location = new System.Drawing.Point(5, 554);
+            this.consoleButton.Location = new System.Drawing.Point(5, 569);
             this.consoleButton.Name = "consoleButton";
             this.consoleButton.Size = new System.Drawing.Size(157, 26);
             this.consoleButton.TabIndex = 4;
@@ -582,6 +524,11 @@
             // 
             // metroTabPage5
             // 
+            this.metroTabPage5.Controls.Add(this.metroLabel13);
+            this.metroTabPage5.Controls.Add(this.metroLabel12);
+            this.metroTabPage5.Controls.Add(this.lavaGangLink);
+            this.metroTabPage5.Controls.Add(this.samboyLink);
+            this.metroTabPage5.Controls.Add(this.slidyDevLink);
             this.metroTabPage5.Controls.Add(this.pictureBox10);
             this.metroTabPage5.Controls.Add(this.metroLabel11);
             this.metroTabPage5.Controls.Add(this.metroLabel10);
@@ -606,6 +553,74 @@
             this.metroTabPage5.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage5.VerticalScrollbarSize = 10;
             // 
+            // metroLabel13
+            // 
+            this.metroLabel13.AutoSize = true;
+            this.metroLabel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.metroLabel13.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel13.ForeColor = System.Drawing.Color.Silver;
+            this.metroLabel13.Location = new System.Drawing.Point(123, 445);
+            this.metroLabel13.Name = "metroLabel13";
+            this.metroLabel13.Size = new System.Drawing.Size(197, 19);
+            this.metroLabel13.TabIndex = 20;
+            this.metroLabel13.Text = "The team behind MelonLoader";
+            this.metroLabel13.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // metroLabel12
+            // 
+            this.metroLabel12.AutoSize = true;
+            this.metroLabel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.metroLabel12.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel12.ForeColor = System.Drawing.Color.Silver;
+            this.metroLabel12.Location = new System.Drawing.Point(123, 420);
+            this.metroLabel12.Name = "metroLabel12";
+            this.metroLabel12.Size = new System.Drawing.Size(169, 19);
+            this.metroLabel12.TabIndex = 19;
+            this.metroLabel12.Text = "Developer of the manager";
+            this.metroLabel12.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // lavaGangLink
+            // 
+            this.lavaGangLink.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.lavaGangLink.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lavaGangLink.Location = new System.Drawing.Point(6, 445);
+            this.lavaGangLink.Name = "lavaGangLink";
+            this.lavaGangLink.Size = new System.Drawing.Size(111, 19);
+            this.lavaGangLink.TabIndex = 18;
+            this.lavaGangLink.Text = "Lava Gang";
+            this.lavaGangLink.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lavaGangLink.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.lavaGangLink.UseSelectable = true;
+            this.lavaGangLink.Click += new System.EventHandler(this.lavaGangLink_Click);
+            // 
+            // samboyLink
+            // 
+            this.samboyLink.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.samboyLink.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.samboyLink.Location = new System.Drawing.Point(6, 420);
+            this.samboyLink.Name = "samboyLink";
+            this.samboyLink.Size = new System.Drawing.Size(111, 19);
+            this.samboyLink.TabIndex = 17;
+            this.samboyLink.Text = "Samboy";
+            this.samboyLink.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.samboyLink.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.samboyLink.UseSelectable = true;
+            this.samboyLink.Click += new System.EventHandler(this.samboyLink_Click);
+            // 
+            // slidyDevLink
+            // 
+            this.slidyDevLink.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.slidyDevLink.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.slidyDevLink.Location = new System.Drawing.Point(6, 395);
+            this.slidyDevLink.Name = "slidyDevLink";
+            this.slidyDevLink.Size = new System.Drawing.Size(111, 19);
+            this.slidyDevLink.TabIndex = 10;
+            this.slidyDevLink.Text = "SlidyDev";
+            this.slidyDevLink.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.slidyDevLink.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.slidyDevLink.UseSelectable = true;
+            this.slidyDevLink.Click += new System.EventHandler(this.slidyDevLink_Click);
+            // 
             // pictureBox10
             // 
             this.pictureBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -621,11 +636,11 @@
             this.metroLabel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.metroLabel11.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.metroLabel11.ForeColor = System.Drawing.Color.Silver;
-            this.metroLabel11.Location = new System.Drawing.Point(24, 393);
+            this.metroLabel11.Location = new System.Drawing.Point(123, 395);
             this.metroLabel11.Name = "metroLabel11";
-            this.metroLabel11.Size = new System.Drawing.Size(394, 76);
+            this.metroLabel11.Size = new System.Drawing.Size(283, 19);
             this.metroLabel11.TabIndex = 15;
-            this.metroLabel11.Text = resources.GetString("metroLabel11.Text");
+            this.metroLabel11.Text = "Main developer of the manager (that\'s me!!!)";
             this.metroLabel11.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // metroLabel10
@@ -656,12 +671,12 @@
             this.metroLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.metroLabel9.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.metroLabel9.ForeColor = System.Drawing.Color.Silver;
-            this.metroLabel9.Location = new System.Drawing.Point(3, 32);
+            this.metroLabel9.Location = new System.Drawing.Point(3, 16);
             this.metroLabel9.Name = "metroLabel9";
-            this.metroLabel9.Size = new System.Drawing.Size(428, 57);
+            this.metroLabel9.Size = new System.Drawing.Size(382, 76);
             this.metroLabel9.TabIndex = 12;
-            this.metroLabel9.Text = "MelonManager is the Official Manager App for MelonLoader.\r\nJoin MelonLoader\'s Off" +
-    "icial Discord Server (linked below) for support.\r\n";
+            this.metroLabel9.Text = "MelonManager is the Official Manager App for MelonLoader.\r\n\r\nQuestions? Join our " +
+    "Discord server (linked below).\r\n";
             this.metroLabel9.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // metroLabel8
@@ -927,13 +942,13 @@
             // 
             // versionText
             // 
-            this.versionText.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.versionText.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.versionText.AutoSize = true;
             this.versionText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.versionText.FontSize = MetroFramework.MetroLabelSize.Small;
             this.versionText.FontWeight = MetroFramework.MetroLabelWeight.Bold;
             this.versionText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.versionText.Location = new System.Drawing.Point(9, 673);
+            this.versionText.Location = new System.Drawing.Point(186, 12);
             this.versionText.Name = "versionText";
             this.versionText.Size = new System.Drawing.Size(31, 15);
             this.versionText.TabIndex = 11;
@@ -958,16 +973,77 @@
             this.updateBtn.UseVisualStyleBackColor = false;
             this.updateBtn.Click += new System.EventHandler(this.updateBtn_Click);
             // 
+            // taskProgressBar
+            // 
+            this.taskProgressBar.Location = new System.Drawing.Point(21, 54);
+            this.taskProgressBar.Name = "taskProgressBar";
+            this.taskProgressBar.Size = new System.Drawing.Size(644, 23);
+            this.taskProgressBar.Style = MetroFramework.MetroColorStyle.Red;
+            this.taskProgressBar.TabIndex = 15;
+            this.taskProgressBar.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
+            // taskName
+            // 
+            this.taskName.AutoSize = true;
+            this.taskName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.taskName.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.taskName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.taskName.Location = new System.Drawing.Point(9, 692);
+            this.taskName.Name = "taskName";
+            this.taskName.Size = new System.Drawing.Size(79, 19);
+            this.taskName.TabIndex = 16;
+            this.taskName.Text = "Task name";
+            this.taskName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.taskName.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.taskName.UseCustomBackColor = true;
+            this.taskName.UseCustomForeColor = true;
+            // 
+            // taskStatus
+            // 
+            this.taskStatus.AutoSize = true;
+            this.taskStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.taskStatus.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.taskStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.taskStatus.Location = new System.Drawing.Point(23, 711);
+            this.taskStatus.Name = "taskStatus";
+            this.taskStatus.Size = new System.Drawing.Size(75, 19);
+            this.taskStatus.TabIndex = 16;
+            this.taskStatus.Text = "Task status";
+            this.taskStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.taskStatus.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.taskStatus.UseCustomBackColor = true;
+            this.taskStatus.UseCustomForeColor = true;
+            // 
+            // metroPanel5
+            // 
+            this.metroPanel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.metroPanel5.Controls.Add(this.taskProgressBar);
+            this.metroPanel5.HorizontalScrollbarBarColor = true;
+            this.metroPanel5.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel5.HorizontalScrollbarSize = 10;
+            this.metroPanel5.Location = new System.Drawing.Point(-12, 681);
+            this.metroPanel5.Name = "metroPanel5";
+            this.metroPanel5.Size = new System.Drawing.Size(684, 118);
+            this.metroPanel5.TabIndex = 0;
+            this.metroPanel5.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroPanel5.UseCustomBackColor = true;
+            this.metroPanel5.VerticalScrollbarBarColor = true;
+            this.metroPanel5.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel5.VerticalScrollbarSize = 10;
+            // 
             // MelonManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(666, 696);
+            this.ClientSize = new System.Drawing.Size(666, 770);
+            this.Controls.Add(this.taskStatus);
+            this.Controls.Add(this.taskName);
             this.Controls.Add(this.updateBtn);
             this.Controls.Add(this.versionText);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pages);
+            this.Controls.Add(this.metroPanel5);
             this.MaximizeBox = false;
             this.Name = "MelonManagerForm";
             this.Resizable = false;
@@ -984,8 +1060,6 @@
             this.metroTabPage1.PerformLayout();
             this.metroPanel1.ResumeLayout(false);
             this.metroPanel1.PerformLayout();
-            this.metroTabPage4.ResumeLayout(false);
-            this.metroTabPage4.PerformLayout();
             this.metroTabPage3.ResumeLayout(false);
             this.metroTabPage3.PerformLayout();
             this.metroTabPage5.ResumeLayout(false);
@@ -1003,6 +1077,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.metroPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1017,10 +1092,7 @@
         private MetroFramework.Controls.MetroTabPage metroTabPage3;
         private System.Windows.Forms.FlowLayoutPanel libraryPanel;
         private System.Windows.Forms.Button addGameButton;
-        private MetroFramework.Controls.MetroTabPage metroTabPage4;
-        private System.Windows.Forms.FlowLayoutPanel tasksLayoutPanel;
         public MetroFramework.Controls.MetroTabControl pages;
-        private MetroFramework.Controls.MetroLabel noTasksText;
         private System.Windows.Forms.FlowLayoutPanel modsLayoutPanel;
         private MetroFramework.Controls.MetroPanel metroPanel1;
         private MetroFramework.Controls.MetroLabel metroLabel1;
@@ -1061,10 +1133,18 @@
         private MetroFramework.Controls.MetroLabel metroLabel11;
         private MetroFramework.Controls.MetroLabel metroLabel10;
         private System.Windows.Forms.Button clearDataButton;
-        private MetroFramework.Controls.MetroCheckBox updateMLCheck;
         private MetroFramework.Controls.MetroCheckBox updateMMCheck;
         private System.Windows.Forms.Button updateBtn;
         private MetroFramework.Controls.MetroLabel noLibGamesText2;
+        private MetroFramework.Controls.MetroProgressBar taskProgressBar;
+        private MetroFramework.Controls.MetroLabel taskName;
+        private MetroFramework.Controls.MetroLabel taskStatus;
+        private MetroFramework.Controls.MetroLabel metroLabel13;
+        private MetroFramework.Controls.MetroLabel metroLabel12;
+        private MetroFramework.Controls.MetroLink lavaGangLink;
+        private MetroFramework.Controls.MetroLink samboyLink;
+        private MetroFramework.Controls.MetroLink slidyDevLink;
+        private MetroFramework.Controls.MetroPanel metroPanel5;
     }
 }
 

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MelonManager
+namespace MelonManager.Utils
 {
-    public static class StringExtensions
+    internal static class Extensions
     {
-        public static string Plural(this string str, string pluralForm, int count)
+        internal static string Plural(this string str, string pluralForm, int count)
         {
             if (string.IsNullOrEmpty(str))
                 return str;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MelonManager;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -6,22 +7,22 @@ using System.Text.Json.Serialization;
 
 namespace MelonLoader.Interfaces
 {
-    internal class GitHub
+    internal static class MelonLoaderGitHub
     {
         private static readonly HttpClient Client = new HttpClient();
 
-        static GitHub()
+        static MelonLoaderGitHub()
         {
-            Client.DefaultRequestHeaders.Add("User-Agent", "MelonLauncher (https://melonwiki.xyz)");
+            Client.DefaultRequestHeaders.Add("User-Agent", BuildInfo.Name + " (https://melonwiki.xyz)");
         }
         
-        internal List<ReleaseData> ReleasesTbl = new List<ReleaseData>();
-        private string API_URL = null;
-        internal GitHub(string url) => API_URL = url;
+        internal static List<ReleaseData> releasesTbl = new List<ReleaseData>();
+        internal static ReleaseData LatestVersion => releasesTbl == null ? null : releasesTbl.FirstOrDefault();
+        private static string API_URL = Constants.MelonLoaderGitApi;
 
-        internal void Refresh(bool checkForInstaller = false)
+        internal static void Refresh()
         {
-            ReleasesTbl.Clear();
+            releasesTbl.Clear();
             
             List<GithubApiRelease> githubApiReleases = Client.GetFromJsonAsync<List<GithubApiRelease>>(API_URL).Result;
             githubApiReleases ??= new List<GithubApiRelease>();
@@ -31,28 +32,23 @@ namespace MelonLoader.Interfaces
                 List<GithubApiAsset> githubApiAssets = release.Assets;
                 string releaseVersion = release.TagName;
                 
-                bool hasWinX86 = (!releaseVersion.StartsWith("v0.2") && !releaseVersion.StartsWith("v0.1"));
+                bool hasWinX86 = !releaseVersion.StartsWith("v0.2") && !releaseVersion.StartsWith("v0.1");
                 
                 ReleaseData releaseData = new ReleaseData()
                 {
                     Version = releaseVersion,
                     IsPreRelease = release.Prerelease,
                 };
-                
-                if (!checkForInstaller)
-                {
-                    releaseData.Windows_x64 = release.FindAssetWithFilename("MelonLoader.x64.zip").AsAssetData();
-                    if (hasWinX86)
-                        releaseData.Windows_x86 = release.FindAssetWithFilename("MelonLoader.x86.zip").AsAssetData();
-                }
-                else
-                    releaseData.Installer = release.FindAssetWithFilename("MelonLoader.Installer.exe").AsAssetData();
 
-                ReleasesTbl.Add(releaseData);
+                releaseData.Windows_x64 = release.FindAssetWithFilename("MelonLoader.x64.zip").AsAssetData();
+                if (hasWinX86)
+                    releaseData.Windows_x86 = release.FindAssetWithFilename("MelonLoader.x86.zip").AsAssetData();
+
+                releasesTbl.Add(releaseData);
             }
             
-            ReleasesTbl = ReleasesTbl.OrderBy(x => x.Version).ToList();
-            ReleasesTbl.Reverse();
+            releasesTbl = releasesTbl.OrderBy(x => x.Version).ToList();
+            releasesTbl.Reverse();
         }
 
         internal class ReleaseData
@@ -65,7 +61,6 @@ namespace MelonLoader.Interfaces
                 internal string Download;
                 internal string SHA512;
             }
-            internal AssetData Installer;
             internal AssetData Windows_x86;
             internal AssetData Windows_x64;
             //internal AssetData Android_Quest;

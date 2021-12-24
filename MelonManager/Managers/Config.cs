@@ -7,48 +7,55 @@ using Tomlet;
 
 namespace MelonLoader.Managers
 {
-    internal static class Config
+    public class Config<T> where T : new()
     {
-        private static string FilePath = Path.Combine(Program.localFilesPath, "MelonManager.cfg");
-        public static FileValues Values = new FileValues();
-
-        static Config()
+        public readonly string name;
+        public readonly string filePath;
+        public T config;
+        
+        public Config(string configName)
         {
+            name = configName;
+            filePath = Path.Combine(Program.localFilesPath, configName + ".cfg");
             Load();
         }
 
-        internal static void Load()
+        public void Load()
         {
-            if (!File.Exists(FilePath))
+            Logger.Log($"Loading config '{name}'");
+            if (!File.Exists(filePath))
+            {
+                config = new T();
                 return;
-            string filestr = File.ReadAllText(FilePath);
+            }
+
+            string filestr = File.ReadAllText(filePath);
             if (string.IsNullOrEmpty(filestr))
                 return;
-            try { Values = TomletMain.To<FileValues>(filestr); } catch { }
+            try 
+            { 
+                config = TomletMain.To<T>(filestr); 
+            } 
+            catch (Exception ex)
+            {
+                Logger.Log($"Failed to load the config '{name}':\n{ex}", Logger.Level.Error);
+            }
         }
 
-        internal static void Save()
+        public void Save()
         {
             try
             {
-                File.WriteAllText(FilePath, TomletMain.TomlStringFrom(Values));
+                File.WriteAllText(filePath, TomletMain.TomlStringFrom(config));
             }
             catch (Exception ex)
             {
-                Logger.Log("Failed to save config:\n" + ex.ToString(), Logger.Level.Error);
-                CustomMessageBox.Error("Failed to save config:\n\n" + ex.ToString());
+                Logger.Log($"Failed to save config '{name}':\n{ex}", Logger.Level.Error);
+                CustomMessageBox.Error($"Failed to save config '{name}':\n\n{ex}");
                 return;
             }
 
-            Logger.Log("Saved configs!");
-        }
-
-        public class FileValues
-        {
-            internal bool autoUpdateMM = true;
-            internal bool autoUpdateML = true;
-            internal int lastPage;
-            internal string lastSelectedGamePath = null;
+            Logger.Log($"Saved config '{name}'!");
         }
     }
 }

@@ -8,19 +8,18 @@ using MelonLoader.Interfaces;
 using System.Diagnostics;
 using MelonLoader;
 using System.Collections.Generic;
+using MelonLoader.Managers;
+using MelonManager.Games;
+using MelonManager.Utils;
+using MelonManager.Configs;
 
 namespace MelonManager
 {
     public static class Program
     {
         public static readonly string localFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Lava Gang\" + BuildInfo.Name);
+        public static readonly Config<MainConfig> config = new Config<MainConfig>("Main");
 
-        internal static GitHub releasesAPI = new GitHub(MelonLoader.URLs.Repositories.MelonLoader);
-        internal static GitHub.ReleaseData LatestMLVersion => releasesAPI.ReleasesTbl == null ? null : releasesAPI.ReleasesTbl.FirstOrDefault();
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main(string[] args)
         {
@@ -40,16 +39,20 @@ namespace MelonManager
             }
 
             if (args.Contains("-console"))
-                Utils.OpenConsole();
+                ConsoleUtils.OpenConsole();
 
             Directory.CreateDirectory(localFilesPath);
             Logger.Initialize();
 
             AppDomain.CurrentDomain.UnhandledException += (s, ex) => HandleException((Exception)ex.ExceptionObject);
             Application.ThreadException += (s, ex) => HandleException(ex.Exception);
-            releasesAPI.Refresh();
+            MelonLoaderGitHub.Refresh();
 
-            Application.Run(new Forms.MelonManagerForm());
+            Application.Run(new MelonManagerForm());
+
+            TempPath.ClearTemp();
+            LibraryGame.SaveLibrary();
+            config.Save();
         }
 
         public static List<Process> CheckSingleInstance()
@@ -102,7 +105,6 @@ namespace MelonManager
             Application.Exit();
             Logger.Deinitialize();
             Directory.Delete(localFilesPath, true);
-            Utils.TryClearDirectory(localFilesPath);
         }
     }
 }

@@ -9,46 +9,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MelonManager
+namespace MelonManager.Utils
 {
-    public static class Utils
+    public static class UtilsBox
     {
-        private const int STD_OUTPUT_HANDLE = -11;
-        private const int CODE_PAGE = 437;
-
-        [DllImport("kernel32.dll",
-               SetLastError = true,
-               CharSet = CharSet.Auto,
-               CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr GetStdHandle(int nStdHandle);
-
-        [DllImport("kernel32.dll",
-            SetLastError = true,
-            CharSet = CharSet.Auto,
-            CallingConvention = CallingConvention.StdCall)]
-        private static extern int AllocConsole();
-
-        [DllImport("kernel32.dll")]
-        static extern IntPtr GetConsoleWindow();
-
-        public static bool IsConsoleOpen { get; private set; }
-
-        public static void OpenConsole()
-        {
-            if (IsConsoleOpen)
-                return;
-
-            AllocConsole();
-            IntPtr stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-            SafeFileHandle safeFileHandle = new SafeFileHandle(stdHandle, true);
-            FileStream fileStream = new FileStream(safeFileHandle, FileAccess.Write);
-            Encoding encoding = Encoding.GetEncoding(CODE_PAGE);
-            StreamWriter standardOutput = new StreamWriter(fileStream, encoding);
-            standardOutput.AutoFlush = true;
-            Console.SetOut(standardOutput);
-            IsConsoleOpen = true;
-        }
-
         public static bool Kill(this IEnumerable<Process> procs)
         {
             bool result = true;
@@ -61,26 +25,6 @@ namespace MelonManager
                 catch { result = false; }
             }
             return result;
-        }
-
-        public static void TryClearDirectory(string dir)
-        {
-            if (!Directory.Exists(dir))
-                return;
-
-            foreach (var d in Directory.EnumerateDirectories(dir))
-            {
-                TryClearDirectory(d);
-            }
-
-            foreach (var f in Directory.EnumerateFiles(dir))
-            {
-                try
-                {
-                    File.Delete(f);
-                }
-                catch { }
-            }
         }
 
         /// <returns>0 if versions are equal, 1 if <paramref name="versionString"/> is higher or 2 if <paramref name="versionString2"/> is higher.</returns>

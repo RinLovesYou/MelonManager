@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace MelonLoader.Interfaces
+namespace MelonManager.Installer.ExtensionReaders
 {
     internal static class Steam
     {

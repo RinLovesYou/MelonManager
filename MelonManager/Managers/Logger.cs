@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MelonManager.Utils;
+using System;
 using System.IO;
 using System.Windows.Forms;
 
@@ -32,7 +33,7 @@ namespace MelonManager.Managers
 
             Log("============================================");
             Log("OS: " + Environment.OSVersion.ToString());
-            Log("App version: v" + Application.ProductVersion);
+            Log("App version: v" + BuildInfo.Version);
             Log("Timezone: " + TimeZone.CurrentTimeZone.StandardName);
             Log("Current date: " + DateTime.Now.ToString("yy-MM-dd"));
             Log("============================================");
@@ -75,7 +76,7 @@ namespace MelonManager.Managers
                 lock (logLock)
                 {
                     var log = $"[{DateTime.Now.ToString("HH:mm:ss.fff")}] [{level}] " + message;
-                    if (Utils.IsConsoleOpen)
+                    if (ConsoleUtils.IsConsoleOpen)
                         Console.WriteLine(log);
                     latestLog.WriteLine(log);
                     currentLog.WriteLine(log);

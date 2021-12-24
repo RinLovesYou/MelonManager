@@ -1,4 +1,7 @@
-﻿using MetroFramework.Forms;
+﻿using MelonLoader.Interfaces;
+using MelonManager.Games;
+using MelonManager.Utils;
+using MetroFramework.Forms;
 using System;
 using System.Drawing;
 using System.IO;
@@ -20,8 +23,8 @@ namespace MelonManager.Forms
             gameName.Location = new Point((Size.Width - this.gameName.Size.Width) / 2, 7);
             this.game = game;
 
-            var currentVer = "v" + game.ml.version;
-            mlVersionSelect.Items.AddRange(Program.releasesAPI.ReleasesTbl.Where(x => !(game.info.x86 && (x.Version.StartsWith("v0.1") || x.Version.StartsWith("v0.2")))).Select(x => x.Version).ToArray());
+            var currentVer = game.ml.version;
+            mlVersionSelect.Items.AddRange(MelonLoaderGitHub.releasesTbl.Where(x => !(game.info.x86 && x.Windows_x86 == null)).Select(x => x.Version).ToArray());
             if (!mlVersionSelect.Items.Contains(currentVer))
             {
                 mlVersionSelect.Items.Insert(0, currentVer);
@@ -33,18 +36,16 @@ namespace MelonManager.Forms
 
         private void installButton_Click(object sender, EventArgs e)
         {
-            Installer.Install(mlVersionSelect.SelectedItem.ToString(), game.info, false);
-            MelonManagerForm.instance.pages.SelectedIndex = 2;
-            Close();
+            game.InstallML(mlVersionSelect.SelectedItem.ToString());
             Dispose();
         }
 
         private void mlVersionSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool enableInstall = Program.LatestMLVersion != null && Utils.CompareVersions(Program.LatestMLVersion.Version, mlVersionSelect.SelectedItem.ToString()) != 2;
+            bool enableInstall = MelonLoaderGitHub.LatestVersion != null && UtilsBox.CompareVersions(MelonLoaderGitHub.LatestVersion.Version, mlVersionSelect.SelectedItem.ToString()) != 2;
             installButton.Enabled = enableInstall;
 
-            var ver =  Utils.CompareVersions(mlVersionSelect.SelectedItem.ToString(), game.ml.version);
+            var ver =  UtilsBox.CompareVersions(mlVersionSelect.SelectedItem.ToString(), game.ml.version);
             switch (ver)
             {
                 case 0:
@@ -64,8 +65,7 @@ namespace MelonManager.Forms
             if (CustomMessageBox.Question($"Are you sure you want to remove {game.info.name} from MelonManager's games library?\nMelonLoader will not be removed.") != DialogResult.Yes)
                 return;
 
-            MelonManagerForm.instance.RemoveLibraryGame(game);
-            Close();
+            game.Remove();
             Dispose();
         }
 
@@ -74,9 +74,7 @@ namespace MelonManager.Forms
             if (CustomMessageBox.Question($"Are you sure you want to uninstall MelonLoader from {game.info.name}?") != DialogResult.Yes)
                 return;
 
-            MelonManagerForm.instance.RemoveLibraryGame(game);
-            Installer.Uninstall(game.info);
-            Close();
+            game.UninstallML(true);
             Dispose();
         }
     }

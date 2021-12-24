@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace MelonManager
+namespace MelonManager.MelonLoader
 {
     public class MLInfo
     {
@@ -9,6 +9,8 @@ namespace MelonManager
 
         public MLInfo(string version)
         {
+            if (version[0] != 'v')
+                version = 'v' + version;
             this.version = version;
         }
 

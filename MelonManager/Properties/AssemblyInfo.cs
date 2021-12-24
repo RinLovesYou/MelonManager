@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle(MelonLoader.BuildInfo.Description)]
-[assembly: AssemblyDescription(MelonLoader.BuildInfo.Description)]
-[assembly: AssemblyCompany(MelonLoader.BuildInfo.Company)]
-[assembly: AssemblyProduct(MelonLoader.BuildInfo.Name)]
-[assembly: AssemblyCopyright("Created by " + MelonLoader.BuildInfo.Author)]
-[assembly: AssemblyTrademark(MelonLoader.BuildInfo.Company)]
+[assembly: AssemblyTitle(MelonManager.BuildInfo.Description)]
+[assembly: AssemblyDescription(MelonManager.BuildInfo.Description)]
+[assembly: AssemblyCompany(MelonManager.BuildInfo.Company)]
+[assembly: AssemblyProduct(MelonManager.BuildInfo.Name)]
+[assembly: AssemblyCopyright("Created by " + MelonManager.BuildInfo.Author)]
+[assembly: AssemblyTrademark(MelonManager.BuildInfo.Company)]
 [assembly: Guid("600543c3-ae7e-4ac7-8540-d4c110be121a")]
-[assembly: AssemblyVersion(MelonLoader.BuildInfo.Version)]
-[assembly: AssemblyFileVersion(MelonLoader.BuildInfo.Version)]
+[assembly: AssemblyVersion(MelonManager.BuildInfo.Version)]
+[assembly: AssemblyFileVersion(MelonManager.BuildInfo.Version)]

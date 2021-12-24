@@ -30,9 +30,9 @@ namespace MelonManager.Forms
         private void InitializeComponent()
         {
             this.metroPanel2 = new MetroFramework.Controls.MetroPanel();
-            this.installButton = new System.Windows.Forms.Button();
             this.mlVersionSelect = new MetroFramework.Controls.MetroComboBox();
             this.mlVersion = new MetroFramework.Controls.MetroLabel();
+            this.installButton = new System.Windows.Forms.Button();
             this.gameName = new MetroFramework.Controls.MetroLabel();
             this.metroPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -54,21 +54,6 @@ namespace MelonManager.Forms
             this.metroPanel2.VerticalScrollbarBarColor = true;
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel2.VerticalScrollbarSize = 10;
-            // 
-            // installButton
-            // 
-            this.installButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.installButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.installButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.installButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.installButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.installButton.Location = new System.Drawing.Point(23, 92);
-            this.installButton.Name = "installButton";
-            this.installButton.Size = new System.Drawing.Size(149, 24);
-            this.installButton.TabIndex = 14;
-            this.installButton.Text = "Install";
-            this.installButton.UseVisualStyleBackColor = false;
-            this.installButton.Click += new System.EventHandler(this.installButton_Click);
             // 
             // mlVersionSelect
             // 
@@ -95,6 +80,21 @@ namespace MelonManager.Forms
             this.mlVersion.Text = "MelonLoader Version";
             this.mlVersion.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.mlVersion.UseCustomBackColor = true;
+            // 
+            // installButton
+            // 
+            this.installButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.installButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.installButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.installButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.installButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.installButton.Location = new System.Drawing.Point(23, 92);
+            this.installButton.Name = "installButton";
+            this.installButton.Size = new System.Drawing.Size(149, 24);
+            this.installButton.TabIndex = 14;
+            this.installButton.Text = "Install";
+            this.installButton.UseVisualStyleBackColor = false;
+            this.installButton.Click += new System.EventHandler(this.installButton_Click);
             // 
             // gameName
             // 
@@ -123,6 +123,7 @@ namespace MelonManager.Forms
             this.Style = MetroFramework.MetroColorStyle.Red;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InstallerForm_FormClosing);
             this.metroPanel2.ResumeLayout(false);
             this.metroPanel2.PerformLayout();
             this.ResumeLayout(false);

@@ -6,161 +6,77 @@ using MelonManager.Managers;
 using MelonLoader.Managers;
 using MetroFramework.Forms;
 using System.Diagnostics;
-using MelonLoader.URLs;
+using MelonLoader;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading;
+using MelonManager.Tasks;
+using MelonManager.Games;
+using MelonManager.Utils;
+using System.Drawing;
+using MelonManager.Installer;
 
 namespace MelonManager.Forms
 {
     public partial class MelonManagerForm : MetroForm
     {
         public static MelonManagerForm instance;
-        public readonly string libFilePath = Path.Combine(Program.localFilesPath, "Library.cfg");
-        public List<Task> tasks = new List<Task>();
-
-        private string[] gamesPaths;
 
         public MelonManagerForm()
         {
-            instance = this;
             InitializeComponent();
+            instance = this;
         }
 
-        public LibraryGame GetLibGameByPath(string exePath)
+        public void AddLibraryGameUI(LibraryGameUI game)
         {
-            var len = libraryPanel.Controls.Count;
-            for (int a = 0; a < len; a++)
-            {
-                var gm = (LibraryGame)libraryPanel.Controls[a];
-                if (gm.info.path == exePath)
-                    return gm;
-            }
-            return null;
-        }
-
-        public void AddTask(Task task)
-        {
-            if (task == null)
-                return;
-
-            noTasksText.Visible = false;
-
-            task.onFinishedCallback += () => FinishTask(task);
-            task.onClose += () => CloseTask(task);
-            task.onFailedCallback += (msg, ex) =>
-            {
-                FailTask(task);
-            };
-            tasks.Add(task);
-            tasksLayoutPanel.Controls.Add(task);
-            if (task.reliesOn != null)
-                return;
-
-            task.StartTask();
-        }
-
-        public void FailTask(Task task, bool close = false)
-        {
-            var len = tasksLayoutPanel.Controls.Count;
-            for (int a = len - 1; a >= 0; a--)
-            {
-                var ctrl = (Task)tasksLayoutPanel.Controls[a];
-                if (ctrl.reliesOn == task)
-                    FailTask(ctrl);
-            }
-        }
-
-        public void CloseTask(Task task, bool closeReliables = false)
-        {
-            tasksLayoutPanel.Controls.Remove(task);
-            task.Dispose();
-
-            if (closeReliables)
-            {
-                var len = tasksLayoutPanel.Controls.Count;
-                for (int a = len - 1; a >= 0; a--)
-                {
-                    var ctrl = (Task)tasksLayoutPanel.Controls[a];
-                    if (ctrl.reliesOn == task)
-                        CloseTask(ctrl, closeReliables);
-                }
-            }
-
-            if (tasksLayoutPanel.Controls.Count == 0)
-                noTasksText.Visible = true;
-        }
-
-        public void FinishTask(Task task)
-        {
-            tasks.Remove(task);
-            if (task.Failed)
-                return;
-            var len = tasksLayoutPanel.Controls.Count;
-            for (int a = 0; a < len; a++)
-            {
-                var ctrl = (Task)tasksLayoutPanel.Controls[a];
-                if (ctrl.reliesOn == task)
-                    ctrl.StartTask();
-            }
-        }
-
-        public void SaveLibrary()
-        {
-            Logger.Log("Saving library games...");
-            var sb = new StringBuilder();
-
-            for (int a = 0; a < libraryPanel.Controls.Count; a++)
-            {
-                var game = (LibraryGame)libraryPanel.Controls[a];
-                sb.AppendLine(game.info.path);
-            }
-
-            File.WriteAllText(libFilePath, sb.ToString());
-        }
-
-        public bool AddLibraryGame(LibraryGame.Info gameInf, bool askToInstall)
-        {
-            var len = libraryPanel.Controls.Count;
-            for (int a = 0; a < len; a++)
-            {
-                var g = libraryPanel.Controls[a];
-                if (g is LibraryGame libGame && libGame.info.path == gameInf.path)
-                {
-                    Logger.Log($"Failed to add '{gameInf.path}' to the library, because an instance of it already exists.", Logger.Level.Warning);
-                    return false;
-                }
-            }
-
-            var game = LibraryGame.CreateLibraryGame(gameInf, askToInstall);
-            if (game == null)
-                return false;
             libraryPanel.Controls.Add(game);
             noLibGamesText.Visible = false;
             noLibGamesText2.Visible = false;
-            Logger.Log($"Added '{gameInf.path}' to the library.");
-            return true;
         }
 
-        public void RemoveLibraryGame(LibraryGame game)
+        public void RemoveLibraryGameUI(LibraryGameUI game)
         {
-            if (game == null)
-                return;
-
             libraryPanel.Controls.Remove(game);
             if (libraryPanel.Controls.Count == 0)
             {
                 noLibGamesText.Visible = true;
-                noLibGamesText2.Visible = false;
+                noLibGamesText2.Visible = true;
             }
-            Logger.Log($"Removed '{game.info.path}' from the library.");
-            game.Dispose();
         }
 
-        public void ClearLibrary()
+        public void ToggleTaskState(bool enabled)
         {
-            libraryPanel.Controls.Clear();
-            noLibGamesText.Visible = true;
-            Logger.Log($"Cleared the library.");
+            Size = new Size(Size.Width, enabled ? 770 : 685);
+        }
+
+        private void TaskProgressUpdate()
+        {
+            taskProgressBar.Value = Task.ProgressPercentage;
+        }
+
+        private void TaskStatusUpdate()
+        {
+            taskStatus.Text = Task.Status;
+        }
+
+        private void TaskEnd(Task task)
+        {
+            if (Task.tasksQueue.Count != 0 || (Task.CurrentTask != null && Task.CurrentTask != task))
+                return;
+
+            ToggleTaskState(false);
+        }
+
+        private void TaskStart(Task task)
+        {
+            taskName.Text = task.name;
+            ToggleTaskState(true);
+        }
+
+        private void CreateLibGameUI(LibraryGame game)
+        {
+            new LibraryGameUI(game);
         }
 
 
@@ -168,24 +84,22 @@ namespace MelonManager.Forms
         private void MelonManager_Load(object sender, EventArgs e)
         {
             versionText.Text = 'v' + Application.ProductVersion;
-            bool libCfgExists = File.Exists(libFilePath);
-            if (!libCfgExists)
-                File.Create(libFilePath).Dispose();
-            string libs = libCfgExists ? File.ReadAllText(libFilePath) : string.Empty;
-            gamesPaths = libs.Contains('\n') ? libs.Split('\n') : new string[] { libs };
-            foreach (var lib in gamesPaths)
-            {
-                if (lib == string.Empty) continue;
-                var info = LibraryGame.Info.Create(lib);
-                if (info == null)
-                    continue;
-                AddLibraryGame(info, false);
-            }
+            consoleButton.Enabled = !ConsoleUtils.IsConsoleOpen;
+            updateMMCheck.Checked = Program.config.config.autoUpdate;
+            pages.SelectedIndex = Program.config.config.mainFormPageIndex;
 
-            consoleButton.Enabled = !Utils.IsConsoleOpen;
-
-            updateMLCheck.Checked = Config.Values.autoUpdateML;
-            updateMMCheck.Checked = Config.Values.autoUpdateMM;
+            ToggleTaskState(Task.CurrentTask != null);
+            TaskProgressUpdate();
+            TaskStatusUpdate();
+            if (Task.CurrentTask != null)
+                taskName.Text = Task.CurrentTask.name;
+            Task.onTaskStarted.Subscribe(TaskStart, this);
+            Task.onStatusUpdate.Subscribe(TaskStatusUpdate, this);
+            Task.onProgressPercentageUpdate.Subscribe(TaskProgressUpdate, this);
+            Task.onTaskFinished.Subscribe(TaskEnd, this);
+            foreach (var g in LibraryGame.LibraryGames)
+                CreateLibGameUI(g);
+            LibraryGame.onGameAdded.Subscribe(CreateLibGameUI, this);
 
             Logger.Log("Form loaded.");
         }
@@ -197,24 +111,28 @@ namespace MelonManager.Forms
 
         private void addGameButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dia = new OpenFileDialog();
-            dia.Filter = "Unity Game Executable | *.exe";
-            dia.Title = "Select a Unity Game Executable";
-            if (dia.ShowDialog() != DialogResult.OK) return;
-            if (GetLibGameByPath(dia.FileName) != null)
+            var path = OpenUnityGameDialog.Open();
+            if (path == null)
+                return;
+            if (LibraryGame.GetLibGame(path) != null)
             {
-                CustomMessageBox.Error("This game is already in your library!");
+                CustomMessageBox.Error("This game already exists in your library!");
                 return;
             }
-            var info = LibraryGame.Info.Create(dia.FileName);
+            var info = GameInfo.Create(path);
             if (info == null)
                 return;
-            AddLibraryGame(info, true);
+            var g = LibraryGame.AddGame(info, false);
+            if (g.ml == null && new InstallerForm(g).ShowDialog() != DialogResult.OK)
+            {
+                g.Remove();
+                return;
+            }
         }
 
         private void MelonManager_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var tasksRunning = tasks.Count != 0;
+            var tasksRunning = Task.CurrentTask != null;
             if (tasksRunning)
             {
                 if (CustomMessageBox.Question("There are still tasks running in the background, closing the manager might cause unexpected issues.\nWould you like to close anyways?") != DialogResult.Yes)
@@ -223,18 +141,18 @@ namespace MelonManager.Forms
                     Logger.Log("Closing form aborted, tasks are still running");
                     return;
                 }
-                Logger.Log("Closing from while tasks are still running", Logger.Level.Warning);
+                Logger.Log("Closing form while tasks are still running", Logger.Level.Warning);
             }
-            TempPath.ClearTemp();
-            SaveLibrary();
-            Config.Save();
-            Logger.Log("Closing");
+            Logger.Log("Closing form");
+
+            Program.config.config.autoUpdate = updateMMCheck.Checked;
+            Program.config.config.mainFormPageIndex = pages.SelectedIndex;
         }
 
         private void consoleButton_Click(object sender, EventArgs e)
         {
             consoleButton.Enabled = false;
-            Utils.OpenConsole();
+            ConsoleUtils.OpenConsole();
             Console.Write(Logger.GetWholeLog());
             Logger.Log("You have opened the debug console. Everything written to this console gets saved to the latest log file.", Logger.Level.Warning);
         }
@@ -246,32 +164,32 @@ namespace MelonManager.Forms
 
         private void mlDiscordLink_Click(object sender, EventArgs e)
         {
-            Process.Start(ExternalLinks.Discord);
+            Process.Start(Constants.Discord);
         }
 
         private void mlWikiLink_Click(object sender, EventArgs e)
         {
-            Process.Start(ExternalLinks.Wiki);
+            Process.Start(Constants.Wiki);
         }
 
         private void mlGithubLink_Click(object sender, EventArgs e)
         {
-            Process.Start(ExternalLinks.MLGitHub);
+            Process.Start(Constants.MLGitHub);
         }
 
         private void lgTwitterLink_Click(object sender, EventArgs e)
         {
-            Process.Start(ExternalLinks.Twitter);
+            Process.Start(Constants.Twitter);
         }
 
         private void lgGithubLink_Click(object sender, EventArgs e)
         {
-            Process.Start(ExternalLinks.LavaGang);
+            Process.Start(Constants.LavaGang);
         }
 
         private void mmGithubLink_Click(object sender, EventArgs e)
         {
-            Process.Start(ExternalLinks.MMGitHub);
+            Process.Start(Constants.MMGitHub);
         }
 
         private void clearDataButton_Click(object sender, EventArgs e)
@@ -282,19 +200,19 @@ namespace MelonManager.Forms
             Program.ClearData();
         }
 
-        private void pages_SelectedIndexChanged(object sender, EventArgs e)
+        private void slidyDevLink_Click(object sender, EventArgs e)
         {
-            Config.Values.lastPage = pages.SelectedIndex;
+            Process.Start(Constants.SlidyDevGit);
         }
 
-        private void updateMMCheck_CheckedChanged(object sender, EventArgs e)
+        private void samboyLink_Click(object sender, EventArgs e)
         {
-            Config.Values.autoUpdateMM = updateMMCheck.Checked;
+            Process.Start(Constants.SamboyGit);
         }
 
-        private void updateMLCheck_CheckedChanged(object sender, EventArgs e)
+        private void lavaGangLink_Click(object sender, EventArgs e)
         {
-            Config.Values.autoUpdateML = updateMLCheck.Checked;
+            Process.Start(Constants.LavaGang);
         }
         #endregion
     }

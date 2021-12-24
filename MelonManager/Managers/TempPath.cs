@@ -5,7 +5,7 @@ namespace MelonManager.Managers
 {
     public static class TempPath
     {
-        public static readonly string tempFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\Temp\MelonManager");
+        public static readonly string tempFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"AppData\Local\Temp\" + BuildInfo.Name);
         static TempPath()
         {
             ClearTemp();
