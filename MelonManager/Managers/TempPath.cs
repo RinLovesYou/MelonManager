@@ -24,7 +24,11 @@ namespace MelonManager.Managers
             VerifyPath();
             foreach (var f in Directory.EnumerateFiles(tempFolder))
             {
-                File.Delete(f);
+                try
+                {
+                    File.Delete(f);
+                }
+                catch { }
             }
         }
 

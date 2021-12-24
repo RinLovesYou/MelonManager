@@ -36,7 +36,7 @@ namespace MelonManager.Forms
 
         private void InstallingStateChanged()
         {
-            var ver = game.Installing || game.ml == null ? -1 : (MelonLoaderGitHub.LatestVersion == null ? -1 : UtilsBox.CompareVersions(MelonLoaderGitHub.LatestVersion.Version, game.ml.version)); // Forgive me for this
+            var ver = game.Installing || game.ml == null ? -1 : (GitHub.LatestVersion == null ? -1 : UtilsBox.CompareVersions(GitHub.LatestVersion.Version, game.ml.version)); // Forgive me for this
             updateButton.Enabled = ver > 0;
             updateButton.Text = game.Installing ? "Installing" : (ver == 0 ? "Up-To-Date" : (ver == -1 ? "Offline" : "Update"));
             var enabled = !game.Installing && game.ml != null;
@@ -84,7 +84,7 @@ namespace MelonManager.Forms
 
         private void updateButton_Click(object sender, EventArgs e)
         {
-            game.InstallML(MelonLoaderGitHub.LatestVersion.Version);
+            game.InstallML(GitHub.LatestVersion.Version);
         }
     }
 }

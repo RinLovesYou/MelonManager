@@ -7,11 +7,11 @@ using System.Text.Json.Serialization;
 
 namespace MelonLoader.Interfaces
 {
-    public static class MelonLoaderGitHub
+    public static class GitHub
     {
         private static readonly HttpClient Client = new HttpClient();
 
-        static MelonLoaderGitHub()
+        static GitHub()
         {
             Client.DefaultRequestHeaders.Add("User-Agent", BuildInfo.Name + " (https://melonwiki.xyz)");
         }
@@ -52,10 +52,10 @@ namespace MelonLoader.Interfaces
 
         public static string GetLatestManagerVersion()
         {
-            List<GithubApiRelease> githubApiReleases = Client.GetFromJsonAsync<List<GithubApiRelease>>(Constants.SelfReleases).Result;
+            List<GithubApiRelease> githubApiReleases = Client.GetFromJsonAsync<List<GithubApiRelease>>(Constants.SelfReleasesGitApi).Result;
             githubApiReleases ??= new List<GithubApiRelease>();
 
-            return githubApiReleases.FirstOrDefault()?.TagName ?? "unknown";
+            return githubApiReleases.FirstOrDefault()?.TagName ?? string.Empty;
         }
 
         public class ReleaseData

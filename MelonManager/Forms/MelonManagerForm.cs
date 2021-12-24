@@ -74,6 +74,14 @@ namespace MelonManager.Forms
             ToggleTaskState(true);
         }
 
+        private void TaskFail(Task task, string message, Exception ex)
+        {
+            var msg = $"Task '{task.name}' failed: '{message}'";
+            if (ex != null)
+                msg += $"\n\n{ex}";
+            CustomMessageBox.Error(msg);
+        }
+
         private void CreateLibGameUI(LibraryGame game)
         {
             new LibraryGameUI(game);
@@ -84,6 +92,7 @@ namespace MelonManager.Forms
         private void MelonManager_Load(object sender, EventArgs e)
         {
             versionText.Text = 'v' + Application.ProductVersion;
+            updateBtn.Visible = !Program.latestVersion;
             consoleButton.Enabled = !ConsoleUtils.IsConsoleOpen;
             updateMMCheck.Checked = Program.config.config.autoUpdate;
             pages.SelectedIndex = Program.config.config.mainFormPageIndex;
@@ -96,6 +105,7 @@ namespace MelonManager.Forms
             Task.onTaskStarted.Subscribe(TaskStart, this);
             Task.onStatusUpdate.Subscribe(TaskStatusUpdate, this);
             Task.onProgressPercentageUpdate.Subscribe(TaskProgressUpdate, this);
+            Task.onTaskFailed.Subscribe(TaskFail, this);
             Task.onTaskFinished.Subscribe(TaskEnd, this);
             foreach (var g in LibraryGame.LibraryGames)
                 CreateLibGameUI(g);
@@ -106,7 +116,13 @@ namespace MelonManager.Forms
 
         private void updateBtn_Click(object sender, EventArgs e)
         {
-
+            var tasksRunning = Task.CurrentTask != null;
+            if (tasksRunning)
+            {
+                CustomMessageBox.Error("Cannot install an update while a task is running.");
+                return;
+            }
+            Program.Update();
         }
 
         private void addGameButton_Click(object sender, EventArgs e)
@@ -135,7 +151,7 @@ namespace MelonManager.Forms
             var tasksRunning = Task.CurrentTask != null;
             if (tasksRunning)
             {
-                if (CustomMessageBox.Question("There are still tasks running in the background, closing the manager might cause unexpected issues.\nWould you like to close anyways?") != DialogResult.Yes)
+                if (CustomMessageBox.Question("There is an active task still running, closing the manager might cause unexpected issues.\nWould you like to close anyways?") != DialogResult.Yes)
                 {
                     e.Cancel = true;
                     Logger.Log("Closing form aborted, tasks are still running");

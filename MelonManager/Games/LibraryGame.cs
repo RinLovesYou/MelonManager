@@ -315,7 +315,7 @@ namespace MelonManager.Games
             if (version[0] != 'v')
                 version = 'v' + version;
 
-            if (!MelonLoaderGitHub.releasesTbl.Any(x => x.Version == version))
+            if (!GitHub.releasesTbl.Any(x => x.Version == version))
             {
                 task.FailTask("Invalid version selected.");
                 return;
@@ -369,8 +369,8 @@ namespace MelonManager.Games
             }
             catch (Exception ex)
             {
-                task.FailTask("Failed to download MelonLoader " + version + ".", ex);
                 wc.Dispose();
+                task.FailTask("Failed to download MelonLoader " + version + ".", ex);
                 return;
             }
         }

@@ -24,7 +24,7 @@ namespace MelonManager.Forms
             this.game = game;
 
             var currentVer = game.ml.version;
-            mlVersionSelect.Items.AddRange(MelonLoaderGitHub.releasesTbl.Where(x => !(game.info.x86 && x.Windows_x86 == null)).Select(x => x.Version).ToArray());
+            mlVersionSelect.Items.AddRange(GitHub.releasesTbl.Where(x => !(game.info.x86 && x.Windows_x86 == null)).Select(x => x.Version).ToArray());
             if (!mlVersionSelect.Items.Contains(currentVer))
             {
                 mlVersionSelect.Items.Insert(0, currentVer);
@@ -42,7 +42,7 @@ namespace MelonManager.Forms
 
         private void mlVersionSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool enableInstall = MelonLoaderGitHub.LatestVersion != null && UtilsBox.CompareVersions(MelonLoaderGitHub.LatestVersion.Version, mlVersionSelect.SelectedItem.ToString()) != 2;
+            bool enableInstall = GitHub.LatestVersion != null && UtilsBox.CompareVersions(GitHub.LatestVersion.Version, mlVersionSelect.SelectedItem.ToString()) != 2;
             installButton.Enabled = enableInstall;
 
             var ver =  UtilsBox.CompareVersions(mlVersionSelect.SelectedItem.ToString(), game.ml.version);

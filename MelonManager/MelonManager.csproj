@@ -105,6 +105,12 @@
     <Compile Include="Forms\MelonManagerForm.Designer.cs">
       <DependentUpon>MelonManagerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MiniForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MiniForm.Designer.cs">
+      <DependentUpon>MiniForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Mods.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +142,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\BuildInfo.cs" />
+    <Compile Include="Updater\UpdateStateManager.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Tasks\Task.cs" />
     <Compile Include="Utils\ConsoleUtils.cs" />
@@ -157,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MelonManagerForm.resx">
       <DependentUpon>MelonManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MiniForm.resx">
+      <DependentUpon>MiniForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Mods.resx">
       <DependentUpon>Mods.cs</DependentUpon>

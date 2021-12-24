@@ -19,7 +19,7 @@ namespace MelonManager.Forms
             gameName.Text = game.info.name;
             gameName.Location = new Point((Size.Width - this.gameName.Size.Width) / 2, 7);
 
-            mlVersionSelect.Items.AddRange(MelonLoaderGitHub.releasesTbl.Where(x => !(game.info.x86 && x.Windows_x86 == null)).Select(x => x.Version).ToArray());
+            mlVersionSelect.Items.AddRange(GitHub.releasesTbl.Where(x => !(game.info.x86 && x.Windows_x86 == null)).Select(x => x.Version).ToArray());
             mlVersionSelect.SelectedIndex = 0;
         }
 

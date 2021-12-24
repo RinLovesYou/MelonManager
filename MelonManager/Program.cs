@@ -12,6 +12,7 @@ using MelonLoader.Managers;
 using MelonManager.Games;
 using MelonManager.Utils;
 using MelonManager.Configs;
+using MelonManager.Updater;
 
 namespace MelonManager
 {
@@ -19,6 +20,7 @@ namespace MelonManager
     {
         public static readonly string localFilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Lava Gang\" + BuildInfo.Name);
         public static readonly Config<MainConfig> config = new Config<MainConfig>("Main");
+        public static bool latestVersion;
 
         [STAThread]
         static void Main(string[] args)
@@ -26,15 +28,25 @@ namespace MelonManager
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var inst = CheckSingleInstance();
-            if (inst.Count != 0)
+            var arg = args.FirstOrDefault(x => x.StartsWith("-update"));
+            if (arg != null && arg.Length > 8)
             {
-                if (CustomMessageBox.Question($"There {"is an instance".Plural("are multiple instances", inst.Count)} of {BuildInfo.Name} already running,\nwould you like to close {"it".Plural("them", inst.Count)}?") != DialogResult.Yes)
-                    return;
-                if (!inst.Kill())
+                UpdateStateManager.Start(arg[8..].Replace("\"", string.Empty));
+                return;
+            }
+
+            if (!args.Contains("-dontchecksingleinstance"))
+            {
+                var inst = GetOtherInstances();
+                if (inst.Count != 0)
                 {
-                    CustomMessageBox.Error("Failed to kill an instance of " + BuildInfo.Name + "!\nTry doing it manually using the Task Manager or run" + BuildInfo.Name + " as admin.");
-                    return;
+                    if (CustomMessageBox.Question($"There {"is an instance".Plural("are multiple instances", inst.Count)} of {BuildInfo.Name} already running,\nwould you like to close {"it".Plural("them", inst.Count)}?") != DialogResult.Yes)
+                        return;
+                    if (!inst.Kill())
+                    {
+                        CustomMessageBox.Error("Failed to kill an instance of " + BuildInfo.Name + "!\nTry doing it manually using the Task Manager or run" + BuildInfo.Name + " as admin.");
+                        return;
+                    }
                 }
             }
 
@@ -44,9 +56,25 @@ namespace MelonManager
             Directory.CreateDirectory(localFilesPath);
             Logger.Initialize();
 
+            var ver = GitHub.GetLatestManagerVersion();
+            if (ver != string.Empty)
+            {
+                var verComp = UtilsBox.CompareVersions(BuildInfo.Version, ver);
+
+                latestVersion = verComp != 2;
+            }
+            else
+                latestVersion = true;
+
+            if (!latestVersion && config.config.autoUpdate)
+            {
+                Update();
+                return;
+            }
+
             AppDomain.CurrentDomain.UnhandledException += (s, ex) => HandleException((Exception)ex.ExceptionObject);
             Application.ThreadException += (s, ex) => HandleException(ex.Exception);
-            MelonLoaderGitHub.Refresh();
+            GitHub.Refresh();
 
             Application.Run(new MelonManagerForm());
 
@@ -55,19 +83,37 @@ namespace MelonManager
             config.Save();
         }
 
-        public static List<Process> CheckSingleInstance()
+        public static void KillOtherInstances()
+        {
+            GetOtherInstances().Kill();
+        }
+
+        public static void Update()
+        {
+            var tempCopy = Path.Combine(TempPath.tempFolder, BuildInfo.Name + ".exe");
+            var currentProc = Process.GetCurrentProcess();
+            var currentPath = currentProc.MainModule.FileName;
+            File.Copy(currentPath, tempCopy);
+            Application.Exit();
+            Process.Start(tempCopy, $"-update \"{currentPath}\"");
+        }
+
+        public static List<Process> GetOtherInstances() // God, forgive me for this
         {
             var currentProc = Process.GetCurrentProcess();
+            var id = currentProc.Id;
             var mainModPath = currentProc.MainModule.FileName;
             var mainInf = FileVersionInfo.GetVersionInfo(mainModPath);
+            var name = mainInf.ProductName;
+            var comp = mainInf.CompanyName;
 
-            var procs = Process.GetProcessesByName(currentProc.ProcessName);
+            var procs = Process.GetProcesses();
             var result = new List<Process>();
             foreach (Process proc in procs)
             {
                 try
                 {
-                    if (proc.Id == currentProc.Id)
+                    if (proc.Id == id)
                         continue;
                     var mod = proc.MainModule.FileName;
                     if (mainModPath == mod)
@@ -75,8 +121,10 @@ namespace MelonManager
                         result.Add(proc);
                         continue;
                     }
+                    if (mod.StartsWith("C:\\Windows"))
+                        continue;
                     var inf = FileVersionInfo.GetVersionInfo(mod);
-                    if (inf.CompanyName == mainInf.CompanyName)
+                    if (inf.ProductName == name && inf.CompanyName == comp)
                     {
                         result.Add(proc);
                         continue;
