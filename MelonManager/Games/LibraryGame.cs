@@ -223,29 +223,37 @@ namespace MelonManager.Games
                 return null;
             }
 
-            if (invalidsList.Contains(melonPath))
+            if (!newMelon && invalidsList.Contains(melonPath))
                 invalidsList.Remove(melonPath);
 
-            list.Add(melon);
+            if (!newMelon)
+                list.Add(melon);
             return melon;
         }
 
         public void AddMelon(string path, bool isPlugin)
         {
+            var melonsPath = Path.Combine(info.dir, isPlugin ? "Plugins" : "Mods");
+            var mel = Path.GetFileName(path);
+            var destination = Path.Combine(melonsPath, mel);
+            var inSamePath = Path.GetFullPath(path) == destination;
+
+            if (inSamePath || File.Exists(destination))
+            {
+                CustomMessageBox.Error($"A melon with the same file name '{mel}' already exists!");
+                Logger.Log($"A melon with the same file name '{mel}' already exists!", Logger.Level.Warning);
+                return;
+            }
+
             var melon = VerifyMelon(path, isPlugin, true);
             if (melon == null)
                 return;
 
-            var melonsPath = Path.Combine(info.dir, isPlugin ? "Plugins" : "Mods");
-            var destination = Path.Combine(melonsPath, Path.GetFileName(path));
-            if (Path.GetFullPath(path) != destination)
-            {
-                if (File.Exists(destination))
-                    destination = destination.Remove(destination.Length - 4) + " " + new Random().Next(int.MaxValue).ToString() + Path.GetExtension(destination);
+            File.Copy(path, destination);
+            melon.path = destination;
 
-                File.Copy(path, destination);
-                melon.path = destination;
-            }
+            var list = isPlugin ? plugins : mods;
+            list.Add(melon);
         }
 
         public void Remove()

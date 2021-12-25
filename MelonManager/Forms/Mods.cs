@@ -16,6 +16,7 @@ namespace MelonManager.Forms
         private List<Melon> Melons => isEditingPlugins ? game.plugins : game.mods;
         public readonly LibraryGame game;
         private readonly bool isEditingPlugins;
+        public Melon selectedMelon;
 
         public Mods(LibraryGame game, bool isEditingPlugins)
         {
@@ -32,11 +33,17 @@ namespace MelonManager.Forms
 
         private void MelonsRefreshed()
         {
+            var idx = modsList.SelectedIndex;
+
             modsList.Items.Clear();
             foreach (var m in Melons)
                 modsList.Items.Add(m.name);
 
+            if (idx < modsList.Items.Count)
+                modsList.SelectedIndex = idx;
+
             InvalidMelons((isEditingPlugins ? game.invalidPlugins : game.invalidMods).Count);
+            HighlightMelon(modsList.SelectedIndex == -1 ? null : Melons[modsList.SelectedIndex]);
         }
 
         private void InvalidMelons(int count)
@@ -51,11 +58,12 @@ namespace MelonManager.Forms
             }
         }
 
-        public void RemoveMelon(int index)
+        public void RemoveMelon()
         {
-            var melon = Melons[index];
-            if (File.Exists(melon.path))
-                File.Delete(melon.path);
+            if (selectedMelon == null)
+                return;
+            if (File.Exists(selectedMelon.path))
+                File.Delete(selectedMelon.path);
             game.RefreshMelons(isEditingPlugins);
         }
 
@@ -66,11 +74,14 @@ namespace MelonManager.Forms
 
         public void HighlightMelon(Melon melon)
         {
-            metroPanel2.Enabled = melon != null;
-            modName.Visible = melon != null;
-            modVersion.Visible = melon != null;
-            modAuthor.Visible = melon != null;
-            if (melon == null)
+            selectedMelon = melon;
+            var isMelon = melon != null;
+            metroPanel2.Enabled = isMelon;
+            removeButton.Visible = isMelon;
+            modName.Visible = isMelon;
+            modVersion.Visible = isMelon;
+            modAuthor.Visible = isMelon;
+            if (!isMelon)
                 return;
             modName.Text = melon.name;
             modVersion.Text = "v" + melon.version;
@@ -79,9 +90,7 @@ namespace MelonManager.Forms
 
         private void modsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (modsList.SelectedIndex < 0) 
-                return;
-            Melon melon = Melons[modsList.SelectedIndex];
+            Melon melon = modsList.SelectedIndex == -1 ? null : Melons[modsList.SelectedIndex];
             HighlightMelon(melon);
         }
 
@@ -89,7 +98,7 @@ namespace MelonManager.Forms
         {
             if (CustomMessageBox.Question($"Are you sure you want to remove '{(string)modsList.SelectedItem}'?") != DialogResult.Yes) 
                 return;
-            RemoveMelon(modsList.SelectedIndex);
+            RemoveMelon();
         }
 
         private void openExplorer_Click(object sender, EventArgs e)
