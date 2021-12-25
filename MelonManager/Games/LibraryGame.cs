@@ -2,7 +2,6 @@
 using MelonLoader.Managers;
 using MelonManager.Configs;
 using MelonManager.Forms;
-using MelonManager.Games;
 using MelonManager.Managers;
 using MelonManager.MelonLoader;
 using MelonManager.Melons;
@@ -15,7 +14,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace MelonManager.Games
 {

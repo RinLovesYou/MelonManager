@@ -6,7 +6,6 @@ using MelonManager.Forms;
 using MelonManager.Managers;
 using MelonLoader.Interfaces;
 using System.Diagnostics;
-using MelonLoader;
 using System.Collections.Generic;
 using MelonLoader.Managers;
 using MelonManager.Games;

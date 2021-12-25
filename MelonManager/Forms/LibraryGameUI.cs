@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using MetroFramework.Controls;
-using System.IO;
-using System.Diagnostics;
-using MelonManager.Managers;
 using MelonManager.Games;
 using MelonManager.Utils;
 using MelonLoader.Interfaces;

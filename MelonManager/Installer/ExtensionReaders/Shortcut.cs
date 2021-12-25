@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Linq;
-
-namespace MelonManager.Installer.ExtensionReaders
+﻿namespace MelonManager.Installer.ExtensionReaders
 {
     public class Shortcut : ExtensionReaderBase
     {

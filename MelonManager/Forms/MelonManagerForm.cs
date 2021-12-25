@@ -1,15 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using MelonManager.Managers;
-using MelonLoader.Managers;
 using MetroFramework.Forms;
 using System.Diagnostics;
-using MelonLoader;
-using System.Text;
-using System.Collections.Generic;
-using System.Threading;
 using MelonManager.Tasks;
 using MelonManager.Games;
 using MelonManager.Utils;
