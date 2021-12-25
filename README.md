@@ -1,5 +1,5 @@
 <p align="left">
-  <a href="#"><img src="https://raw.githubusercontent.com/LavaGang/MelonLoader.Installer/master/Resources/ML_Logo.png"></a>
+  <a href="#"><img src="https://raw.githubusercontent.com/SlidyDev/MelonManager/master/MelonManager/Resources/Melon 170.png"></a>
 </p>
 
 ---
