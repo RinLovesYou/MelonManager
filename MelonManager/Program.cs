@@ -28,25 +28,35 @@ namespace MelonManager
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var arg = args.FirstOrDefault(x => x.StartsWith("-update"));
-            if (arg != null && arg.Length > 8)
+            var currentProc = Process.GetCurrentProcess();
+            var currentPath = currentProc.MainModule.FileName;
+
+            var arg = Array.IndexOf(args, "-update");
+            if (arg != -1 && arg + 1 < args.Length)
             {
-                UpdateStateManager.Start(arg[8..].Replace("\"", string.Empty));
+                KillOtherInstances();
+                Logger.Initialize();
+                UpdateStateManager.Start(args[arg + 1]);
                 return;
             }
 
-            if (!args.Contains("-dontchecksingleinstance"))
+            if (Path.GetFileNameWithoutExtension(currentPath) != BuildInfo.Name)
+            {
+                CustomMessageBox.Error($"Cannot start {BuildInfo.Name} with a different file name.\nRenaming {BuildInfo.Name}'s executable might cause unexpected issues in the future.\nPlease rename it back to '{BuildInfo.Name}'.");
+                return;
+            }
+
+            if (args.Contains("-killotherinstances"))
+            {
+                KillOtherInstances();
+            }
+            else
             {
                 var inst = GetOtherInstances();
                 if (inst.Count != 0)
                 {
-                    if (CustomMessageBox.Question($"There {"is an instance".Plural("are multiple instances", inst.Count)} of {BuildInfo.Name} already running,\nwould you like to close {"it".Plural("them", inst.Count)}?") != DialogResult.Yes)
-                        return;
-                    if (!inst.Kill())
-                    {
-                        CustomMessageBox.Error("Failed to kill an instance of " + BuildInfo.Name + "!\nTry doing it manually using the Task Manager or run" + BuildInfo.Name + " as admin.");
-                        return;
-                    }
+                    CustomMessageBox.Error($"Cannot start another instance of {BuildInfo.Name} while another one is still running.");
+                    return;
                 }
             }
 
@@ -54,7 +64,6 @@ namespace MelonManager
                 ConsoleUtils.OpenConsole();
 
             Directory.CreateDirectory(localFilesPath);
-            Logger.Initialize();
 
             var ver = GitHub.GetLatestManagerVersion();
             if (ver != string.Empty)
@@ -90,24 +99,20 @@ namespace MelonManager
 
         public static void Update()
         {
-            var tempCopy = Path.Combine(TempPath.tempFolder, BuildInfo.Name + ".exe");
             var currentProc = Process.GetCurrentProcess();
+            var tempCopy = Path.Combine(TempPath.tempFolder, BuildInfo.Name + ".exe");
             var currentPath = currentProc.MainModule.FileName;
             File.Copy(currentPath, tempCopy);
             Application.Exit();
             Process.Start(tempCopy, $"-update \"{currentPath}\"");
         }
 
-        public static List<Process> GetOtherInstances() // God, forgive me for this
+        public static List<Process> GetOtherInstances()
         {
             var currentProc = Process.GetCurrentProcess();
             var id = currentProc.Id;
-            var mainModPath = currentProc.MainModule.FileName;
-            var mainInf = FileVersionInfo.GetVersionInfo(mainModPath);
-            var name = mainInf.ProductName;
-            var comp = mainInf.CompanyName;
 
-            var procs = Process.GetProcesses();
+            var procs = Process.GetProcessesByName(BuildInfo.Name);
             var result = new List<Process>();
             foreach (Process proc in procs)
             {
@@ -115,20 +120,7 @@ namespace MelonManager
                 {
                     if (proc.Id == id)
                         continue;
-                    var mod = proc.MainModule.FileName;
-                    if (mainModPath == mod)
-                    {
-                        result.Add(proc);
-                        continue;
-                    }
-                    if (mod.StartsWith("C:\\Windows"))
-                        continue;
-                    var inf = FileVersionInfo.GetVersionInfo(mod);
-                    if (inf.ProductName == name && inf.CompanyName == comp)
-                    {
-                        result.Add(proc);
-                        continue;
-                    }
+                    result.Add(proc);
                 }
                 catch { }
             }

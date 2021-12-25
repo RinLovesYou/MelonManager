@@ -25,7 +25,7 @@ namespace MelonManager.Updater
             if (task.Failed)
                 return;
 
-            Process.Start(path, "-dontchecksingleinstance");
+            Process.Start(path, "-killotherinstances");
         }
 
         private static void InstallTask(Task task)
@@ -79,9 +79,10 @@ namespace MelonManager.Updater
 
                 File.Copy(mlTempPath, path);
             }
-            catch
+            catch (Exception ex)
             {
-                File.Copy(mlTempPath, path.Remove(path.Length - 4) + " " + new Random().Next(int.MaxValue).ToString()); // Lmao idk
+                task.FailTask($"Failed to copy the new version of {BuildInfo.Name} to the path of the old version.", ex);
+                return;
             }
 
             task.FinishTask();
