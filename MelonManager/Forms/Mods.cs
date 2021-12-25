@@ -107,7 +107,9 @@ namespace MelonManager.Forms
                 return;
 
             foreach (var f in dia.FileNames)
-                game.VerifyMelon(f, isEditingPlugins, true);
+                game.AddMelon(f, isEditingPlugins);
+
+            MelonsRefreshed();
         }
 
         private void removeInvalidBtn_Click(object sender, EventArgs e)

@@ -166,7 +166,7 @@ namespace MelonManager.Games
             Logger.Log($"All {(plugins ? "plugins" : "mods")} from '{info}' refreshed!");
         }
 
-        public void VerifyMelon(string melonPath, bool isPlugin, bool newMelon = false)
+        private Melon VerifyMelon(string melonPath, bool isPlugin, bool newMelon = false)
         {
             melonPath = Path.GetFullPath(melonPath);
             var str = File.OpenRead(melonPath);
@@ -183,7 +183,7 @@ namespace MelonManager.Games
 
                 if (newMelon)
                     CustomMessageBox.Error($"The {(isPlugin ? "plugin" : "mod")} '{existingMelon.name}' is already installed!");
-                return;
+                return existingMelon;
             }
 
             str.Seek(0, SeekOrigin.Begin);
@@ -196,7 +196,7 @@ namespace MelonManager.Games
                 if (!newMelon && !invalidsList.Contains(melonPath))
                     invalidsList.Add(melonPath);
 
-                return;
+                return null;
             }
             if (!melon.CheckCompatibility(info))
             {
@@ -209,7 +209,7 @@ namespace MelonManager.Games
                 else if (!invalidsList.Contains(melonPath))
                     invalidsList.Add(melonPath);
 
-                return;
+                return null;
             }
             if (melon.isPlugin != isPlugin)
             {
@@ -220,13 +220,32 @@ namespace MelonManager.Games
                 else if (!invalidsList.Contains(melonPath))
                     invalidsList.Add(melonPath);
 
-                return;
+                return null;
             }
 
             if (invalidsList.Contains(melonPath))
                 invalidsList.Remove(melonPath);
 
             list.Add(melon);
+            return melon;
+        }
+
+        public void AddMelon(string path, bool isPlugin)
+        {
+            var melon = VerifyMelon(path, isPlugin, true);
+            if (melon == null)
+                return;
+
+            var melonsPath = Path.Combine(info.dir, isPlugin ? "Plugins" : "Mods");
+            var destination = Path.Combine(melonsPath, Path.GetFileName(path));
+            if (Path.GetFullPath(path) != destination)
+            {
+                if (File.Exists(destination))
+                    destination = destination.Remove(destination.Length - 4) + " " + new Random().Next(int.MaxValue).ToString() + Path.GetExtension(destination);
+
+                File.Copy(path, destination);
+                melon.path = destination;
+            }
         }
 
         public void Remove()
