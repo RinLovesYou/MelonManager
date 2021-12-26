@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MelonManager", "MelonManager\MelonManager.csproj", "{600543C3-AE7E-4AC7-8540-D4C110BE121A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MelonManagerAvalonia", "MelonManagerAvalonia\MelonManagerAvalonia.csproj", "{8CBFCCCF-6AF9-46AB-A776-02EC39601916}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{600543C3-AE7E-4AC7-8540-D4C110BE121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{600543C3-AE7E-4AC7-8540-D4C110BE121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{600543C3-AE7E-4AC7-8540-D4C110BE121A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CBFCCCF-6AF9-46AB-A776-02EC39601916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CBFCCCF-6AF9-46AB-A776-02EC39601916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CBFCCCF-6AF9-46AB-A776-02EC39601916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CBFCCCF-6AF9-46AB-A776-02EC39601916}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

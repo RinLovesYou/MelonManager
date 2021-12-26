@@ -1,0 +1,17 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:MelonManagerAvalonia"
+             x:Class="MelonManagerAvalonia.App">
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme Mode="Dark"/>
+    </Application.Styles>
+    
+    <Application.Resources>
+        <SolidColorBrush x:Key="TabItemHeaderSelectedPipeFill" Color="Red"/>
+        <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="#1a1a1a"/>
+    </Application.Resources>
+</Application>

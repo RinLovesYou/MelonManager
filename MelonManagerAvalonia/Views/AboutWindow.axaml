@@ -1,0 +1,109 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MelonManagerAvalonia.ViewModels"
+             x:Class="MelonManagerAvalonia.Views.AboutWindow"
+             FontSize="13" FontWeight="Light">
+    <Design.DataContext>
+        <viewModels:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Margin="10" TextAlignment="Center" Text="{Binding AboutText}"/>
+        <Canvas Grid.Row="1" Background="Gray"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Margin="10, 0, 10, 10">
+                <TextBlock Text="MelonLoader" Margin="5, 20, 0, 5"/>
+                <Button Name="MlDiscordButton" Background="#11FFFFFF" HorizontalAlignment="Stretch" Command="{Binding OpenMlDiscord }">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Discord.png" Width="25" Height="25"></Image>
+                            <TextBlock Text="Discord" VerticalAlignment="Center" Margin="5, 0, 0, 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Name="MlWikiButton" Background="#11FFFFFF" HorizontalAlignment="Stretch" Command="{Binding OpenMlWiki }">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/ML_Icon_small.png" Width="25" Height="25"></Image>
+                            <TextBlock Text="MelonWiki" VerticalAlignment="Center" Margin="5, 0, 0, 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Name="MlGithubButton" Background="#11FFFFFF" HorizontalAlignment="Stretch" Command="{Binding OpenMlGithub }">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/GitHub_Dark.png" Width="25" Height="25"></Image>
+                            <TextBlock Text="Github" VerticalAlignment="Center" Margin="5, 0, 0, 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <TextBlock Text="MelonManager" Margin="5, 20, 0, 5"/>
+                <Button Name="ManagerGithubButton" Background="#11FFFFFF" HorizontalAlignment="Stretch" Command="{Binding OpenMelonManagerGithub }">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/GitHub_Dark.png" Width="25" Height="25"></Image>
+                            <TextBlock Text="Github" VerticalAlignment="Center" Margin="5, 0, 0, 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Margin="10, 0, 10, 10">
+                <TextBlock Text="LavaGang" Margin="5, 20, 0, 5"/>
+                <Button Name="LavaGangTwitterButton" Background="#11FFFFFF" HorizontalAlignment="Stretch" Command="{Binding OpenLavaGangTwitter }">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/Twitter.png" Width="25" Height="25"></Image>
+                            <TextBlock Text="Twitter" VerticalAlignment="Center" Margin="5, 0, 0, 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Name="LavaGangGithubButton" Background="#11FFFFFF" HorizontalAlignment="Stretch" Command="{Binding OpenLavaGangGithub }">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Assets/GitHub_Dark.png" Width="25" Height="25"></Image>
+                            <TextBlock Text="Github" VerticalAlignment="Center" Margin="5, 0, 0, 0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            
+        </Grid>
+        <Canvas Grid.Row="3" Background="Gray"/>
+        <StackPanel Grid.Row="4" Margin="10">
+            <TextBlock Text="Credits:"></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="SlidyDevButton" Foreground="Gray" FontSize="13" Content="SlidyDev" Background="Transparent" Width="100" Command="{Binding OpenSlidyDev }"/>
+                <TextBlock Text="Main Developer of the Manager" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="SamBoyButton" Foreground="Gray" FontSize="13" Content="Samboy" Background="Transparent" Width="100" Command="{Binding OpenSamboy }"/>
+                <TextBlock Text="Developer of the Manager" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="RinButton" Foreground="Gray" FontSize="13" Content="RinLovesYou" Background="Transparent" Width="100" Command="{Binding OpenRin }"/>
+                <TextBlock Text="Cross-Plat Support and UI Work" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="LavaGangButton" Foreground="Gray" FontSize="13" Content="LavaGang" Background="Transparent" Width="100" Command="{Binding OpenLavaGangGithub }"/>
+                <TextBlock Text="The Team behind MelonLoader" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

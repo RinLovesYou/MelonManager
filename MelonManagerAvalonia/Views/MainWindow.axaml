@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MelonManagerAvalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Width="650"
+        Height="675"
+        x:Class="MelonManagerAvalonia.Views.MainWindow"
+        Icon="/Assets/Icon.ico"
+        Title="MelonManager">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    <Window.Styles>
+        <Style Selector="TabItem">
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style Selector="TabItem /template/Border#PART_SelectedPipe">
+            <Setter Property="Background" Value="Red"></Setter>
+        </Style>
+    </Window.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Canvas Grid.Row="0" Background="#21ff5c"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Image Source="/Assets/Melon_170.png" Width="35" Margin="5, 5, 0, 0"/>
+            <Image Source="/Assets/MLM_Text.png" Height="30" Margin="5, 5, 0, 0"/>
+            <TextBlock Text="{Binding VersionNumber}" VerticalAlignment="Bottom" Margin="4, 0, 0, 6" Foreground="Gray"></TextBlock>
+        </StackPanel>
+        <Canvas Grid.Row="2" HorizontalAlignment="Stretch" Height="2" Background="Gray" Margin="10, 0, 10, 540"/>
+        <TabControl Grid.Row="2">
+            <TabItem Header="Library">
+                
+            </TabItem>
+            <TabItem Header="Packages">
+                <TextBlock Text="Hello"></TextBlock>
+            </TabItem>
+            <TabItem Header="Settings">
+                
+            </TabItem>
+            <TabItem Header="About">
+                <UserControl Name="AboutPageView" Content="{Binding AboutPage}"></UserControl>
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+</Window>
