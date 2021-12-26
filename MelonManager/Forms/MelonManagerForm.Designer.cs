@@ -51,7 +51,6 @@
             this.updateMMCheck = new MetroFramework.Controls.MetroCheckBox();
             this.clearDataButton = new System.Windows.Forms.Button();
             this.localDataButton = new System.Windows.Forms.Button();
-            this.consoleButton = new System.Windows.Forms.Button();
             this.metroTabPage5 = new MetroFramework.Controls.MetroTabPage();
             this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
@@ -123,7 +122,7 @@
             this.pages.HotTrack = true;
             this.pages.Location = new System.Drawing.Point(0, 33);
             this.pages.Name = "pages";
-            this.pages.SelectedIndex = 0;
+            this.pages.SelectedIndex = 2;
             this.pages.Size = new System.Drawing.Size(660, 655);
             this.pages.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.pages.Style = MetroFramework.MetroColorStyle.Red;
@@ -449,7 +448,6 @@
             this.metroTabPage3.Controls.Add(this.updateMMCheck);
             this.metroTabPage3.Controls.Add(this.clearDataButton);
             this.metroTabPage3.Controls.Add(this.localDataButton);
-            this.metroTabPage3.Controls.Add(this.consoleButton);
             this.metroTabPage3.HorizontalScrollbarBarColor = true;
             this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
             this.metroTabPage3.HorizontalScrollbarSize = 10;
@@ -506,22 +504,6 @@
             this.localDataButton.Text = "Open Data Folder";
             this.localDataButton.UseVisualStyleBackColor = false;
             this.localDataButton.Click += new System.EventHandler(this.localDataButton_Click);
-            // 
-            // consoleButton
-            // 
-            this.consoleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.consoleButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.consoleButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.consoleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.consoleButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.consoleButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consoleButton.Location = new System.Drawing.Point(5, 569);
-            this.consoleButton.Name = "consoleButton";
-            this.consoleButton.Size = new System.Drawing.Size(157, 26);
-            this.consoleButton.TabIndex = 4;
-            this.consoleButton.Text = "Open Console";
-            this.consoleButton.UseVisualStyleBackColor = false;
-            this.consoleButton.Click += new System.EventHandler(this.consoleButton_Click);
             // 
             // metroTabPage5
             // 
@@ -1108,7 +1090,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private MetroFramework.Controls.MetroLabel versionText;
         private System.Windows.Forms.Button localDataButton;
-        private System.Windows.Forms.Button consoleButton;
         private MetroFramework.Controls.MetroLabel noLibGamesText;
         private MetroFramework.Controls.MetroTabPage metroTabPage5;
         private MetroFramework.Controls.MetroLabel metroLabel6;

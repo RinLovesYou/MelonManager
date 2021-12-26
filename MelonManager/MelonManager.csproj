@@ -146,7 +146,6 @@
     <Compile Include="Updater\UpdateStateManager.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Tasks\Task.cs" />
-    <Compile Include="Utils\ConsoleUtils.cs" />
     <Compile Include="Utils\UtilsBox.cs" />
     <Compile Include="Utils\FormsSafeEvent.cs" />
     <Compile Include="Utils\SimpleSHA512.cs" />

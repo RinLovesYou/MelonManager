@@ -59,9 +59,6 @@ namespace MelonManager
                 }
             }
 
-            if (args.Contains("-console"))
-                ConsoleUtils.OpenConsole();
-
             Directory.CreateDirectory(localFilesPath);
 
             var ver = GitHub.GetLatestManagerVersion();

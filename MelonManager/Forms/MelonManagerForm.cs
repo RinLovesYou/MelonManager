@@ -86,7 +86,6 @@ namespace MelonManager.Forms
         {
             versionText.Text = 'v' + Application.ProductVersion;
             updateBtn.Visible = !Program.latestVersion;
-            consoleButton.Enabled = !ConsoleUtils.IsConsoleOpen;
             updateMMCheck.Checked = Program.config.config.autoUpdate;
             pages.SelectedIndex = Program.config.config.mainFormPageIndex;
 
@@ -156,14 +155,6 @@ namespace MelonManager.Forms
 
             Program.config.config.autoUpdate = updateMMCheck.Checked;
             Program.config.config.mainFormPageIndex = pages.SelectedIndex;
-        }
-
-        private void consoleButton_Click(object sender, EventArgs e)
-        {
-            consoleButton.Enabled = false;
-            ConsoleUtils.OpenConsole();
-            Console.Write(Logger.GetWholeLog());
-            Logger.Log("You have opened the debug console. Everything written to this console gets saved to the latest log file.", Logger.Level.Warning);
         }
 
         private void localDataButton_Click(object sender, EventArgs e)

@@ -85,8 +85,6 @@ namespace MelonManager.Managers
                 lock (logLock)
                 {
                     var log = $"[{DateTime.Now.ToString("HH:mm:ss.fff")}] [{level}] " + message;
-                    if (ConsoleUtils.IsConsoleOpen)
-                        Console.WriteLine(log);
                     latestLog.WriteLine(log);
                     currentLog.WriteLine(log);
                 }
