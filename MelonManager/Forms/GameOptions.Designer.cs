@@ -54,14 +54,14 @@ namespace MelonManager.Forms
             // 
             // removeFromLibButton
             // 
-            this.removeFromLibButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(10)))), ((int)(((byte)(30)))));
+            this.removeFromLibButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(14)))), ((int)(((byte)(50)))));
             this.removeFromLibButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.removeFromLibButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.removeFromLibButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.removeFromLibButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.removeFromLibButton.Location = new System.Drawing.Point(210, 105);
+            this.removeFromLibButton.Location = new System.Drawing.Point(237, 111);
             this.removeFromLibButton.Name = "removeFromLibButton";
-            this.removeFromLibButton.Size = new System.Drawing.Size(183, 24);
+            this.removeFromLibButton.Size = new System.Drawing.Size(156, 24);
             this.removeFromLibButton.TabIndex = 9;
             this.removeFromLibButton.Text = "Remove from the Library";
             this.removeFromLibButton.UseVisualStyleBackColor = false;
@@ -69,14 +69,14 @@ namespace MelonManager.Forms
             // 
             // uninstallButton
             // 
-            this.uninstallButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(10)))), ((int)(((byte)(30)))));
+            this.uninstallButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(14)))), ((int)(((byte)(50)))));
             this.uninstallButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.uninstallButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.uninstallButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.uninstallButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.uninstallButton.Location = new System.Drawing.Point(23, 105);
+            this.uninstallButton.Location = new System.Drawing.Point(23, 111);
             this.uninstallButton.Name = "uninstallButton";
-            this.uninstallButton.Size = new System.Drawing.Size(181, 24);
+            this.uninstallButton.Size = new System.Drawing.Size(156, 24);
             this.uninstallButton.TabIndex = 10;
             this.uninstallButton.Text = "Uninstall MelonLoader";
             this.uninstallButton.UseVisualStyleBackColor = false;
@@ -84,14 +84,14 @@ namespace MelonManager.Forms
             // 
             // mlVersion
             // 
-            this.mlVersion.AutoSize = true;
             this.mlVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.mlVersion.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.mlVersion.Location = new System.Drawing.Point(115, 4);
+            this.mlVersion.Location = new System.Drawing.Point(3, 7);
             this.mlVersion.Name = "mlVersion";
-            this.mlVersion.Size = new System.Drawing.Size(139, 19);
+            this.mlVersion.Size = new System.Drawing.Size(364, 19);
             this.mlVersion.TabIndex = 2;
             this.mlVersion.Text = "MelonLoader Version";
+            this.mlVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.mlVersion.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.mlVersion.UseCustomBackColor = true;
             // 
@@ -100,9 +100,9 @@ namespace MelonManager.Forms
             this.mlVersionSelect.FontSize = MetroFramework.MetroComboBoxSize.Small;
             this.mlVersionSelect.FormattingEnabled = true;
             this.mlVersionSelect.ItemHeight = 19;
-            this.mlVersionSelect.Location = new System.Drawing.Point(82, 26);
+            this.mlVersionSelect.Location = new System.Drawing.Point(82, 34);
             this.mlVersionSelect.Name = "mlVersionSelect";
-            this.mlVersionSelect.Size = new System.Drawing.Size(106, 25);
+            this.mlVersionSelect.Size = new System.Drawing.Size(100, 25);
             this.mlVersionSelect.Style = MetroFramework.MetroColorStyle.Red;
             this.mlVersionSelect.TabIndex = 13;
             this.mlVersionSelect.Theme = MetroFramework.MetroThemeStyle.Dark;
@@ -116,9 +116,9 @@ namespace MelonManager.Forms
             this.installButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.installButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.installButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.installButton.Location = new System.Drawing.Point(194, 26);
+            this.installButton.Location = new System.Drawing.Point(188, 34);
             this.installButton.Name = "installButton";
-            this.installButton.Size = new System.Drawing.Size(88, 24);
+            this.installButton.Size = new System.Drawing.Size(94, 25);
             this.installButton.TabIndex = 14;
             this.installButton.Text = "Reinstall";
             this.installButton.UseVisualStyleBackColor = false;
@@ -133,9 +133,9 @@ namespace MelonManager.Forms
             this.metroPanel2.HorizontalScrollbarBarColor = true;
             this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel2.HorizontalScrollbarSize = 10;
-            this.metroPanel2.Location = new System.Drawing.Point(23, 42);
+            this.metroPanel2.Location = new System.Drawing.Point(23, 29);
             this.metroPanel2.Name = "metroPanel2";
-            this.metroPanel2.Size = new System.Drawing.Size(370, 57);
+            this.metroPanel2.Size = new System.Drawing.Size(370, 70);
             this.metroPanel2.TabIndex = 13;
             this.metroPanel2.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel2.UseCustomBackColor = true;
@@ -161,7 +161,6 @@ namespace MelonManager.Forms
             this.Style = MetroFramework.MetroColorStyle.Red;
             this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroPanel2.ResumeLayout(false);
-            this.metroPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
