@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace MelonManagerAvalonia;
 
 public class Constants
@@ -16,4 +18,6 @@ public class Constants
     internal const string SlidyDevGit = "https://github.com/SlidyDev";
     internal const string SamboyGit = "https://github.com/SamboyCoding";
     internal const string RinGit = "https://github.com/RinLovesYou";
+    
+    internal static string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString().Remove(3);
 }

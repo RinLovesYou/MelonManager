@@ -85,23 +85,19 @@
             
         </Grid>
         <Canvas Grid.Row="3" Background="Gray"/>
-        <StackPanel Grid.Row="4" Margin="10">
-            <TextBlock Text="Credits:"></TextBlock>
-            <StackPanel Orientation="Horizontal">
-                <Button Name="SlidyDevButton" Foreground="Gray" FontSize="13" Content="SlidyDev" Background="Transparent" Width="100" Command="{Binding OpenSlidyDev }"/>
-                <TextBlock Text="Main Developer of the Manager" VerticalAlignment="Center"></TextBlock>
+        <StackPanel Grid.Row="4" Margin="10" HorizontalAlignment="Center">
+            <TextBlock Text="MelonManager Credits:" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Vertical">
+                <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" Name="SlidyDevButton" Foreground="Gray" FontSize="13" Content="SlidyDev" Background="Transparent" Width="100" Command="{Binding OpenSlidyDev }"/>
+                <TextBlock HorizontalAlignment="Center" Text="Main Developer of the Manager" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Name="SamBoyButton" Foreground="Gray" FontSize="13" Content="Samboy" Background="Transparent" Width="100" Command="{Binding OpenSamboy }"/>
-                <TextBlock Text="Developer of the Manager" VerticalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Vertical">
+                <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" Name="SamBoyButton" Foreground="Gray" FontSize="13" Content="Samboy" Background="Transparent" Width="100" Command="{Binding OpenSamboy }"/>
+                <TextBlock HorizontalAlignment="Center" Text="Developer of the Manager" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Name="RinButton" Foreground="Gray" FontSize="13" Content="RinLovesYou" Background="Transparent" Width="100" Command="{Binding OpenRin }"/>
-                <TextBlock Text="Cross-Plat Support and UI Work" VerticalAlignment="Center"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Name="LavaGangButton" Foreground="Gray" FontSize="13" Content="LavaGang" Background="Transparent" Width="100" Command="{Binding OpenLavaGangGithub }"/>
-                <TextBlock Text="The Team behind MelonLoader" VerticalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Vertical">
+                <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" Name="RinButton" Foreground="Gray" FontSize="13" Content="RinLovesYou" Background="Transparent" Width="100" Command="{Binding OpenRin }"/>
+                <TextBlock HorizontalAlignment="Center" Text="Cross-Plat Support and UI Work" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>

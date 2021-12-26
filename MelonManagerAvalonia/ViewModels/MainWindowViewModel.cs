@@ -9,12 +9,18 @@ namespace MelonManagerAvalonia.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string VersionNumber => "v" + Assembly.GetExecutingAssembly().GetName().Version.ToString().Remove(3);
+        public string VersionNumber => "v" + Constants.Version;
+
+        #region PackageStore
+
+        public string PackageStoreText =>
+            "This page will soon turn into a Package Store where you will be able to explore and find your\nfavorite mods, mod packs and plugins from verified external sources.";
+
+        #endregion
         
         #region AboutPage
 
         public string AboutText => "MelonManager is the Official Manager App for MelonLoader.\n\n Questions? Join our Discord Server (linked below).";
-        
         public UserControl AboutPage => new AboutWindow();
         
         public ReactiveCommand <Unit, Unit> OpenMlDiscord { get; }

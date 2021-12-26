@@ -7,6 +7,7 @@ namespace MelonManagerAvalonia.Views
 {
     public partial class MainWindow : Window
     {
+        public static Window Instance { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -24,6 +25,11 @@ namespace MelonManagerAvalonia.Views
         {
             var aboutControl = sender as UserControl;
             aboutControl.Content = new AboutWindow();
+        }
+
+        private void StyledElement_OnInitialized(object? sender, EventArgs e)
+        {
+            Instance = sender as MainWindow;
         }
     }
 }

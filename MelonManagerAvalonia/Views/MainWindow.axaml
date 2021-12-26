@@ -7,7 +7,8 @@
         Height="675"
         x:Class="MelonManagerAvalonia.Views.MainWindow"
         Icon="/Assets/Icon.ico"
-        Title="MelonManager">
+        Title="MelonManager"
+        Initialized="StyledElement_OnInitialized">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -31,8 +32,8 @@
         
         <Canvas Grid.Row="0" Background="#21ff5c"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Image Source="/Assets/Melon_170.png" Width="35" Margin="5, 5, 0, 0"/>
-            <Image Source="/Assets/MLM_Text.png" Height="30" Margin="5, 5, 0, 0"/>
+            <Image Source="/Assets/Melon_170.png" Width="35" Margin="5, 5, 0, 5"/>
+            <Image Source="/Assets/MLM_Text.png" Height="30" Margin="0, 5, 0, 0"/>
             <TextBlock Text="{Binding VersionNumber}" VerticalAlignment="Bottom" Margin="4, 0, 0, 6" Foreground="Gray"></TextBlock>
         </StackPanel>
         <Canvas Grid.Row="2" HorizontalAlignment="Stretch" Height="2" Background="Gray" Margin="10, 0, 10, 540"/>
@@ -41,7 +42,10 @@
                 
             </TabItem>
             <TabItem Header="Packages">
-                <TextBlock Text="Hello"></TextBlock>
+                <StackPanel HorizontalAlignment="Center" Margin="0, 0, 0, 300" VerticalAlignment="Center">
+                    <TextBlock Text="Coming Soon..." FontWeight="Bold" FontSize="24" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding PackageStoreText}" HorizontalAlignment="Center" TextAlignment="Center"/>
+                </StackPanel>
             </TabItem>
             <TabItem Header="Settings">
                 

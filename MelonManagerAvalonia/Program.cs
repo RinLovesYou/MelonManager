@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
 
 namespace MelonManagerAvalonia
@@ -10,6 +9,7 @@ namespace MelonManagerAvalonia
     {
 
         private static OSPlatform _currentPlat;
+        public static readonly string localFilesPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Lava Gang\" + "MelonManager");
 
         public static OSPlatform CurrentPlatform
         {
