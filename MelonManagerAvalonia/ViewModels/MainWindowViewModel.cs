@@ -1,6 +1,7 @@
 ﻿using System.Reactive;
 using System.Reflection;
 using Avalonia.Controls;
+using MelonManager.Views;
 using MelonManagerAvalonia.Utils;
 using MelonManagerAvalonia.Views;
 using ReactiveUI;
@@ -10,6 +11,12 @@ namespace MelonManagerAvalonia.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         public string VersionNumber => "v" + Constants.Version;
+        
+        #region Library
+        
+        public UserControl LibraryPage => new LibraryWindow();
+        
+        #endregion
 
         #region PackageStore
 

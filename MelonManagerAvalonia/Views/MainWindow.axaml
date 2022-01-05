@@ -39,7 +39,7 @@
         <Canvas Grid.Row="2" HorizontalAlignment="Stretch" Height="2" Background="Gray" Margin="10, 0, 10, 540"/>
         <TabControl Grid.Row="2">
             <TabItem Header="Library">
-                
+                <UserControl Name="LibraryView" Content="{Binding LibraryPage}"/>
             </TabItem>
             <TabItem Header="Packages">
                 <StackPanel HorizontalAlignment="Center" Margin="0, 0, 0, 300" VerticalAlignment="Center">
@@ -51,7 +51,7 @@
                 
             </TabItem>
             <TabItem Header="About">
-                <UserControl Name="AboutPageView" Content="{Binding AboutPage}"></UserControl>
+                <UserControl Name="AboutPageView" Content="{Binding AboutPage}"/>
             </TabItem>
         </TabControl>
     </Grid>
